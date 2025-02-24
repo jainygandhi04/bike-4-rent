@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 const Categories = () => {
   const array = [
     {
-      name: "Economuter bikes",
-      images: "../images/economuter/pulsar.png",
+      name: "Activa",
+      images: "../images/activanew.jpg",
       href: "/bikerentsection",
     },
     {
@@ -16,7 +16,7 @@ const Categories = () => {
       href: "/bikerentsection",
     },
     {
-      name: "Scooter",
+      name: "Juipter",
       images: "../images/scooter/vespaa.png",
       href: "/bikerentsection",
     },

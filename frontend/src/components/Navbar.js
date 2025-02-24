@@ -97,7 +97,7 @@ export default function Navbar({ scrolled }) {
                     <div>
                       <Menu.Button className='inline-flex items-center justify-center w-full px-4 py-2 text-xs font-medium rounded-md sm:text-base text-orange focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
                         <img
-                          src='../ashish.jpg'
+                          src='../avatar.jpg'
                           alt=''
                           className='w-10 h-10 mr-2 rounded-full'
                         />

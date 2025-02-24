@@ -6,10 +6,10 @@ const Footer = () => {
     {
       heading: "Near-by Attractions",
       links: [
-        { name: "Fatehsagar lake" },
-        { name: "City Palace" },
-        { name: "Bahubali Hills" },
-        { name: "Sajjangarh Monsoon Palace" },
+        { name: "Fatehsagar lake", href: "https://en.wikipedia.org/wiki/Fateh_Sagar_Lake", target: '_blank' },
+        { name: "City Palace",href : "https://en.wikipedia.org/wiki/City_Palace,_Udaipur", target: '_blank' },
+        { name: "Ambrai Ghat" , href: "https://en.wikipedia.org/wiki/Ambrai_Ghat", target: '_blank' },
+        { name: "Sajjangarh Monsoon Palace" , href :"https://en.wikipedia.org/wiki/Monsoon_Palace", target: '_blank'},
       ],
     },
 
@@ -62,6 +62,7 @@ const Footer = () => {
                         <Link
                           className='text-base font-medium text-slate-900 hover:text-gray-800'
                           to={link.href}
+                          target={link.target}
                         >
                           {link.name}
                         </Link>
