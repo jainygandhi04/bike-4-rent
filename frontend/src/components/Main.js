@@ -2,8 +2,10 @@ import React from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { Link } from "react-router-dom";
+import { DatePicker } from "antd";
 
 const Main = () => {
+  const {RangePicker} = DatePicker;
   return (
     <section className='py-3 text-center bg-teal-50 h-1/2'>
       <h3 className='mt-2 text-2xl antialiased font-semibold sm:font-extrabold sm:text-6xl sm:pt-10 text-orange sm:mt-4'>
@@ -22,6 +24,7 @@ const Main = () => {
       >
         Book Now
       </Link>
+      <RangePicker/>
     </section>
   );
 };

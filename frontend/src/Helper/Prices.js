@@ -11,8 +11,8 @@ export const Prices = [
   },
   {
     _id: 3,
-    name: "NPR 3100 to NPR 5000",
-    array: [3100, 5000],
+    name: "NPR 3100 to NPR 5001",
+    array: [3100, 5001],
   },
   {
     _id: 4,

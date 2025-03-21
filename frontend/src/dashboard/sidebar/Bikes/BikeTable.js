@@ -8,7 +8,7 @@ const BikeTable = ({ color }) => {
   const [showModal, setShowModal] = useState(false);
   const [bikeId, setBikeId] = useState();
   const dispatch = useDispatch();
-  const base_url = `http://localhost:5000`;
+  const base_url = `http://localhost:5001`;
   useEffect(() => {
     dispatch(BikeAll());
   }, []);

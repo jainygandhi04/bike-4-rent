@@ -10,8 +10,8 @@ import { logout } from "../redux/features/User/authSlice";
 import { LoggedInUser } from "../redux/features/User/authAction";
 
 const navigation = [
-  { name: "Home", href: "/" },
-  { name: "Rent Bikes", href: "/bikerentsection" },
+  { name: "Home", href: "/" }
+  //{ name: "Rent Bikes", href: "/bikerentsection" },
 ];
 
 function classNames(...classes) {
@@ -177,12 +177,16 @@ export default function Navbar({ scrolled }) {
                   <Link
                     className='px-3 py-2 text-sm font-medium text-black rounded-md hover:bg-black hover:text-white'
                     to='/login'
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     Login
                   </Link>
                   <Link
                     className='px-3 py-2 text-sm font-medium text-white rounded-md text-gray-1 00 bg-orange hover:bg-black'
                     to='/signup'
+                    target="_blank"
+                    rel="noopener noreferrer" 
                   >
                     Sign up
                   </Link>

@@ -33,7 +33,7 @@ const BikeRentSection = () => {
 
   const { bikes } = useSelector((state) => state.bike);
   const { categories } = useSelector((state) => state.category);
-  const base_url = "http://localhost:5000";
+  const base_url = "http://localhost:5001";
   const handleCart = (bike) => {
     dispatch(addToCart(bike));
   };
@@ -48,7 +48,7 @@ const BikeRentSection = () => {
   };
 
   return (
-    <Layout title={"Bike rental made easy"}>
+    <Layout title={"Bike-4-Rental"}>
       <section className='flex h-full'>
         <div className='w-1/5 border-r-2 border-orange'>
           <div className='container px-5 mx-auto mt-3'>

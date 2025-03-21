@@ -14,7 +14,7 @@ import {
 import { clearFields } from "../../../redux/features/Bikes/bikeSlice";
 import { useParams } from "react-router-dom";
 import { CategoryAll } from "../../../redux/features/Category/categoryAction";
-const base_url = `http://localhost:5000`;
+const base_url = `http://localhost:5001`;
 
 const EditBike = () => {
   const [selectedImage, setSelectedImage] = useState();
