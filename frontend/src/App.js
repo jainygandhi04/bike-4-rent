@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./dashboard/Dashboard";
 import Private from "./Helper/Private";
@@ -20,17 +20,17 @@ function App() {
         <Loading />
       ) : (
         <div className='bg-slate-50'>
-          <Routes>
+            <Routes>
             <Route path='/*' element={<App1 />} />
-            <Route
+              <Route
               path='/dashboard/*'
-              element={
-                <Private>
-                  <Dashboard />
-                </Private>
-              }
+                element={
+                  <Private>
+                    <Dashboard />
+                  </Private>
+                }
             ></Route>
-          </Routes>
+            </Routes>
           <FloatButton.BackTop type='primary' visibilityHeight={50} />
         </div>
       )}

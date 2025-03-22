@@ -7,6 +7,10 @@ import { addToCart } from "../redux/features/Cart/cartSlice";
 import { Checkbox, Radio } from "antd";
 import Layout from "./Layout";
 import { Prices } from "../Helper/Prices";
+import { DatePicker, ConfigProvider } from 'antd';
+import enUS from 'antd/es/locale/en_US';
+const { RangePicker } = DatePicker;
+
 
 const BikeRentSection = () => {
   const [checked, setChecked] = useState([]);
@@ -49,11 +53,16 @@ const BikeRentSection = () => {
 
   return (
     <Layout title={"Bike-4-Rental"}>
-      <section className='flex h-full'>
-        <div className='w-1/5 border-r-2 border-orange'>
-          <div className='container px-5 mx-auto mt-3'>
-            <h1 className='text-xl font-bold text-left'>Filter by Category</h1>
-            <div className='flex flex-col gap-2 mt-2 ml-2 text-base font-semibold'>
+      <section className="flex h-full">
+        <div className="w-1/5 border-r-2 border-orange">
+          <div className="container px-5 mx-auto mt-3">
+          <h1 className="text-xl font-bold text-left">Pick your Dates</h1>
+<ConfigProvider locale={enUS}>
+  <RangePicker className="mb-4" />
+</ConfigProvider>
+
+            <h1 className="text-xl font-bold text-left">Filter by Category</h1>
+            <div className="flex flex-col gap-2 mt-2 ml-2 text-base font-semibold">
               {categories?.map((c) => (
                 <Checkbox
                   key={c._id}

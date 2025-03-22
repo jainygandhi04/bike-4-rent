@@ -8,15 +8,17 @@ import Signup from "./Signup";
 import Unauthorized from "../Helper/Unauthorized";
 import Categories from "./Categories";
 import Contact from "./Contact";
-import Testimonial from "./Testimonial";
-import BikeRentSection from "./BikeRentSection";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+//import Login from "./Login";
 import ForgotPassword from "./ForgotPassword";
 import OrderDropdown from "./OrderDropdown";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
+import BikeRentSection from "./BikeRentSection";
+import Testimonial from "./Testimonial";
 
 const App1 = () => {
   const [scrolled, setScrolled] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 30);
@@ -28,6 +30,7 @@ const App1 = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
   return (
     <>
       <Navbar scrolled={scrolled} />
