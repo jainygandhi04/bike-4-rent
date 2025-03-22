@@ -28,7 +28,7 @@ const Signup = () => {
   }, [success]);
 
   return (
-    <Layout title={"Bikebook : Signup"}>
+    <Layout title={"Bike-4-Rent : Signup"}>
       <div className='flex flex-col justify-center h-screen px-6 lg:px-8 bg-slate-50'>
         <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
           <Link to='/'>

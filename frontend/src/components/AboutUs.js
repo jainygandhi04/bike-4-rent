@@ -1,6 +1,6 @@
 import React from "react";
 
-const WhyUs = () => {
+const AboutUs = () => {
   return (
     <section className='text-gray-600 body-font'>
       <div className='container flex flex-wrap px-5 py-10 mx-auto sm:py-12'>
@@ -84,22 +84,17 @@ const WhyUs = () => {
                   One Stop Shop
                 </h2>
                 <p className='leading-relaxed'>
-                  Be it everyday commute,road trips,riding gears, and
+                  Be it everyday commute, road trips, riding gears, and
                   maintenance - we have them all.
                 </p>
               </div>
             </div>
           </div>
-          {/*   <Image
-            src={pricing}
-            className='object-cover object-center mt-12 rounded-lg lg:w-3/5 md:w-1/2 md:mt-0'
-            alt='team'
-          /> */}
 
           <img
             className='object-center mt-12 rounded-lg lg:w-3/5 md:w-1/2 object-fit md:mt-0'
             src='../images/scooter.jpg'
-            alt='step'
+            alt='scooter'
           />
         </div>
       </div>
@@ -107,4 +102,4 @@ const WhyUs = () => {
   );
 };
 
-export default WhyUs;
+export default AboutUs;

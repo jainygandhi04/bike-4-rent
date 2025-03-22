@@ -27,7 +27,7 @@ export default function Sidebar() {
             className='inline-block p-4 px-0 mr-0 text-2xl font-extrabold text-center uppercase shadow md:block md:pb-2 whitespace-nowrap'
             to='/'
           >
-            BikeBook
+            Bike-4-Rent
           </Link>
           <div
             className={
@@ -43,7 +43,7 @@ export default function Sidebar() {
                     className='inline-block px-0 mr-0 text-sm font-bold text-left uppercase md:block whitespace-nowrap'
                     to='/'
                   >
-                    BikeBook
+                    Bike-4-Rent
                   </Link>
                 </div>
                 <div className='flex justify-end w-6/12'>

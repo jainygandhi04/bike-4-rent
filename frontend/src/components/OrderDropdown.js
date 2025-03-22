@@ -10,7 +10,7 @@ const OrderDropdown = ({ color }) => {
   }, []);
   const { userOrders } = useSelector((state) => state.order);
   return (
-    <Layout title={"BikeBook : Your Orders"}>
+    <Layout title={"Bike-4-Rent : Your Orders"}>
       <div className='flex items-center justify-center'>
         <h1 className='font-serif text-2xl font-bold'>Your Orders</h1>
       </div>

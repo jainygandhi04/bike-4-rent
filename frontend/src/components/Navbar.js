@@ -1,31 +1,21 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { Fragment, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useNavigate } from "react-router-dom";
-import { Fragment } from "react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { Bars3Icon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import { logout } from "../redux/features/User/authSlice";
 import { LoggedInUser } from "../redux/features/User/authAction";
-
-const navigation = [
-  { name: "Home", href: "/" }
-  //{ name: "Rent Bikes", href: "/bikerentsection" },
-];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export default function Navbar({ scrolled }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   useEffect(() => {
     dispatch(LoggedInUser());
-  }, []);
-  const { loading, userInfo, error } = useSelector((state) => state.auth);
-  // const { cartTotalQuantity } = useSelector((state) => state.cart);
+  }, [dispatch]);
+
+  const { userInfo } = useSelector((state) => state.auth);
+
   const handleLogout = () => {
     dispatch(logout());
     navigate("/");
@@ -33,7 +23,7 @@ export default function Navbar({ scrolled }) {
 
   return (
     <Disclosure
-      as='nav'
+      as="nav"
       className={`fixed top-0 w-full z-10 ${
         scrolled
           ? "bg-teal-100 opacity-100 transition-all duration-300"
@@ -42,117 +32,89 @@ export default function Navbar({ scrolled }) {
     >
       {({ open }) => (
         <>
-          <div className='mx-auto max-w-7xl sm:px-6 lg:px-8'>
-            <div className='relative flex items-center justify-between h-16'>
-              <div className='absolute inset-y-0 left-0 flex items-center sm:hidden'>
-                {/* Mobile menu button*/}
-                <Disclosure.Button className='inline-flex items-center justify-center p-2 text-gray-400 rounded-md hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'>
-                  <span className='sr-only'>Open main menu</span>
-                  {open ? (
-                    <XMarkIcon className='block w-6 h-6' aria-hidden='true' />
-                  ) : (
-                    <Bars3Icon className='block w-6 h-6' aria-hidden='true' />
-                  )}
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="relative flex items-center justify-between h-16">
+              {/* Left Hamburger */}
+              <div className="flex items-center">
+                <Disclosure.Button className="inline-flex items-center justify-center p-2 text-gray-700 rounded-md hover:bg-orange hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <Bars3Icon className="block w-6 h-6" aria-hidden="true" />
                 </Disclosure.Button>
               </div>
-              <div className='flex items-center justify-center flex-1 sm:items-stretch sm:justify-start'>
-                <Link className='flex items-center flex-shrink-0' to='/'>
+
+              {/* Center Logo */}
+              <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center">
+                <Link to="/" className="flex items-center">
                   <img
-                    className='block w-auto h-8 lg:hidden'
-                    src='../images/bikelogo.png'
-                    alt='Your Company'
-                  />
-                  <img
-                    className='hidden w-auto h-8 lg:block'
-                    src='../images/bikelogo.png'
-                    alt='Your Company'
+                    className="h-8 w-auto"
+                    src="/images/bikelogo.png"
+                    alt="Bike4Rent"
                   />
                 </Link>
-                <div className='hidden sm:flex sm:ml-6'>
-                  <div className='flex space-x-4'>
-                    {navigation.map((item, index) => (
-                      <Link
-                        key={item.name}
-                        to={item.href}
-                        className={classNames(
-                          " hover:bg-orange hover:text-white text-semibold",
-                          "rounded-md px-3 py-2 text-sm font-bold text-slate-900"
-                        )}
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
               </div>
-              {userInfo !== undefined && userInfo !== null ? (
-                <div className='flex items-center text-right'>
-                  {/* <Link className='flex items-center' to='/cart'>
-                    <ShoppingBagIcon className='w-6 h-6 ' />
-                    <span className='flex flex-col items-center justify-center font-semibold cursor-pointer'>
-                      <span className=''>Your Cart</span>
-                    </span>
-                  </Link> */}
-                  <Menu as='div' className='text-left '>
+
+              {/* Right Nav */}
+              <div className="flex space-x-4 items-center">
+                <Link
+                  to="/"
+                  className="text-slate-900 font-bold hover:bg-orange hover:text-white rounded-md px-3 py-2 text-sm"
+                >
+                  Home
+                </Link>
+
+                {userInfo ? (
+                  <Menu as="div" className="relative">
                     <div>
-                      <Menu.Button className='inline-flex items-center justify-center w-full px-4 py-2 text-xs font-medium rounded-md sm:text-base text-orange focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
+                      <Menu.Button className="flex items-center text-orange text-sm font-medium rounded-md focus:outline-none">
                         <img
-                          src='../avatar.jpg'
-                          alt=''
-                          className='w-10 h-10 mr-2 rounded-full'
+                          src="/avatar.jpg"
+                          alt="avatar"
+                          className="w-8 h-8 mr-2 rounded-full"
                         />
                         {userInfo.name}
-                        <ChevronDownIcon
-                          className='w-5 h-5 ml-2 -mr-1 text-orange'
-                          aria-hidden='true'
-                        />
+                        <ChevronDownIcon className="w-5 h-5 ml-1" />
                       </Menu.Button>
                     </div>
                     <Transition
                       as={Fragment}
-                      enter='transition ease-out duration-100'
-                      enterFrom='transform opacity-0 scale-95'
-                      enterTo='transform opacity-100 scale-100'
-                      leave='transition ease-in duration-75'
-                      leaveFrom='transform opacity-100 scale-100'
-                      leaveTo='transform opacity-0 scale-95'
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
                     >
-                      <Menu.Items className='absolute right-0 z-10 w-48 mt-2 origin-top-right divide-y divide-gray-300 rounded-md shadow-lg bg-gray-50 ring-1 ring-black ring-opacity-5 focus:outline-none'>
-                        <div className='px-1 py-1 '>
-                          {userInfo.role === 1 ? (
+                      <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <div className="py-1">
+                          {userInfo.role === 1 && (
                             <Menu.Item>
                               {({ active }) => (
                                 <Link
-                                  to='/dashboard'
+                                  to="/dashboard"
                                   className={`${
                                     active
                                       ? "bg-orange text-white"
                                       : "text-gray-900"
-                                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                  } block px-4 py-2 text-sm`}
                                 >
                                   Dashboard
                                 </Link>
                               )}
                             </Menu.Item>
-                          ) : (
-                            <></>
                           )}
                           <Menu.Item>
                             {({ active }) => (
                               <Link
-                                to='/orderdropdown'
+                                to="/orderdropdown"
                                 className={`${
                                   active
                                     ? "bg-orange text-white"
                                     : "text-gray-900"
-                                } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                } block px-4 py-2 text-sm`}
                               >
-                                Your orders
+                                Your Orders
                               </Link>
                             )}
                           </Menu.Item>
-                        </div>
-                        <div className='px-1 py-1'>
                           <Menu.Item>
                             {({ active }) => (
                               <button
@@ -161,7 +123,7 @@ export default function Navbar({ scrolled }) {
                                   active
                                     ? "bg-orange text-white"
                                     : "text-gray-900"
-                                } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                } block w-full text-left px-4 py-2 text-sm`}
                               >
                                 Logout
                               </button>
@@ -171,50 +133,101 @@ export default function Navbar({ scrolled }) {
                       </Menu.Items>
                     </Transition>
                   </Menu>
-                </div>
-              ) : (
-                <div className='space-x-2'>
-                  <Link
-                    className='px-3 py-2 text-sm font-medium text-black rounded-md hover:bg-black hover:text-white'
-                    to='/login'
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Login
-                  </Link>
-                  <Link
-                    className='px-3 py-2 text-sm font-medium text-white rounded-md text-gray-1 00 bg-orange hover:bg-black'
-                    to='/signup'
-                    target="_blank"
-                    rel="noopener noreferrer" 
-                  >
-                    Sign up
-                  </Link>
-                </div>
-              )}
-
-              {/*  */}
+                ) : (
+                  <>
+                    <Link
+                      to="/login"
+                      className="px-3 py-2 text-sm font-medium text-black rounded-md hover:bg-black hover:text-white"
+                    >
+                      Login
+                    </Link>
+                    <Link
+                      to="/signup"
+                      className="px-3 py-2 text-sm font-medium text-white bg-orange rounded-md hover:bg-black"
+                    >
+                      Sign up
+                    </Link>
+                  </>
+                )}
+              </div>
             </div>
           </div>
 
-          <Disclosure.Panel className='sm:hidden'>
-            <div className='px-2 pt-2 pb-3 space-y-1'>
-              {navigation.map((item) => (
-                <Disclosure.Button
-                  key={item.name}
-                  as='a'
-                  href={item.href}
-                  className={classNames(
-                    item.current
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-700 hover:bg-gray-700 hover:text-white",
-                    "block rounded-md px-3 py-2 text-base font-medium"
-                  )}
-                  aria-current={item.current ? "page" : undefined}
-                >
-                  {item.name}
-                </Disclosure.Button>
-              ))}
+          {/* Hamburger Dropdown Menu */}
+          <Disclosure.Panel className="absolute bg-white left-0 mt-16 w-48 shadow-lg rounded-md">
+            <div className="space-y-1 p-2">
+              <Link
+                to="/about"
+                className="block px-4 py-2 text-sm text-gray-900 hover:bg-orange hover:text-white rounded-md"
+              >
+                About Us
+              </Link>
+              <Link
+                to="/contact"
+                className="block px-4 py-2 text-sm text-gray-900 hover:bg-orange hover:text-white rounded-md"
+              >
+                Contact Us
+              </Link>
+              <Link
+                to="/faqs"
+                className="block px-4 py-2 text-sm text-gray-900 hover:bg-orange hover:text-white rounded-md"
+              >
+                FAQs
+              </Link>
+              <Link
+                to="/terms"
+                className="block px-4 py-2 text-sm text-gray-900 hover:bg-orange hover:text-white rounded-md"
+              >
+                Terms & Conditions
+              </Link>
+
+              {/* Nested Nearby Attractions */}
+              <Menu as="div" className="relative">
+                {({ open }) => (
+                  <>
+                    <Menu.Button className="flex w-full items-center justify-between px-4 py-2 text-sm text-gray-900 hover:bg-orange hover:text-white rounded-md">
+                      Nearby Attractions
+                      <ChevronDownIcon className="w-4 h-4 ml-2" />
+                    </Menu.Button>
+                    {open && (
+                      <div className="ml-4 mt-1 space-y-1">
+                        <a
+                          href="https://en.wikipedia.org/wiki/Fateh_Sagar_Lake"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block px-4 py-2 text-sm text-gray-900 hover:bg-orange hover:text-white rounded-md"
+                        >
+                          Fatehsagar Lake
+                        </a>
+                        <a
+                          href="https://en.wikipedia.org/wiki/City_Palace,_Udaipur"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block px-4 py-2 text-sm text-gray-900 hover:bg-orange hover:text-white rounded-md"
+                        >
+                          City Palace
+                        </a>
+                        <a
+                          href="https://en.wikipedia.org/wiki/Ambrai_Ghat"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block px-4 py-2 text-sm text-gray-900 hover:bg-orange hover:text-white rounded-md"
+                        >
+                          Ambrai Ghat
+                        </a>
+                        <a
+                          href="https://en.wikipedia.org/wiki/Monsoon_Palace"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block px-4 py-2 text-sm text-gray-900 hover:bg-orange hover:text-white rounded-md"
+                        >
+                          Sajjangarh Monsoon Palace
+                        </a>
+                      </div>
+                    )}
+                  </>
+                )}
+              </Menu>
             </div>
           </Disclosure.Panel>
         </>

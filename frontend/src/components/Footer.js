@@ -78,7 +78,7 @@ const Footer = () => {
       <div className='bg-gray-100'>
         <div className='container flex flex-col flex-wrap px-5 py-4 mx-auto sm:flex-row'>
           <p className='text-sm text-center text-slate-900 sm:text-left'>
-            © 2020 BikeBook —
+            © 2020 Bike-4-Rent —
             <a
               href='https://twitter.com/knyttneve'
               rel='noopener noreferrer'
