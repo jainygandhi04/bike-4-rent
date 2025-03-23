@@ -11,7 +11,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { loading, userInfo, success } = useSelector((state) => state.auth);
+  const { loading, userInfo } = useSelector((state) => state.auth);
   const [errors, setErrors] = useState("");
   useEffect(() => {
     window.scrollTo({
@@ -24,13 +24,19 @@ const Login = () => {
   useEffect(() => {
     if (userInfo) {
       dispatch(clearFields());
+      if(email==='admin@gmail.com'){
+        navigate("/admin")
+      }
+      else{
       navigate("/");
+      }
     }
   }, [userInfo]);
   const onSubmit = async (event) => {
     const data = {
       email: email,
       password: password,
+      role: email ==='admin@gmail.com' ? 1 :0
     };
     const datas = await dispatch(userLogin(data));
     if (datas.error) {

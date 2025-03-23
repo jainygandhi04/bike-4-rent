@@ -53,7 +53,7 @@ const EditBike = () => {
           method='update'
           // success={success}
           handleBack={handleBack}
-          backlink='/dashboard/bikes'
+          backlink='/bikes'
         >
           <Formik
             initialValues={{

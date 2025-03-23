@@ -19,6 +19,15 @@ import Testimonial from "./Testimonial";
 import AboutUs from "./AboutUs";
 import Faqs from "./FAQs";
 import Terms from "./Terms";
+import Dashboard from "../dashboard/Dashboard";
+import User from "../dashboard/sidebar/User/User";
+import Category from "../dashboard/sidebar/Category/Category";
+import AddCategory from "../dashboard/sidebar/Category/AddCategory";
+import EditCategory from "../dashboard/sidebar/Category/EditCategory";
+import Bike from "../dashboard/sidebar/Bikes/Bike";
+import AddBike from "../dashboard/sidebar/Bikes/AddBike";
+import EditBike from "../dashboard/sidebar/Bikes/EditBike";
+
 
 const App1 = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -51,6 +60,18 @@ const App1 = () => {
           <Route path='/contact' element={<Contact />} />
           <Route path='/forgotpassword' element={<ForgotPassword />} />
           <Route path='/order/:slug' element={<Order />} />
+
+          {/* Admin Routes */}
+          <Route path= '/admin' element = {<Dashboard/>}/>
+          <Route path='/users' element={<User />} />
+              <Route path='/category' element={<Category/>} />
+              <Route path='/category/add' element={<AddCategory />} />
+              <Route path='/category/edit/:id' element={<EditCategory />} />
+              <Route path='/bikes' element={<Bike />} />
+              <Route path='/bikes/add' element={<AddBike />} />
+              <Route path='/bikes/edit/:id' element={<EditBike />} />
+              <Route path='/userorders' element={<Order />} />
+          
 
           {/* New pages */}
           <Route path='/about' element={<AboutUs />} />

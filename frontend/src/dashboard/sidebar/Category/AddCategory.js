@@ -31,7 +31,7 @@ const AddCategory = () => {
       title='Category'
       method='create'
       handleBack={handleBack}
-      backlink='/dashboard/category'
+      backlink='/category'
     >
       <Formik
         initialValues={{

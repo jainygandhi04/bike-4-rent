@@ -6,7 +6,7 @@ const Bike = () => {
   return (
     <TableWrapper
       title='Total Bikes'
-      addlink='/dashboard/bikes/add'
+      addlink='/bikes/add'
       addTitle='Add Bike'
       layouttitle='Dashboard Bike table'
     >

@@ -119,7 +119,7 @@ const BikeTable = ({ color }) => {
                   </td>
                   <td className='p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap'>
                     <div className='flex justify-center'>
-                      <Link to={`/dashboard/bikes/edit/${bike._id}`}>
+                      <Link to={`/bikes/edit/${bike._id}`}>
                         <svg
                           xmlns='http://www.w3.org/2000/svg'
                           className='icon icon-tabler icon-tabler-edit'

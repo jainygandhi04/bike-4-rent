@@ -46,7 +46,7 @@ const AddBike = () => {
       title='Bikes'
       method='create'
       handleBack={handleBack}
-      backlink='/dashboard/bikes'
+      backlink='/bikes'
     >
       <Formik
         initialValues={{

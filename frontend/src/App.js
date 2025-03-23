@@ -7,7 +7,7 @@ import "./App.css";
 // Lazy load major components
 const App1 = lazy(() => import("./components/App1"));
 const Dashboard = lazy(() => import("./dashboard/Dashboard"));
-const Private = lazy(() => import("./Helper/Private"));
+
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -26,20 +26,12 @@ function App() {
       ) : (
         <div className='bg-slate-50'>
           <Suspense fallback={<Loading />}>
-            <Routes>
-              {/* Public app routes */}
-              <Route path='/*' element={<App1 />} />
-              
-              {/* Protected dashboard */}
-              <Route
-                path='/dashboard/*'
-                element={
-                  <Private>
-                    <Dashboard />
-                  </Private>
-                }
-              />
-            </Routes>
+          <Routes>
+  <Route path="/*" element={<App1 />} />
+
+ 
+</Routes>
+
           </Suspense>
           <FloatButton.BackTop type='primary' visibilityHeight={50} />
         </div>
