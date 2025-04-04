@@ -15,7 +15,7 @@ export default function Navbar({ scrolled }) {
   }, [dispatch]);
 
   const { userInfo } = useSelector((state) => state.auth);
-
+  
   const handleLogout = () => {
     dispatch(logout());
     navigate("/");
@@ -54,13 +54,8 @@ export default function Navbar({ scrolled }) {
 
               {/* Right Nav */}
               <div className="flex space-x-4 items-right justify-end">
-                {/* <Link
-                  to="/"
-                  className="text-slate-900 font-bold hover:bg-orange hover:text-white rounded-md px-3 py-2 text-sm"
-                >
-                  Home
-                </Link> */}
-                <Link to="/"
+               
+                <Link  to={userInfo?.role===1 ? '/admin': "/"}
                     className="bg-[#FAF3E0] text-[#B9651D] px-4 py-3 text-base font-medium rounded-md hover:bg-gradient-to-r hover:from-[#FFB347] hover:to-[#B9651D] hover:text-[#FAF3E0] hover:shadow-md transition duration-200 pl-4"
                     style={{ fontFamily: "'Merriweather', serif" }}
                   >

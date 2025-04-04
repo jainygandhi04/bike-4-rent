@@ -44,7 +44,7 @@ const EditCategory = () => {
           title='Category'
           method='update'
           handleBack={handleBack}
-          backlink='/dashboard/category'
+          backlink='/category'
         >
           <Formik
             initialValues={{

@@ -1,175 +1,100 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useMemo } from "react";
+import { Select } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { AllOrder, updateStatus } from "../../../redux/features/Order/orderAction";
 import Spinner from "../../../Helper/Spinner";
 import toast from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  AllOrder,
-  updateStatus,
-} from "../../../redux/features/Order/orderAction";
-import { Select } from "antd";
+import moment from "moment"; // Import moment.js for date formatting
+
 const { Option } = Select;
 
 const Ordertable = ({ color }) => {
-  const [status, setStatus] = useState([
-    "Not Processed",
-    "Processing",
-    "Shipped",
-    "Delivered",
-    "Cancelled",
-  ]);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(AllOrder());
-  }, []);
+  }, [dispatch]);
+
   const { loading, error, orders } = useSelector((state) => state.order);
-  console.log(orders, "ordertable");
+
+  const statusOptions = useMemo(() => ["Not Processed", "Processing", "Shipped", "Delivered", "Cancelled"], []);
+
+  // Local state to track status changes immediately
+  const [localOrders, setLocalOrders] = useState([]);
+
+  useEffect(() => {
+    if (orders?.length) {
+      setLocalOrders(orders);
+    }
+  }, [orders]);
+
   const handleChange = (orderId, value) => {
-    let data = {
-      orderId: orderId,
-      status: value,
-    };
-    dispatch(updateStatus(data));
-    dispatch(AllOrder());
+    setLocalOrders((prev) =>
+      prev.map((order) => (order._id === orderId ? { ...order, status: value } : order))
+    );
+    dispatch(updateStatus({ orderId, status: value }));
   };
+
+  if (loading) return <Spinner />;
+  if (error) {
+    toast.error(error);
+    return null;
+  }
+
   return (
     <div style={{ maxHeight: "300px", overflowY: "auto" }}>
-      <table className='items-center w-full bg-white border-collapse'>
+      <table className="items-center w-full bg-white border-collapse">
         <thead>
           <tr>
-            <th
-              className={
-                "px-2 border flex items-center justify-center border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold " +
-                (color === "light"
-                  ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                  : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-              }
-            >
-              SN
-            </th>
-
-            <th
-              className={
-                "px-5 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                (color === "light"
-                  ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                  : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-              }
-            >
-              Bikename
-            </th>
-            <th
-              className={
-                "px-5 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center " +
-                (color === "light"
-                  ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                  : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-              }
-            >
-              Bike_number
-            </th>
-            <th
-              className={
-                "px-5 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center " +
-                (color === "light"
-                  ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                  : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-              }
-            >
-              Rented User
-            </th>
-            <th
-              className={
-                "px-2 align-middle border border-solid py-2 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center " +
-                (color === "light"
-                  ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                  : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-              }
-            >
-              Total Amount
-            </th>
-            <th
-              className={
-                "px-3 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center " +
-                (color === "light"
-                  ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                  : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-              }
-            >
-              Start Date
-            </th>
-            <th
-              className={
-                "px-3 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center " +
-                (color === "light"
-                  ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                  : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-              }
-            >
-              End Date
-            </th>
-            <th
-              className={
-                "px-5 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center " +
-                (color === "light"
-                  ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                  : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-              }
-            >
-              Status
-            </th>
+            {["SN", "Bike Name", "Bike Number", "Rented User", "Total Amount", "Start Date", "End Date", "Status"].map(
+              (header, index) => (
+                <th
+                  key={index}
+                  className={`px-5 py-3 border text-xs uppercase font-semibold text-center ${
+                    color === "light"
+                      ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                      : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700"
+                  }`}
+                >
+                  {header}
+                </th>
+              )
+            )}
           </tr>
         </thead>
         <tbody>
-          {/* {loading && <Spinner />}
-          {error && toast.error(error)} */}
-          {orders && orders.length !== 0 ? (
-            orders.map((order, i) => {
-              return (
-                <tr key={order._id}>
-                  <td className='items-center px-2 text-left align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap'>
-                    {i + 1}
-                  </td>
-                  <td className='items-center px-5 py-3 text-left align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap'>
-                    <div className='flex'>
-                      {order.bikes.name ? order.bikes.name : "N/A"}
-                    </div>
-                  </td>
-                  <td className='items-center px-5 py-3 text-left align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap'>
-                    {order.bikes.number ? order.bikes.number : "N/A"}
-                  </td>
-                  <td className='items-center px-5 py-3 text-left align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap'>
-                    {order.renter.name}
-                  </td>
-                  <td className='items-center p-2 text-left align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap'>
-                    {order.totalAmt}
-                  </td>
-                  <td className='items-center p-3 text-left align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap'>
-                    {order.startDate}
-                  </td>
-
-                  <td className='items-center p-3 text-center align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap'>
-                    {order.endDate}
-                  </td>
-                  <td className='items-center p-4 px-5 text-center align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap'>
-                    <Select
-                      bordered={false}
-                      onChange={(value) => handleChange(order._id, value)}
-                      defaultValue={order.status}
-                    >
-                      {status.map((s, i) => (
-                        <Option key={i} value={s}>
-                          {s}
-                        </Option>
-                      ))}
-                    </Select>
-                  </td>
-                </tr>
-              );
-            })
+          {localOrders?.length ? (
+            localOrders.map((order, i) => (
+              <tr key={order._id}>
+                <td className="px-2 text-center border">{i + 1}</td>
+                <td className="px-5 py-3 border">{order?.bikes?.name || "N/A"}</td>
+                <td className="px-5 py-3 border">{order?.bikes?.number || "N/A"}</td>
+                <td className="px-5 py-3 border">{order?.renter?.name || "N/A"}</td>
+                <td className="p-2 border">{order?.totalAmt || "N/A"}</td>
+                <td className="p-3 border">
+                  {order?.startDate ? moment(order.startDate).format("DD/MM/YYYY") : "N/A"}
+                </td>
+                <td className="p-3 border">
+                  {order?.endDate ? moment(order.endDate).format("DD/MM/YYYY") : "N/A"}
+                </td>
+                <td className="p-4 text-center border">
+                  <Select
+                    bordered={false}
+                    value={order.status} // Use local state value
+                    onChange={(value) => handleChange(order._id, value)}
+                  >
+                    {statusOptions.map((s, index) => (
+                      <Option key={index} value={s}>
+                        {s}
+                      </Option>
+                    ))}
+                  </Select>
+                </td>
+              </tr>
+            ))
           ) : (
-            <tr className='text-center border'>
-              <td colSpan={5} className='p-3 font-bold text-red-500'>
+            <tr className="text-center border">
+              <td colSpan={8} className="p-3 font-bold text-red-500">
                 No Data Found!!
               </td>
             </tr>

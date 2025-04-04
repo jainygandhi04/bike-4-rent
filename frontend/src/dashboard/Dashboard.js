@@ -27,15 +27,7 @@ const Dashboard = () => {
           <Headerstats />
           <div className='w-full px-4 mx-auto -m-24 md:px-10 bg-[#fae4ca]'>
             <Routes>
-              <Route path='/' element={<DashboardHome />} />
-              <Route path='/users' element={<User />} />
-              <Route path='/category' element={<Category />} />
-              <Route path='/category/add' element={<AddCategory />} />
-              <Route path='/category/edit/:id' element={<EditCategory />} />
-              <Route path='/bikes' element={<Bike />} />
-              <Route path='/bikes/add' element={<AddBike />} />
-              <Route path='/bikes/edit/:id' element={<EditBike />} />
-              <Route path='/userorders' element={<Order />} />
+              <Route path='/admin' element={<DashboardHome />} />
             </Routes>
           </div>
         </div>

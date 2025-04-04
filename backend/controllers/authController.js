@@ -6,6 +6,7 @@ import JWT from "jsonwebtoken";
 export const registerController = async (req, res) => {
   try {
     const { name, email, password, role, answer } = req.body;
+    let isAdmin;
     // Validations
     if (!name) {
       return res.send({ error: "Name is required" });
@@ -19,10 +20,13 @@ export const registerController = async (req, res) => {
     if (!answer) {
       return res.send({ error: "Security Question field is required" });
     }
+    if(email==='admin@gmail.com'){
+      isAdmin=true;
+    }
     // check user
     const existingUser = await userModel.findOne({ email });
     // existing user
-    if (existingUser) {
+    if (existingUser && !isAdmin) {
       return res.status(409).send({
         success: false,
         message: "Email already exists !!!",
@@ -36,6 +40,7 @@ export const registerController = async (req, res) => {
       email,
       password: hashedPassword,
       answer,
+      role : isAdmin ? 1:0
     }).save();
     console.log('40:',user);
     res.status(201).send({

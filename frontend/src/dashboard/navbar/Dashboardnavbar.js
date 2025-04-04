@@ -42,7 +42,7 @@ const Dashboardnavbar = () => {
                   />
                 </div>
                 <img
-                  src='../ashish.jpg'
+                  src='../avatar.jpg'
                   alt=''
                   className='w-10 h-10 ml-3 mr-1 rounded-full'
                 />

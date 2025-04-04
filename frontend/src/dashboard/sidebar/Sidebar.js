@@ -80,7 +80,7 @@ export default function Sidebar() {
               <li className='items-center'>
                 <Link
                   className='flex items-center text-sm font-bold uppercase '
-                  to='/dashboard/users'
+                  to='/users'
                 >
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -105,7 +105,7 @@ export default function Sidebar() {
               <li className='items-center'>
                 <Link
                   className='flex items-center text-sm font-bold uppercase '
-                  to='/dashboard/category'
+                  to='/category'
                 >
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -129,7 +129,7 @@ export default function Sidebar() {
               <li className='items-center'>
                 <Link
                   className='flex items-center text-sm font-bold uppercase'
-                  to='/dashboard/bikes'
+                  to='/bikes'
                 >
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -153,7 +153,7 @@ export default function Sidebar() {
               <li className='items-center'>
                 <Link
                   className='flex items-center text-sm font-bold uppercase '
-                  to='/dashboard/userorders'
+                  to='/userorders'
                 >
                   <svg
                     xmlns='http://www.w3.org/2000/svg'

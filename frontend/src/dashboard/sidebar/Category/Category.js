@@ -6,7 +6,7 @@ const Category = () => {
   return (
     <TableWrapper
       title='Total Category'
-      addlink='/dashboard/category/add'
+      addlink='/category/add'
       addTitle='Add Category'
       layouttitle='Dashboard Category table'
     >

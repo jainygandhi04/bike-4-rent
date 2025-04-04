@@ -1,71 +1,170 @@
-import React from 'react';
-import { Collapse } from 'antd';
+import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import {
+  Button,
+  Checkbox,
+  Upload,
+  message,
+  Card,
+  Typography,
+  Divider,
+  Row,
+  Col,
+} from "antd";
+import { UploadOutlined, CheckCircleOutlined } from "@ant-design/icons";
 
-const { Panel } = Collapse;
+const { Title, Paragraph } = Typography;
 
-const TermsAndConditions = () => {
+const Terms = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [agreed, setAgreed] = useState(false);
+  const [fileList, setFileList] = useState([]);
+
+  // Handle file upload
+  const handleFileChange = ({ fileList }) => setFileList(fileList);
+
+  // Handle form submission
+  const handleProceed = () => {
+    if (!agreed) {
+      message.error("You must agree to the terms before proceeding.");
+      return;
+    }
+
+    if (fileList.length === 0) {
+      message.error("Please upload a valid driving license.");
+      return;
+    }
+
+    message.success("Terms accepted! Proceeding to payment...");
+    navigate("/payment", {
+      state: { ...location.state, termsAccepted: true },
+    });
+  };
+
   return (
-    <section className="max-w-4xl px-4 py-10 mx-auto text-slate-900">
-      <h1 className="mb-6 text-3xl font-bold text-center">Terms & Conditions</h1>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "100vh",
+        backgroundColor: "#f5f5f5",
+        padding: "20px",
+      }}
+    >
+      <Card
+        title={
+          <Title level={2} style={{ textAlign: "center", marginBottom: 0 }}>
+            Terms and Conditions
+          </Title>
+        }
+        bordered={false}
+        style={{
+          maxWidth: 1000, 
+          width: "100%",
+          backgroundColor: "#fff",
+          boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+          borderRadius: 10,
+          padding: 24,
+        }}
+      >
+        <Typography>
+          <Paragraph
+            style={{ textAlign: "center", fontSize: "16px", fontWeight: "500" }}
+          >
+            Welcome to <strong>Bike4Rent Udaipur</strong>. Please read our terms before proceeding.
+          </Paragraph>
 
-      <Collapse accordion>
-        <Panel header="1. Rental Agreement" key="1">
-          <p>
-            By renting a vehicle from Bike-4-Rent, you agree to comply with all terms mentioned herein and 
-            to return the vehicle in the same condition as received.
-          </p>
-        </Panel>
+          <Divider />
 
-        <Panel header="2. Valid Documents" key="2">
-          <p>
-            Riders must possess a valid driving license and government-issued ID proof. Copies of these documents 
-            will be submitted during booking or at pickup.
-          </p>
-        </Panel>
+          <Row gutter={[16, 16]}>
+            <Col span={24}>
+              <Title level={4}>1. Rental Agreement</Title>
+              <Paragraph>
+                - Minimum age: <strong>18 years</strong> with a valid driving license. <br />
+                - Bike must be returned in the same condition as received. <br />
+                - Rental period must be followed; extension requires approval.
+              </Paragraph>
+            </Col>
 
-        <Panel header="3. Payment & Deposit" key="3">
-          <p>
-            Full payment and a refundable security deposit are to be paid prior to the handover of the vehicle. 
-            The deposit will be refunded post-inspection.
-          </p>
-        </Panel>
+            <Col span={24}>
+              <Title level={4}>2. Liability</Title>
+              <Paragraph>
+                - Renter is responsible for <strong>damages, fines, and accidents</strong>. <br />
+                - Company is <strong>not liable</strong> for personal injuries during the rental period.
+              </Paragraph>
+            </Col>
 
-        <Panel header="4. Usage Policy" key="4">
-          <p>
-            The vehicle is to be used within the agreed location limits. Misuse, illegal activities, and sub-rental 
-            are strictly prohibited.
-          </p>
-        </Panel>
+            <Col span={24}>
+              <Title level={4}>3. Payment & Refund Policy</Title>
+              <Paragraph>
+                - Full payment is required before taking the bike. <br />
+                <strong>Cancellation Policy:</strong> <br />
+                - <strong>No refund</strong> will be provided once the order is placed.
+              </Paragraph>
+            </Col>
 
-        <Panel header="5. Damage & Penalties" key="5">
-          <p>
-            Any damage to the vehicle during the rental period will be assessed and repair costs will be deducted 
-            from the deposit or charged additionally.
-          </p>
-        </Panel>
+            <Col span={24}>
+              <Title level={4}>4. Driving License Requirement</Title>
+              <Paragraph>
+                - You must upload a valid government-issued <strong>driving license</strong> before proceeding.
+              </Paragraph>
 
-        <Panel header="6. Late Return Charges" key="6">
-          <p>
-            Returns made later than the agreed time will attract late fees as per company policy. Ensure 
-            timely returns to avoid penalties.
-          </p>
-        </Panel>
+              <Upload
+                fileList={fileList}
+                onChange={handleFileChange}
+                beforeUpload={() => false} 
+                maxCount={1}
+                accept=".jpg,.png,.pdf"
+              >
+                <Button
+                  icon={<UploadOutlined />}
+                  block
+                  style={{
+                    backgroundColor: "#1890ff",
+                    color: "white",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Upload Driving License
+                </Button>
+              </Upload>
+            </Col>
 
-        <Panel header="7. Cancellation & Refunds" key="7">
-          <p>
-            Bookings canceled 24 hours prior will receive a full refund. No refunds will be provided for same-day 
-            cancellations.
-          </p>
-        </Panel>
+            <Col span={24}>
+              <Checkbox
+                onChange={(e) => setAgreed(e.target.checked)}
+                style={{ fontSize: "14px", marginTop: "10px" }}
+              >
+                I agree to the terms and conditions
+              </Checkbox>
+            </Col>
 
-        <Panel header="8. Agreement Modifications" key="8">
-          <p>
-            Bike-4-Rent reserves the right to modify the terms & conditions at any point without prior notice.
-          </p>
-        </Panel>
-      </Collapse>
-    </section>
+            <Col span={24}>
+              <Button
+                type="primary"
+                block
+                icon={<CheckCircleOutlined />}
+                size="large"
+                className="mt-4"
+                onClick={handleProceed}
+                disabled={!agreed || fileList.length === 0}
+                style={{
+                  backgroundColor: agreed && fileList.length > 0 ? "#52c41a" : "#d9d9d9",
+                  color: "white",
+                  fontWeight: "bold",
+                  marginTop: "15px",
+                }}
+              >
+                Proceed to Payment
+              </Button>
+            </Col>
+          </Row>
+        </Typography>
+      </Card>
+    </div>
   );
 };
 
-export default TermsAndConditions;
+export default Terms;

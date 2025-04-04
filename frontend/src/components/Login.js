@@ -1,36 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom"; // Import useLocation
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../Helper/Spinner";
 import { userLogin } from "../redux/features/User/authAction";
 import { clearFields } from "../redux/features/User/authSlice";
 import Layout from "./Layout";
 import Error from "../Helper/Error";
+
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation(); // Get the location state
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { loading, userInfo, success } = useSelector((state) => state.auth);
+  const { loading, userInfo } = useSelector((state) => state.auth);
   const [errors, setErrors] = useState("");
+
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-  // redirect authenticated user to profile screen
+  // Redirect authenticated user to intended page or default page
   useEffect(() => {
     if (userInfo) {
       dispatch(clearFields());
-      navigate("/");
+      const locationState = location.state;
+      if (locationState?.from) {
+        navigate(locationState.from, { state: locationState.orderData });
+      } else if (email === "admin@gmail.com") {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
     }
-  }, [userInfo]);
+  }, [userInfo, dispatch, navigate, location, email]); // Added dependencies
+
   const onSubmit = async (event) => {
+    event.preventDefault();
     const data = {
       email: email,
       password: password,
+      role: email === "admin@gmail.com" ? 1 : 0,
     };
     const datas = await dispatch(userLogin(data));
     if (datas.error) {
@@ -56,12 +66,9 @@ const Login = () => {
         </div>
 
         <div className='mt-5 sm:mx-auto sm:w-full sm:max-w-sm'>
-          <form className='space-y-6'>
+          <form className='space-y-6' onSubmit={onSubmit}>
             <div>
-              <label
-                htmlFor='email'
-                className='block text-sm font-medium leading-6 text-gray-900'
-              >
+              <label htmlFor='email' className='block text-sm font-medium leading-6 text-gray-900'>
                 Email address
               </label>
               <div className='mt-2'>
@@ -79,10 +86,7 @@ const Login = () => {
 
             <div>
               <div className='flex items-center justify-between'>
-                <label
-                  htmlFor='password'
-                  className='block text-sm font-medium leading-6 text-gray-900'
-                >
+                <label htmlFor='password' className='block text-sm font-medium leading-6 text-gray-900'>
                   Password
                 </label>
               </div>
@@ -98,10 +102,7 @@ const Login = () => {
                 />
               </div>
               <div className='flex flex-col mt-1 '>
-                <Link
-                  to='/forgotpassword'
-                  className='text-sm font-semibold text-right cursor-pointer text-slate-900'
-                >
+                <Link to='/forgotpassword' className='text-sm font-semibold text-right cursor-pointer text-slate-900'>
                   Forgot password?
                 </Link>
               </div>
@@ -111,7 +112,6 @@ const Login = () => {
               <button
                 type='submit'
                 className='flex justify-center w-full px-3 py-1.5 text-sm font-semibold leading-6 text-white rounded-md shadow-sm bg-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
-                onClick={(event) => onSubmit(event)}
                 disabled={loading}
               >
                 {loading ? <Spinner /> : "Login"}
@@ -120,10 +120,7 @@ const Login = () => {
           </form>
 
           <p className='mt-3 text-sm text-center text-gray-500'>
-            <Link
-              to='/signup'
-              className='font-semibold leading-6 text-slate-900 '
-            >
+            <Link to='/signup' className='font-semibold leading-6 text-slate-900 '>
               Don't have an account ?
               <span className='text-orange'> Sign up</span>
             </Link>

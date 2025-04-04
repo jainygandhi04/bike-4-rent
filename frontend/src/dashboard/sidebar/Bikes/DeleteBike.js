@@ -4,51 +4,53 @@ import toast from "react-hot-toast";
 import { deleteBike } from "../../../redux/features/Bikes/bikeAction";
 import { clearFields } from "../../../redux/features/Bikes/bikeSlice";
 
-export const DeleteBike = ({ setShowModal, id, showModal }) => {
+export const DeleteBike = ({ setShowModal, id }) => {
   const dispatch = useDispatch();
   const { error, success } = useSelector((state) => state.bike);
 
+  // Close modal when deletion is successful
   useEffect(() => {
     if (success) {
+      toast.success("Bike deleted successfully");
       dispatch(clearFields());
-      setShowModal(!showModal);
+      setTimeout(() => setShowModal(false), 500); // ✅ Ensures proper re-render
     }
-  }, [success]);
+  }, [success, dispatch, setShowModal]);
 
   return (
     <>
       {error && toast.error(error)}
-      {success && toast.success(`Bike deleted  sucessfully`)}
-      <div className='absolute left-0 z-50 flex justify-center w-full overflow-x-hidden overflow-y-auto outline-none top-12 focus:outline-none'>
-        <div className='w-1/2'>
-          <div className='relative flex flex-col w-full px-4 bg-white border-0 rounded-lg shadow-lg outline-none focus:outline-none'>
-            {/*body*/}
-            <div className='relative flex justify-center'>
-              <p className='my-4 text-lg leading-relaxed text-slate-500'>
-                Are you sure to delete?
-              </p>
-            </div>
-            {/*footer*/}
-            <div className='flex items-center justify-end p-6 border-t border-solid rounded-b border-slate-200'>
-              <button
-                className='px-6 py-2 mb-1 mr-1 text-sm font-bold text-red-500 uppercase transition-all duration-150 ease-linear outline-none background-transparent focus:outline-none'
-                type='button'
-                onClick={() => dispatch(deleteBike(id))}
-              >
-                Yes
-              </button>
-              <button
-                className='px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-emerald-500 active:bg-emerald-600 hover:shadow-lg focus:outline-none'
-                type='button'
-                onClick={() => setShowModal(!showModal)}
-              >
-                No
-              </button>
-            </div>
+
+      <div className="fixed inset-0 flex items-center justify-center z-50">
+        {/* Modal Box */}
+        <div className="bg-white shadow-lg rounded-lg w-96 p-6 relative">
+          <p className="text-lg text-gray-700 text-center">
+            Are you sure you want to delete?
+          </p>
+          <div className="flex justify-center mt-4">
+            {/* YES Button */}
+            <button
+              className="bg-red-500 text-white px-6 py-2 rounded mr-2"
+              type="button"
+              onClick={() => dispatch(deleteBike(id))}
+            >
+              Yes
+            </button>
+
+            {/* NO Button */}
+            <button
+              className="bg-green-500 text-white px-6 py-2 rounded"
+              type="button"
+              onClick={() => setShowModal(false)} // ✅ Now works properly
+            >
+              No
+            </button>
           </div>
         </div>
       </div>
-      <div className='absolute inset-0 z-30 bg-black opacity-60'></div>
+
+      {/* Background Overlay */}
+      <div className="fixed inset-0 bg-black opacity-60 z-40"></div>
     </>
   );
 };

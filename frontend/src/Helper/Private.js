@@ -13,16 +13,15 @@ const Private = ({ children }) => {
     const authCheck = async () => {
       try {
         const res = await Http.get(
-          "/api/v1/auth/admin-auth"
-          //  {
-          // headers: {
-          //   Authorization: `Bearer ${userToken}`,
-          //   "Cache-Control": "no-cache",
-          //   "If-None-Match": "<ETAG_VALUE>",
-          // yo duiota line chahi , narakhni, vani  server ley cached resources jo pathaidinxa.
-          // This ensures that the server instructs the client and intermediate caching servers not to cache the resource and provides a mechanism (ETag) for validating the freshness of the resource.
-          // },
-          // }
+          "/api/v1/auth/admin-auth",
+           {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+            "Cache-Control": "no-cache",
+            "If-None-Match": "<ETAG_VALUE>",
+        
+          },
+          }
         );
         if (!res.data.ok) {
           setTimeout(() => {
@@ -34,7 +33,7 @@ const Private = ({ children }) => {
       } catch (error) {}
     };
     if (userToken) authCheck();
-  }, [userToken]);
+  }, [userToken,navigate]);
   return ok ? <>{children}</> : <PrivateSpinner />;
 };
 
