@@ -10,6 +10,7 @@ import Bike from "../dashboard/sidebar/Bikes/Bike";
 import AddBike from "../dashboard/sidebar/Bikes/AddBike";
 import EditBike from "../dashboard/sidebar/Bikes/EditBike";
 import Ordertable from "../dashboard/sidebar/Order/Ordertable";
+import Attractions from "./attractions";
 
 // Lazy Load Components
 const Navbar = lazy(() => import("./Navbar"));
@@ -31,6 +32,7 @@ const AboutUs = lazy(() => import("./AboutUs"));
 const Faqs = lazy(() => import("./FAQs"));
 const Terms = lazy(() => import("./Terms"));
 const Payment = lazy(() => import("./Payment"));
+
 
 // Error Handling
 const Unauthorized = lazy(() => import("../Helper/Unauthorized"));
@@ -75,6 +77,9 @@ const App1 = () => {
               <Route path='/bikes/add' element={<AddBike />} />
               <Route path='/bikes/edit/:id' element={<EditBike />} />
               <Route path='/userorders' element={<Ordertable />} />
+          {/* New pages */}
+          
+          <Route path="/attractions" element={<Attractions />} />
 
             {/* Static Pages */}
             <Route path="/about" element={<AboutUs />} />
