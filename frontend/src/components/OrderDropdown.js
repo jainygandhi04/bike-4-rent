@@ -3,6 +3,15 @@ import Layout from "./Layout";
 import { useDispatch, useSelector } from "react-redux";
 import { GetOrder } from "../redux/features/Order/orderAction";
 
+// Function to format date to dd/mm/yyyy
+const formatDate = (date) => {
+  const d = new Date(date);
+  const day = ("0" + d.getDate()).slice(-2); // Adds leading zero if day is a single digit
+  const month = ("0" + (d.getMonth() + 1)).slice(-2); // Adds leading zero if month is a single digit
+  const year = d.getFullYear();
+  return `${day}/${month}/${year}`;
+};
+
 const OrderDropdown = ({ color }) => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -11,12 +20,12 @@ const OrderDropdown = ({ color }) => {
   const { userOrders } = useSelector((state) => state.order);
   return (
     <Layout title={"Bike-4-Rent : Your Orders"}>
-      <div className='flex items-center justify-center'>
-        <h1 className='font-serif text-2xl font-bold'>Your Orders</h1>
+      <div className="flex items-center justify-center">
+        <h1 className="font-serif text-2xl font-bold">Your Orders</h1>
       </div>
-      <div className='flex items-center justify-center w-full mt-3'>
+      <div className="flex items-center justify-center w-full mt-3">
         <div style={{ maxHeight: "300px", overflowY: "auto" }}>
-          <table className='items-center w-full bg-white border-collapse'>
+          <table className="items-center w-full bg-white border-collapse">
             <thead>
               <tr>
                 <th
@@ -29,7 +38,6 @@ const OrderDropdown = ({ color }) => {
                 >
                   SN
                 </th>
-
                 <th
                   className={
                     "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
@@ -107,110 +115,46 @@ const OrderDropdown = ({ color }) => {
                 userOrders.map((order, i) => {
                   return (
                     <tr key={order._id}>
-                      <td className='items-center p-4 px-6 text-left align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap'>
+                      <td className="items-center p-4 px-6 text-left align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap">
                         {i + 1}
                       </td>
-                      <td className='items-center p-4 px-6 text-left align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap'>
-                        <div className='flex items-center gap-3'>
+                      <td className="items-center p-4 px-6 text-left align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap">
+                        <div className="flex items-center gap-3">
                           {order.bikes.name ? order.bikes.name : "N/A"}
                         </div>
                       </td>
-                      <td className='items-center p-4 px-6 text-left align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap'>
-                        <div className='flex items-center gap-3'>
+                      <td className="items-center p-4 px-6 text-left align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap">
+                        <div className="flex items-center gap-3">
                           {order.bikes.number ? order.bikes.number : "N/A"}
                         </div>
                       </td>
-                      <td className='items-center p-4 px-6 text-center align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap'>
+                      <td className="items-center p-4 px-6 text-center align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap">
                         {order.renter.name}
                       </td>
-                      <td className='items-center p-4 px-6 text-center align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap'>
+                      <td className="items-center p-4 px-6 text-center align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap">
                         {order.totalAmt}
                       </td>
-                      <td className='items-center p-4 px-6 text-center align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap'>
-                        {order.startDate}
+                      <td className="items-center p-4 px-6 text-center align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap">
+                        {order.startDate ? formatDate(order.startDate) : "N/A"}
                       </td>
-                      <td className='items-center p-4 px-6 text-center align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap'>
-                        {order.endDate}
+                      <td className="items-center p-4 px-6 text-center align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap">
+                        {order.endDate ? formatDate(order.endDate) : "N/A"}
                       </td>
-                      <td className='items-center p-4 px-6 text-center align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap'>
+                      <td className="items-center p-4 px-6 text-center align-middle border-t-0 border-l-0 border-r-0 text-md whitespace-nowrap">
                         {order.status}
                       </td>
-                      {/* <td className='p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap'>
-                        <div className='flex justify-center'>
-                          <Link to={`/dashboard/bikes/edit/${bike._id}`}>
-                            <svg
-                              xmlns='http://www.w3.org/2000/svg'
-                              className='icon icon-tabler icon-tabler-edit'
-                              width='24'
-                              height='24'
-                              viewBox='0 0 24 24'
-                              strokeWidth='1.5'
-                              stroke='#00b341'
-                              fill='none'
-                              strokeLinecap='round'
-                              strokeLinejoin='round'
-                            >
-                              <path
-                                stroke='none'
-                                d='M0 0h24v24H0z'
-                                fill='none'
-                              />
-                              <path d='M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3' />
-                              <path d='M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3' />
-                              <line x1='16' y1='5' x2='19' y2='8' />
-                            </svg>
-                          </Link>
-                          <button
-                            type='button'
-                            onClick={() => {
-                              handleDeleteClick(bike._id);
-                            }}
-                          >
-                            <svg
-                              xmlns='http://www.w3.org/2000/svg'
-                              className='icon icon-tabler icon-tabler-trash'
-                              width='24'
-                              height='24'
-                              viewBox='0 0 24 24'
-                              strokeWidth='1.5'
-                              stroke='#ff2825'
-                              fill='none'
-                              strokeLinecap='round'
-                              strokeLinejoin='round'
-                            >
-                              <path
-                                stroke='none'
-                                d='M0 0h24v24H0z'
-                                fill='none'
-                              />
-                              <line x1='4' y1='7' x2='20' y2='7' />
-                              <line x1='10' y1='11' x2='10' y2='17' />
-                              <line x1='14' y1='11' x2='14' y2='17' />
-                              <path d='M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12' />
-                              <path d='M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3' />
-                            </svg>
-                          </button>
-                        </div>
-                      </td> */}
                     </tr>
                   );
                 })
               ) : (
-                <tr className='text-center border'>
-                  <td colSpan={5} className='p-3 font-bold text-red-500'>
+                <tr className="text-center border">
+                  <td colSpan={5} className="p-3 font-bold text-red-500">
                     No Data Found!!
                   </td>
                 </tr>
               )}
             </tbody>
           </table>
-          {/* {showModal && (
-            <DeleteBike
-              id={bikeId}
-              setShowModal={setShowModal}
-              showModal={showModal}
-            />
-          )} */}
         </div>
       </div>
     </Layout>

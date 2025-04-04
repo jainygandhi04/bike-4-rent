@@ -4,19 +4,16 @@ import { FloatButton } from "antd";
 import Loading from "./components/Loading";
 import "./App.css";
 
-// Lazy load major components
+// Lazy Load Major Components
 const App1 = lazy(() => import("./components/App1"));
 const Dashboard = lazy(() => import("./dashboard/Dashboard"));
-
 
 function App() {
   const [loading, setLoading] = useState(true);
 
-  // Loader for splash screen
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
+    const timer = setTimeout(() => setLoading(false), 2000);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -24,16 +21,14 @@ function App() {
       {loading ? (
         <Loading />
       ) : (
-        <div className='bg-slate-50'>
+        <div className="bg-slate-50 min-h-screen">
           <Suspense fallback={<Loading />}>
-          <Routes>
-  <Route path="/*" element={<App1 />} />
-
- 
-</Routes>
-
+            <Routes>
+              <Route path="/*" element={<App1 />} />
+              <Route path="/admin/*" element={<Dashboard />} />
+            </Routes>
           </Suspense>
-          <FloatButton.BackTop type='primary' visibilityHeight={50} />
+          <FloatButton.BackTop type="primary" visibilityHeight={50} />
         </div>
       )}
     </>

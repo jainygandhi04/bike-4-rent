@@ -14,85 +14,77 @@ const orderSlice = createSlice({
   name: "order",
   initialState,
   reducers: {
-    clearFields: (state, { payload }) => {
+    clearFields: (state) => {
       state.success = false;
       state.loading = false;
-      state.error = false;
+      state.error = null;
       state.orderById = null;
     },
   },
-  extraReducers: {
-    //all the orders by id
-    [AddOrder.pending]: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    [AddOrder.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.success = true;
-    },
-    [AddOrder.rejected]: (state, { payload }) => {
-      state.loading = false;
-      state.error = payload;
-    },
+  extraReducers: (builder) => {
+    builder
+      // Add Order
+      .addCase(AddOrder.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(AddOrder.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.success = true;
+      })
+      .addCase(AddOrder.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload;
+      })
 
-    // //all orders
-    [AllOrder.pending]: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    [AllOrder.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.orders = payload;
-    },
-    [AllOrder.rejected]: (state, { payload }) => {
-      state.loading = false;
-      state.error = payload;
-    },
+      // Get All Orders
+      .addCase(AllOrder.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(AllOrder.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.orders = payload;
+      })
+      .addCase(AllOrder.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload;
+      })
 
-    // //all orders of particular renter
-    [GetOrder.pending]: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    [GetOrder.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.userOrders = payload;
-    },
-    [GetOrder.rejected]: (state, { payload }) => {
-      state.loading = false;
-      state.error = payload;
-    },
+      // Get Orders for a Specific Renter
+      .addCase(GetOrder.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(GetOrder.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.userOrders = payload;
+      })
+      .addCase(GetOrder.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload;
+      })
 
-    // update status of order by admin
-    [updateStatus.pending]: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    [updateStatus.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      // state.orders = payload;
-      // console.log(state.orders, "hello");
-    },
-    [updateStatus.rejected]: (state, { payload }) => {
-      state.loading = false;
-      state.error = payload;
-    },
-
-    //all the orders by id
-    // [AllOrderById.pending]: (state) => {
-    //   state.loading = true;
-    //   state.error = null;
-    // },
-    // [AllOrderById.fulfilled]: (state, { payload }) => {
-    //   state.loading = false;
-    //   state.orderById = payload;
-    // },
-    // [AllOrderById.rejected]: (state, { payload }) => {
-    //   state.loading = false;
-    //   state.error = payload;
-    // },
+      // Update Order Status by Admin
+      .addCase(updateStatus.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateStatus.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        const updatedOrder = state.orders.find(
+          (order) => order._id === payload._id
+        );
+        if (updatedOrder) {
+          updatedOrder.status = payload.status;
+        }
+      })
+      .addCase(updateStatus.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload;
+      });
   },
 });
+
 export const { clearFields } = orderSlice.actions;
 export default orderSlice.reducer;

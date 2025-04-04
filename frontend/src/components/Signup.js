@@ -150,7 +150,7 @@ const Signup = () => {
                     <input
                       id='confirmPassword'
                       name='confirmPassword'
-                      type='text'
+                      type='password'
                       autoComplete='confirmPassword'
                       onChange={props.handleChange}
                       onBlur={props.handleBlur}

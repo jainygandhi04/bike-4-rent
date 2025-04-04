@@ -30,8 +30,8 @@ export const ValidateUser = Yup.object().shape({
       /^[a-zA-Z]+$/,
       "Security Answer can only contain alphabetical characters."
     )
-    .min(5, "Security answer must be at least 5 characters long.")
-    .max(10, "Security answer cannot be longer than 15 characters.")
+    .min(3, "Security answer must be at least 3 characters long.")
+    .max(20, "Security answer cannot be longer than 20 characters.")
     .required("*Security answer is required"),
 });
 
@@ -65,6 +65,6 @@ export const ValidateBikeAdd = Yup.object().shape({
 export const ValidateCategoryAdd = Yup.object().shape({
   name: Yup.string()
     .required("Category name is required")
-    .min(5, "Category name must be at least 5 characters long.")
+    .min(3, "Category name must be at least 3 characters long.")
     .max(15, "Category name cannot be longer than 15 characters."),
 });

@@ -15,7 +15,7 @@ export default function Navbar({ scrolled }) {
   }, [dispatch]);
 
   const { userInfo } = useSelector((state) => state.auth);
-  console.log(userInfo);
+  
   const handleLogout = () => {
     dispatch(logout());
     navigate("/");

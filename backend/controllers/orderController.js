@@ -4,23 +4,25 @@ import orderModel from "../models/orderModel.js";
 export const makeOrderController = async (req, res) => {
   try {
     const { bikeId, totalAmt, startDate, endDate } = req.body;
+
     // Validations
-    if (!totalAmt) {
-      return res.send({ error: "Amount is required" });
+    if (!totalAmt || !startDate || !endDate) {
+      return res.status(400).send({
+        success: false,
+        message: "All fields are required (totalAmt, startDate, endDate)",
+      });
     }
-    if (!startDate) {
-      return res.send({ error: "Selection of day is required" });
-    }
-    if (!endDate) {
-      return res.send({ error: "Selection of day is required" });
-    }
+
     const order = new orderModel({
       renter: req.user._id,
       bikes: bikeId,
-      totalAmt: totalAmt,
-      startDate: startDate,
-      endDate: endDate,
-    }).save();
+      totalAmt,
+      startDate,
+      endDate,
+    });
+
+    await order.save();
+
     res.status(201).send({
       success: true,
       message: "Order created successfully",
@@ -29,19 +31,20 @@ export const makeOrderController = async (req, res) => {
   } catch (error) {
     res.status(500).send({
       success: false,
-      message: "Somethingwent wrong",
-      error,
+      message: "Something went wrong while creating the order",
+      error: error.message,
     });
   }
 };
 
-// order of single user : getting in customer your order,{customer orders in their your orders}
+// Order of a single user
 export const getOrdersController = async (req, res) => {
   try {
     const orders = await orderModel
       .find({ renter: req.user._id })
       .populate("bikes", "-photo")
       .populate("renter", "name");
+
     res.status(200).send({
       success: true,
       message: "Successfully fetched all orders of this user",
@@ -50,46 +53,71 @@ export const getOrdersController = async (req, res) => {
   } catch (error) {
     res.status(500).send({
       success: false,
-      error,
-      message: "Something went wrong",
+      message: "Something went wrong while fetching user orders",
+      error: error.message,
     });
   }
 };
 
-// All the orders to be shown in dashboard
+// All orders for admin dashboard
 export const AllOrdersController = async (req, res) => {
   try {
     const orders = await orderModel
       .find({})
       .populate("bikes", "-photo")
       .populate("renter", "name")
-      .sort({ createdAt: "-1" });
-    res.json(orders);
+      .sort({ createdAt: -1 });
+
+    res.status(200).send({
+      success: true,
+      message: "Fetched all orders successfully",
+      orders,
+    });
   } catch (error) {
     res.status(500).send({
       success: false,
-      message: "Something went wrong while fetching user orders",
-      error,
+      message: "Something went wrong while fetching all orders",
+      error: error.message,
     });
   }
 };
 
-// Update status of the order by admin
+// Update order status (admin)
 export const updateStatusController = async (req, res) => {
   try {
     const { orderId } = req.params;
     const { status } = req.body;
-    const orders = await orderModel.findByIdAndUpdate(
+
+    if (!status) {
+      return res.status(400).send({
+        success: false,
+        message: "Status field is required",
+      });
+    }
+
+    const updatedOrder = await orderModel.findByIdAndUpdate(
       orderId,
       { status },
       { new: true }
     );
-    res.json(orders);
+
+    if (!updatedOrder) {
+      return res.status(404).send({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    res.status(200).send({
+      success: true,
+      message: "Order status updated successfully",
+      updatedOrder,
+    });
   } catch (error) {
     res.status(500).send({
       success: false,
-      message: "Something went wrong while updating user order status",
-      error,
+      message: "Something went wrong while updating order status",
+      error: error.message,
     });
   }
 };

@@ -1,22 +1,22 @@
 export const Prices = [
   {
     _id: 0,
-    name: "NPR 0 to NPR 1500",
+    name: "INR 0 to INR 1500",
     array: [0, 1500],
   },
   {
     _id: 1,
-    name: "NPR 1600 to NPR 3000",
-    array: [1600, 3000],
+    name: "INR 1500 to INR 3000",
+    array: [1500, 3000],
   },
   {
     _id: 3,
-    name: "NPR 3100 to NPR 5001",
-    array: [3100, 5001],
+    name: "INR 3000 to INR 5000",
+    array: [3500, 5000],
   },
   {
     _id: 4,
-    name: "NPR 5100 or more",
-    array: [5100, 10000],
+    name: "INR 5000 or more",
+    array: [5000, 10000],
   },
 ];
