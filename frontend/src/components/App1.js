@@ -19,6 +19,7 @@ import Testimonial from "./Testimonial";
 import AboutUs from "./AboutUs";
 import Faqs from "./FAQs";
 import Terms from "./Terms";
+import Attractions from "./attractions";
 
 const App1 = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -56,6 +57,7 @@ const App1 = () => {
           <Route path='/about' element={<AboutUs />} />
           <Route path='/faqs' element={<Faqs />} />
           <Route path='/terms' element={<Terms />} />
+          <Route path="/attractions" element={<Attractions />} />
 
           {/* Catch-all */}
           <Route path='*' element={<Unauthorized />} />

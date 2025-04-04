@@ -38,7 +38,7 @@ const Footer = () => {
         <div className='flex-shrink-0 w-32 mx-auto text-center sm:w-64 md:mx-0 md:text-left'>
           <img
             className='flex items-center justify-center font-medium text-gray-900 title-font md:justify-start'
-            src='../images/bikelogo.png'
+            src='../images/BikeForRentFinalLogo.png'
           />
 
           <p className='mt-2 text-sm text-slate-900'>

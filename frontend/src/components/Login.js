@@ -46,7 +46,7 @@ const Login = () => {
           <Link to='/'>
             <img
               className='w-auto h-10 mx-auto'
-              src='../images/bikelogo.png'
+              src='../images/BikeForRentFinalLogo.png'
               alt='Your Company'
             />
           </Link>

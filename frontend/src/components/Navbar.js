@@ -24,7 +24,7 @@ export default function Navbar({ scrolled }) {
   return (
     <Disclosure
       as="nav"
-      className={`fixed top-0 w-full z-10 ${
+      className={`fixed top-0 w-full z-50 ${
         scrolled
           ? "bg-teal-100 opacity-100 transition-all duration-300"
           : "bg-slate-50"
@@ -35,31 +35,38 @@ export default function Navbar({ scrolled }) {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="relative flex items-center justify-between h-16">
               {/* Left Hamburger */}
-              <div className="flex items-center">
+              <div className="flex items-left ml-[-140px] ">
                 <Disclosure.Button className="inline-flex items-center justify-center p-2 text-gray-700 rounded-md hover:bg-orange hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <Bars3Icon className="block w-6 h-6" aria-hidden="true" />
                 </Disclosure.Button>
               </div>
 
               {/* Center Logo */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center">
+               <div className="flex items-left absolute left-0 -ml-20 mt-4 ">
                 <Link to="/" className="flex items-center">
                   <img
-                    className="h-8 w-auto"
-                    src="/images/bikelogo.png"
+                    className="h-40 w-auto"
+                    src="/images/BikeForRentFinalLogo.png"
                     alt="Bike4Rent"
                   />
                 </Link>
               </div>
 
               {/* Right Nav */}
-              <div className="flex space-x-4 items-center">
-                <Link
+              <div className="flex space-x-4 items-right justify-end">
+                {/* <Link
                   to="/"
                   className="text-slate-900 font-bold hover:bg-orange hover:text-white rounded-md px-3 py-2 text-sm"
                 >
                   Home
-                </Link>
+                </Link> */}
+                <Link to="/"
+                    className="bg-[#FAF3E0] text-[#B9651D] px-4 py-3 text-base font-medium rounded-md hover:bg-gradient-to-r hover:from-[#FFB347] hover:to-[#B9651D] hover:text-[#FAF3E0] hover:shadow-md transition duration-200 pl-4"
+                    style={{ fontFamily: "'Merriweather', serif" }}
+                  >
+                    Home
+                  </Link>
+
 
                 {userInfo ? (
                   <Menu as="div" className="relative">
@@ -135,7 +142,7 @@ export default function Navbar({ scrolled }) {
                   </Menu>
                 ) : (
                   <>
-                    <Link
+                    {/* <Link
                       to="/login"
                       className="px-3 py-2 text-sm font-medium text-black rounded-md hover:bg-black hover:text-white"
                     >
@@ -146,7 +153,22 @@ export default function Navbar({ scrolled }) {
                       className="px-3 py-2 text-sm font-medium text-white bg-orange rounded-md hover:bg-black"
                     >
                       Sign up
+                    </Link> */}
+                    <Link to="/login"
+                       className="bg-[#FAF3E0] text-[#B9651D] px-4 py-3 text-base font-medium rounded-md hover:bg-gradient-to-r hover:from-[#FFB347] hover:to-[#B9651D] hover:text-[#FAF3E0] hover:shadow-md transition duration-200"
+                      style={{ fontFamily: "'Merriweather', serif" }}
+                      >
+                       Login
                     </Link>
+
+                <Link
+                  to="/signup"
+                  className="bg-[#FAF3E0] text-[#B9651D] px-4 py-3 text-base font-medium rounded-md hover:bg-gradient-to-r hover:from-[#FFB347] hover:to-[#B9651D] hover:text-[#FAF3E0] hover:shadow-md transition duration-200"
+                  style={{ fontFamily: "'Merriweather', serif" }}
+                >
+                  Sign Up
+                </Link>
+
                   </>
                 )}
               </div>
@@ -154,80 +176,41 @@ export default function Navbar({ scrolled }) {
           </div>
 
           {/* Hamburger Dropdown Menu */}
-          <Disclosure.Panel className="absolute bg-white left-0 mt-16 w-48 shadow-lg rounded-md">
-            <div className="space-y-1 p-2">
+          <Disclosure.Panel className="absolute bg-white left-0 mt-0 w-48 shadow-lg rounded-md z-50 shadow-lg bg-white/10 backdrop-blur-md border border-white/20 transition-all duration-300 ">
+            <div className="space-y-1 p-2 ">
               <Link
                 to="/about"
-                className="block px-4 py-2 text-sm text-gray-900 hover:bg-orange hover:text-white rounded-md"
+                className="block px-5 py-3 text-base text-[#FAF3E0] hover:bg-gradient-to-l hover:from-[#FFAA33] hover:to-[#8A470D] hover:shadow-md rounded-lg transition duration-300"
               >
                 About Us
               </Link>
               <Link
                 to="/contact"
-                className="block px-4 py-2 text-sm text-gray-900 hover:bg-orange hover:text-white rounded-md"
+                className="block px-5 py-3 text-base text-[#FAF3E0] hover:bg-gradient-to-l hover:from-[#FFAA33] hover:to-[#8A470D] hover:shadow-md rounded-lg transition duration-300"
               >
                 Contact Us
               </Link>
               <Link
                 to="/faqs"
-                className="block px-4 py-2 text-sm text-gray-900 hover:bg-orange hover:text-white rounded-md"
+                className="block px-5 py-3 text-base text-[#FAF3E0] hover:bg-gradient-to-l hover:from-[#FFAA33] hover:to-[#8A470D] hover:shadow-md rounded-lg transition duration-300"
               >
                 FAQs
               </Link>
               <Link
                 to="/terms"
-                className="block px-4 py-2 text-sm text-gray-900 hover:bg-orange hover:text-white rounded-md"
+                className="block px-5 py-3 text-base text-[#FAF3E0] hover:bg-gradient-to-l hover:from-[#FFAA33] hover:to-[#8A470D] hover:shadow-md rounded-lg transition duration-300"
               >
                 Terms & Conditions
               </Link>
+              <Link
+                to="/attractions"
+                className="block px-5 py-3 text-base text-[#FAF3E0] hover:bg-gradient-to-l hover:from-[#FFAA33] hover:to-[#8A470D] hover:shadow-md rounded-lg transition duration-300"
+              >
+                Nearby Attractions
+              </Link>
 
-              {/* Nested Nearby Attractions */}
-              <Menu as="div" className="relative">
-                {({ open }) => (
-                  <>
-                    <Menu.Button className="flex w-full items-center justify-between px-4 py-2 text-sm text-gray-900 hover:bg-orange hover:text-white rounded-md">
-                      Nearby Attractions
-                      <ChevronDownIcon className="w-4 h-4 ml-2" />
-                    </Menu.Button>
-                    {open && (
-                      <div className="ml-4 mt-1 space-y-1">
-                        <a
-                          href="https://en.wikipedia.org/wiki/Fateh_Sagar_Lake"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="block px-4 py-2 text-sm text-gray-900 hover:bg-orange hover:text-white rounded-md"
-                        >
-                          Fatehsagar Lake
-                        </a>
-                        <a
-                          href="https://en.wikipedia.org/wiki/City_Palace,_Udaipur"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="block px-4 py-2 text-sm text-gray-900 hover:bg-orange hover:text-white rounded-md"
-                        >
-                          City Palace
-                        </a>
-                        <a
-                          href="https://en.wikipedia.org/wiki/Ambrai_Ghat"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="block px-4 py-2 text-sm text-gray-900 hover:bg-orange hover:text-white rounded-md"
-                        >
-                          Ambrai Ghat
-                        </a>
-                        <a
-                          href="https://en.wikipedia.org/wiki/Monsoon_Palace"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="block px-4 py-2 text-sm text-gray-900 hover:bg-orange hover:text-white rounded-md"
-                        >
-                          Sajjangarh Monsoon Palace
-                        </a>
-                      </div>
-                    )}
-                  </>
-                )}
-              </Menu>
+          
+              
             </div>
           </Disclosure.Panel>
         </>

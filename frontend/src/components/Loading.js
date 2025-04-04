@@ -8,7 +8,7 @@ const Loading = () => {
         <img
           className='object-cover object-center w-48 rounded'
           alt='logo'
-          src='../images/bikelogo.png'
+          src='../images/BikeForRentFinalLogo.png'
         />
       </div>
       <div className='loader'>
