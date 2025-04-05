@@ -95,7 +95,7 @@ const BikeRentSection = () => {
                   <div className="flex justify-between w-full h-10 mt-3">
                     <Link
                       to={`/order/${bike.slug}`}
-                      className="flex items-center px-4 py-1 text-white bg-orange rounded hover:bg-black"
+                      className="flex items-center px-4 py-1 text-black bg-orange rounded hover:bg-black"
                     >
                       Rent Now
                     </Link>

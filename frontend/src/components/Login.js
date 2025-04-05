@@ -111,7 +111,7 @@ const Login = () => {
             <div>
               <button
                 type='submit'
-                className='flex justify-center w-full px-3 py-1.5 text-sm font-semibold leading-6 text-white rounded-md shadow-sm bg-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+                className='flex justify-center w-full px-3 py-1.5 text-sm font-semibold leading-6 text-black rounded-md shadow-sm bg-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
                 disabled={loading}
               >
                 {loading ? <Spinner /> : "Login"}

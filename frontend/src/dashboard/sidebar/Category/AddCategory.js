@@ -85,7 +85,7 @@ const AddCategory = () => {
                 ) : (
                   <button
                     type='submit'
-                    className='px-4 py-2 mr-1 text-xs font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-orange active:bg-lightBlue-600 hover:shadow-md focus:outline-none'
+                    className='px-4 py-2 mr-1 text-xs font-bold text-black uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-orange active:bg-lightBlue-600 hover:shadow-md focus:outline-none'
                   >
                     Submit
                   </button>
