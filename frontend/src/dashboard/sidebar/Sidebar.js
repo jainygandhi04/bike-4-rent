@@ -258,6 +258,16 @@ export default function Sidebar() {
         <Menu.Item key="/userorders" icon={<ShoppingCartOutlined />}>
           <Link to="/userorders">Bike Orders</Link>
         </Menu.Item>
+
+        <Menu.Item key="/downloadreports" icon={<ShoppingCartOutlined />}>
+          <Link to="https://docs.google.com/spreadsheets/d/1P_US4lNRlt6R1XfVw94XxaxfsMGpf_X1DbRmVtZZ8Kc/edit?usp=sharing" target="blank">Download Reports</Link>
+        </Menu.Item>
+
+        <Menu.Item key="/downloadreports" icon={<ShoppingCartOutlined />}>
+          <Link to="https://mvts11.millitrack.com/modern/#/" target="blank">GPS Tracking</Link>
+        </Menu.Item>
+
+
       </Menu>
     </Sider>
   );

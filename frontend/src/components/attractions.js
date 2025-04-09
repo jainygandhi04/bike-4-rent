@@ -1,4 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { faMapLocationDot } from "@fortawesome/free-solid-svg-icons";
+
+
+
 
 const attractions = [
   {
@@ -62,6 +68,7 @@ const Attractions = () => {
   return (
     <div className="bg-gradient-to-b from-orange-100 to-orange-300 min-h-screen p-8">
       <h1 className={`text-4xl md:text-5xl font-extrabold text-orange-900 text-center transition-all duration-700 ${animate ? "opacity-100 translate-y-0 scale-110" : "opacity-0 translate-y-10 scale-90"}`}>
+      <FontAwesomeIcon icon={faLocationDot} className="text-orange-800 mr-2" />
         Nearby Attractions
       </h1>
       <p className={`text-lg md:text-xl text-gray-700 text-center mt-2 transition-all duration-700 ${animate ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
@@ -71,7 +78,7 @@ const Attractions = () => {
         {attractions.map((place, index) => (
           <div
             key={index}
-            className={`bg-white p-6 rounded-xl shadow-lg transform transition-all duration-700 ease-in-out hover:scale-110 hover:bg-orange-400 hover:shadow-2xl hover:rotate-1 hover:text-white ${animate ? `opacity-100 scale-100 translate-y-0 translate-x-0` : `opacity-0 scale-90 translate-y-${index % 2 === 0 ? '16' : '-16'} translate-x-${index % 2 === 0 ? '-16' : '16'}`}`}
+            className={`bg-white p-6 rounded-xl shadow-lg transform transition-all duration-700 ease-in-out hover:scale-110 hover:bg-[#cc8f76]  hover:shadow-2xl hover:rotate-1 hover:text-white ${animate ? `opacity-100 scale-100 translate-y-0 translate-x-0` : `opacity-0 scale-90 translate-y-${index % 2 === 0 ? '16' : '-16'} translate-x-${index % 2 === 0 ? '-16' : '16'}`}`}
           >
             <img src={place.image} alt={place.name} className="w-full h-52 object-cover rounded-xl transition-all duration-700 hover:scale-110 hover:rotate-2" />
             <h2 className="text-2xl font-semibold text-orange-900 mt-4 transition-all duration-700 hover:text-white hover:scale-110">
@@ -88,6 +95,8 @@ const Attractions = () => {
       </div>
       <div className="mt-16 flex flex-col items-center">
         <h2 className={`text-3xl font-bold text-orange-900 text-center transition-all duration-700 ${animate ? "opacity-100 translate-y-0 scale-110" : "opacity-0 translate-y-10 scale-90"}`}>
+        <FontAwesomeIcon icon={faMapLocationDot} className="text-orange-800 mr-2" />
+
           Explore Udaipur
         </h2>
         <div className={`w-full md:w-3/4 lg:w-2/3 h-80 mt-6 rounded-xl overflow-hidden shadow-xl transition-all duration-700 hover:scale-105 hover:shadow-2xl ${animate ? "opacity-100 scale-100" : "opacity-0 scale-90"}`}>

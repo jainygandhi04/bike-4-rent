@@ -11,9 +11,9 @@ import AddBike from "../dashboard/sidebar/Bikes/AddBike";
 import EditBike from "../dashboard/sidebar/Bikes/EditBike";
 import Ordertable from "../dashboard/sidebar/Order/Ordertable";
 import Attractions from "./attractions";
-//import SendOtp from "./components/SendOtp"; // Adjust path if needed
+import PaymentSuccess from "./paymentSuccess";
+import TermsCond from "./TermsCond";
 
-//<Route path="/sendOtp" element={<sendOtp />} />
 
 
 // Lazy Load Components
@@ -35,6 +35,7 @@ const SendOtp =lazy(()=>import("./SendOtp"));
 const AboutUs = lazy(() => import("./AboutUs"));
 const Faqs = lazy(() => import("./FAQs"));
 const Terms = lazy(() => import("./Terms"));
+const Termsc = lazy(() => import("./TermsCond"));
 const Payment = lazy(() => import("./Payment"));
 
 
@@ -72,6 +73,7 @@ const App1 = () => {
             <Route path="/order/:slug" element={<Order />} />
             <Route path="/sendOtp" element={<SendOtp />} />
             
+            <Route path="/payment-success" element={<PaymentSuccess/>} />
 
              {/* Admin Routes */}
           <Route path= '/admin' element = {<Dashboard/>}/>
@@ -86,11 +88,13 @@ const App1 = () => {
           {/* New pages */}
           
           <Route path="/attractions" element={<Attractions />} />
+          <Route path="/terms" element={<Terms />} />
+
 
             {/* Static Pages */}
             <Route path="/about" element={<AboutUs />} />
             <Route path="/faqs" element={<Faqs />} />
-            <Route path="/terms" element={<Terms />} />
+            <Route path="/termsc" element={<TermsCond />} />
             <Route path="/payment" element={<Payment />} />
 
             {/* Catch-All Route */}

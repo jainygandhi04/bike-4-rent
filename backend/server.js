@@ -7,7 +7,12 @@ import authRoutes from "./routes/authRoute.js";
 import categoryRoutes from "./routes/categoryRoute.js";
 import bikeRoutes from "./routes/bikeRoute.js";
 import orderRoutes from "./routes/orderRoute.js";
-import paymentRoutes from "./routes/paymentRoutes.js";
+import Razorpay from "razorpay";
+import payment from './routes/paymentRoute.js';
+import reviewRoutes from "./routes/reviewRoute.js";
+import paymentRoute from "./routes/paymentRoute.js";
+
+
 
 
 import cors from "cors";
@@ -25,7 +30,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
-app.use("/api/v1/payment", paymentRoutes);
+app.use("/api/v1/payment",paymentRoute );
 
 
 // routes
@@ -33,7 +38,8 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/bike", bikeRoutes);
 app.use("/api/v1/order", orderRoutes);
-app.use("/api/v1/payment", paymentRoutes); // 👈 Razorpay payment route
+app.use("/api/v1/",payment);
+app.use("/api/v1/review", reviewRoutes);
 
 //  rest api
 app.get("/", (req, res) => {
@@ -50,3 +56,11 @@ app.listen(PORT, () => {
     `Server running on mode ${process.env.DEV_MODE} on ${PORT}`.bgWhite.black
   );
 });
+// razor pay
+
+export const instance= new Razorpay({
+  key_id:process.env.RAZORPAY_API_KEY,
+  key_secret:process.env.RAZORPAY_API_SECRET 
+})
+
+

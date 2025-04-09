@@ -3,6 +3,8 @@ import { Route, Routes } from "react-router-dom";
 import { FloatButton } from "antd";
 import Loading from "./components/Loading";
 import "./App.css";
+import AllReviews from "./components/Allreviews.js";
+
 
 // Lazy Load Major Components
 const App1 = lazy(() => import("./components/App1"));
@@ -26,6 +28,8 @@ function App() {
             <Routes>
               <Route path="/*" element={<App1 />} />
               <Route path="/admin/*" element={<Dashboard />} />
+              <Route path="/reviews" element={<AllReviews />} />
+
             </Routes>
           </Suspense>
           <FloatButton.BackTop type="primary" visibilityHeight={50} />

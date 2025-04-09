@@ -106,8 +106,6 @@
 // };
 
 // export default Ordertable;
-
-
 import React, { useState, useEffect, useMemo } from "react";
 import { Table, Select, Card, Tag, Spin, Empty } from "antd";
 import { useDispatch, useSelector } from "react-redux";
@@ -135,11 +133,60 @@ const Ordertable = () => {
     dispatch(AllOrder());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (orders?.length) {
-      setLocalOrders(orders);
+
+  
+
+  // Local state to track status changes immediately
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwR8HIuUE1VOgPSCLyPsUG6Xvvqt1naNQCgmRlO127cl9QYNWJvN1Spn9qN7XFAmKdQ/exec';
+
+   const sendOrdersToGoogleSheet = async (orders) => {
+   for (let i = 0; i < orders.length; i++) {
+    const order = orders[i];
+
+    const formData = new FormData();
+    formData.append("SN", i + 1);
+    formData.append("Bikename", order.bikes?.name || "N/A");
+    formData.append("Bike_number", order.bikes?.number || "N/A");
+    formData.append("Renter_name", order.renter?.name || "N/A");
+    formData.append("Total_Amount", order.totalAmt);
+    formData.append("Start_Date", order.startDate);
+    formData.append("End_Date", order.endDate);
+    formData.append("Status", order.status);
+    formData.append("object_id",order.orderId);
+
+    try {
+      await fetch(scriptURL, {
+        method: "POST",
+        body: formData,
+      });
+    } catch (error) {
+      console.error("Error sending order to Google Sheet:", error);
     }
-  }, [orders]);
+  }
+
+  console.log("All orders sent to Google Sheet");
+};
+
+  useEffect(() => {
+    dispatch(AllOrder()).then((res) => {
+      const allOrders = res.payload || [];
+      const sentOrderIds = JSON.parse(localStorage.getItem("sent_order_ids")) || [];
+  
+      // Filter orders that haven't been sent yet
+      const newOrders = allOrders.filter((order) => !sentOrderIds.includes(order._id));
+  
+      if (newOrders.length > 0) {
+        sendOrdersToGoogleSheet(newOrders);
+  
+        // Update the localStorage with new sent IDs
+        const updatedSentIds = [...sentOrderIds, ...newOrders.map((order) => order._id)];
+        localStorage.setItem("sent_order_ids", JSON.stringify(updatedSentIds));
+      }
+  
+      // Update local state regardless
+      setLocalOrders(allOrders);
+    });
+  }, [dispatch]);
 
   const statusOptions = useMemo(
     () => ["Not Processed", "Processing", "Cancelled"],
@@ -217,6 +264,182 @@ const Ordertable = () => {
     toast.error(error);
     return <Empty description="Failed to load data" />;
   }
+
+  // const downloadCSV = () => {
+  //   if (!localOrders?.length) return;
+  
+  //   const headers = [
+  //     "SN",
+  //     "Bike Name",
+  //     "Bike Number",
+  //     "Rented User",
+  //     "Total Amount",
+  //     "Start Date",
+  //     "End Date",
+  //     "Status"
+  //   ];
+  
+  //   const rows = localOrders.map((order, index) => {
+  //     const startDate = order?.startDate ? moment(order.startDate).format("DD-MM-YYYY") : "";
+  //     const endDate = order?.endDate ? moment(order.endDate).format("DD-MM-YYYY") : "";
+  
+  //     return [
+  //       index + 1,
+  //       order?.bikes?.name || "",
+  //       order?.bikes?.number || "",
+  //       order?.renter?.name || "",
+  //       order?.totalAmt || "",
+  //       startDate,
+  //       endDate,
+  //       order?.status || ""
+  //     ];
+  //   });
+  
+  //   const csvContent =
+  //     "data:text/csv;charset=utf-8," +
+  //     [headers, ...rows]
+  //       .map((row) =>
+  //         row
+  //           .map((cell) => {
+  //             let text = String(cell).replace(/"/g, '""');
+  //             if (text.includes(",") || text.includes('"')) {
+  //               text = `"${text}"`;
+  //             }
+  //             return text;
+  //           })
+  //           .join(",")
+  //       )
+  //       .join("\n");
+  
+  //   const encodedUri = encodeURI(csvContent);
+  //   const link = document.createElement("a");
+  //   link.setAttribute("href", encodedUri);
+  //   link.setAttribute("download", "orders.csv");
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
+
+//   const downloadCSV = () => {
+//   if (!localOrders?.length) return;
+
+//   const headers = [
+//     "SN",
+//     "Bike Name",
+//     "Bike Number",
+//     "Rented User",
+//     "Total Amount",
+//     "Start Date",
+//     "End Date",
+//     "Status"
+//   ];
+
+//   const rows = localOrders.map((order, index) => {
+//     // Get date parts
+//     const start = moment(order?.startDate);
+//     const end = moment(order?.endDate);
+
+//     // Format using =DATE() so Excel reads it as date
+//     const startDate = start.isValid()
+//       ? `=DATE(${start.format("YYYY")},${start.format("MM")},${start.format("DD")})`
+//       : "";
+//     const endDate = end.isValid()
+//       ? `=DATE(${end.format("YYYY")},${end.format("MM")},${end.format("DD")})`
+//       : "";
+
+//     return [
+//       index + 1,
+//       order?.bikes?.name || "",
+//       order?.bikes?.number || "",
+//       order?.renter?.name || "",
+//       order?.totalAmt || "",
+//       startDate,
+//       endDate,
+//       order?.status || ""
+//     ];
+//   });
+
+//   const csvContent =
+//     "data:text/csv;charset=utf-8," +
+//     [headers, ...rows]
+//       .map((row) =>
+//         row
+//           .map((cell) => {
+//             let text = String(cell).replace(/"/g, '""');
+//             if (text.includes(",") || text.includes('"') || text.startsWith("=")) {
+//               text = `"${text}"`;
+//             }
+//             return text;
+//           })
+//           .join(",")
+//       )
+//       .join("\n");
+
+//   const encodedUri = encodeURI(csvContent);
+//   const link = document.createElement("a");
+//   link.setAttribute("href", encodedUri);
+//   link.setAttribute("download", "orders.csv");
+//   document.body.appendChild(link);
+//   link.click();
+//   document.body.removeChild(link);
+// };
+const downloadCSV = () => {
+  if (!localOrders?.length) return;
+
+  const headers = [
+    "SN",
+    "Bike Name",
+    "Bike Number",
+    "Rented User",
+    "Total Amount",
+    "Start Date",
+    "End Date",
+    "Status"
+  ];
+
+  const rows = localOrders.map((order, index) => {
+    const startDate = order?.startDate ? moment(order.startDate).format("YYYY-MM-DD") : "";
+    const endDate = order?.endDate ? moment(order.endDate).format("YYYY-MM-DD") : "";
+
+    return [
+      index + 1,
+      order?.bikes?.name || "",
+      order?.bikes?.number || "",
+      order?.renter?.name || "",
+      order?.totalAmt || "",
+      startDate,
+      endDate,
+      order?.status || ""
+    ];
+  });
+
+  const csvContent =
+    "data:text/csv;charset=utf-8," +
+    [headers, ...rows]
+      .map((row) =>
+        row
+          .map((cell) => {
+            let text = String(cell).replace(/"/g, '""');
+            if (text.includes(",") || text.includes('"')) {
+              text = `"${text}"`;
+            }
+            return text;
+          })
+          .join(",")
+      )
+      .join("\n");
+
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "orders.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
+
+  
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
