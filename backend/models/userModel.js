@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
+    otp: {
+      code: { type: String },
+      expiry: { type: Date }
+    },
+    
     name: {
       type: String,
       required: true,

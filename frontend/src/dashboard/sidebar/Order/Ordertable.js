@@ -107,28 +107,36 @@
 
 // export default Ordertable;
 import React, { useState, useEffect, useMemo } from "react";
-import { Select } from "antd";
+import { Table, Select, Card, Tag, Spin, Empty } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { AllOrder, updateStatus } from "../../../redux/features/Order/orderAction";
-import Spinner from "../../../Helper/Spinner";
 import toast from "react-hot-toast";
-import moment from "moment"; // Import moment.js for date formatting
+import moment from "moment";
 
 const { Option } = Select;
 
-const Ordertable = ({ color }) => {
+const statusColors = {
+  "Not Processed": "default",
+  Processing: "blue",
+  //Shipped: "orange",
+  //Delivered: "green",
+  Cancelled: "red",
+};
+
+const Ordertable = () => {
   const dispatch = useDispatch();
+  const { loading, error, orders } = useSelector((state) => state.order);
+
+  const [localOrders, setLocalOrders] = useState([]);
 
   useEffect(() => {
     dispatch(AllOrder());
   }, [dispatch]);
 
-  const { loading, error } = useSelector((state) => state.order);
 
-  const statusOptions = useMemo(() => ["Not Processed", "Processing", "Shipped", "Delivered", "Cancelled"], []);
+  
 
   // Local state to track status changes immediately
-  const [localOrders, setLocalOrders] = useState([]);
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwR8HIuUE1VOgPSCLyPsUG6Xvvqt1naNQCgmRlO127cl9QYNWJvN1Spn9qN7XFAmKdQ/exec';
 
    const sendOrdersToGoogleSheet = async (orders) => {
@@ -180,17 +188,81 @@ const Ordertable = ({ color }) => {
     });
   }, [dispatch]);
 
+  const statusOptions = useMemo(
+    () => ["Not Processed", "Processing", "Cancelled"],
+    []
+  );
+
   const handleChange = (orderId, value) => {
     setLocalOrders((prev) =>
-      prev.map((order) => (order._id === orderId ? { ...order, status: value } : order))
+      prev.map((order) =>
+        order._id === orderId ? { ...order, status: value } : order
+      )
     );
     dispatch(updateStatus({ orderId, status: value }));
   };
 
-  if (loading) return <Spinner />;
+  const columns = [
+    {
+      title: "SN",
+      dataIndex: "sn",
+      render: (_, __, index) => index + 1,
+      align: "center",
+    },
+    {
+      title: "Bike Name",
+      dataIndex: ["bikes", "name"],
+      render: (name) => name || "N/A",
+    },
+    {
+      title: "Bike Number",
+      dataIndex: ["bikes", "number"],
+      render: (number) => number || "N/A",
+    },
+    {
+      title: "Rented User",
+      dataIndex: ["renter", "name"],
+      render: (name) => name || "N/A",
+    },
+    {
+      title: "Total Amount",
+      dataIndex: "totalAmt",
+      render: (amt) => (amt ? `₹${amt}` : "N/A"),
+      align: "center",
+    },
+    {
+      title: "Start Date",
+      dataIndex: "startDate",
+      render: (date) => (date ? moment(date).format("DD/MM/YYYY") : "N/A"),
+    },
+    {
+      title: "End Date",
+      dataIndex: "endDate",
+      render: (date) => (date ? moment(date).format("DD/MM/YYYY") : "N/A"),
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      align: "center",
+      render: (status, record) => (
+        <Select
+          value={status}
+          style={{ width: 150 }}
+          onChange={(value) => handleChange(record._id, value)}
+        >
+          {statusOptions.map((option) => (
+            <Option key={option} value={option}>
+              <Tag color={statusColors[option]}>{option}</Tag>
+            </Option>
+          ))}
+        </Select>
+      ),
+    },
+  ];
+
   if (error) {
     toast.error(error);
-    return null;
+    return <Empty description="Failed to load data" />;
   }
 
   // const downloadCSV = () => {
@@ -370,79 +442,30 @@ const downloadCSV = () => {
   
 
   return (
-    
-    <div style={{ maxHeight: "300px", overflowY: "auto" }}>
-      
-    {/* Download Button at the top right */}
-    <div className="flex justify-end mb-2">
-      <button
-        onClick={downloadCSV}
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+    <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+      <Card
+        title="Order Management"
+        style={{ flex: 1, display: "flex", flexDirection: "column" }}
+        bodyStyle={{ flex: 1, display: "flex", flexDirection: "column", padding: 0 }}
       >
-        Download CSV
-      </button>
-    </div>
-   
-
-      <table className="items-center w-full bg-white border-collapse">
-        <thead>
-          <tr>
-            {["SN", "Bike Name", "Bike Number", "Rented User", "Total Amount", "Start Date", "End Date", "Status","object_id"].map(
-              (header, index) => (
-                <th
-                  key={index}
-                  className={`px-5 py-3 border text-xs uppercase font-semibold text-center ${
-                    color === "light"
-                      ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                      : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700"
-                  }`}
-                >
-                  {header}
-                </th>
-              )
-            )}
-          </tr>
-        </thead>
-        <tbody>
-          {localOrders?.length ? (
-            localOrders.map((order, i) => (
-              <tr key={order._id}>
-                <td className="px-2 text-center border">{i + 1}</td>
-                <td className="px-5 py-3 border">{order?.bikes?.name || "N/A"}</td>
-                <td className="px-5 py-3 border">{order?.bikes?.number || "N/A"}</td>
-                <td className="px-5 py-3 border">{order?.renter?.name || "N/A"}</td>
-                <td className="p-2 border">{order?.totalAmt || "N/A"}</td>
-                <td className="p-3 border">
-                  {order?.startDate ? moment(order.startDate).format("YYYY-MM-DD") : "N/A"}
-                </td>
-                <td className="p-3 border">
-                  {order?.endDate ? moment(order.endDate).format("YYYY-MM-DD") : "N/A"}
-                </td>
-                <td className="p-4 text-center border">
-                  <Select
-                    bordered={false}
-                    value={order.status} // Use local state value
-                    onChange={(value) => handleChange(order._id, value)}
-                  >
-                    {statusOptions.map((s, index) => (
-                      <Option key={index} value={s}>
-                        {s}
-                      </Option>
-                    ))}
-                  </Select>
-                </td>
-                <td className="px-5 py-3 border">{order._id || "N/A"}</td>
-              </tr>
-            ))
-          ) : (
-            <tr className="text-center border">
-              <td colSpan={8} className="p-3 font-bold text-red-500">
-                No Data Found!!
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+        {loading ? (
+          <div style={{ textAlign: "center", padding: "2rem" }}>
+            <Spin size="large" />
+          </div>
+        ) : (
+          <Table
+            dataSource={localOrders}
+            columns={columns}
+            rowKey="_id"
+            pagination={false}
+            style={{ flex: 1 }}
+            scroll={{ y: "calc(100vh - 240px)", x: "max-content" }}
+            locale={{
+              emptyText: <Empty description="No Orders Found" />,
+            }}
+          />
+        )}
+      </Card>
     </div>
   );
 };

@@ -10,6 +10,7 @@ import orderRoutes from "./routes/orderRoute.js";
 import Razorpay from "razorpay";
 import payment from './routes/paymentRoute.js';
 import reviewRoutes from "./routes/reviewRoute.js";
+import paymentRoute from "./routes/paymentRoute.js";
 
 
 
@@ -29,6 +30,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
+app.use("/api/v1/payment",paymentRoute );
+
 
 // routes
 app.use("/api/v1/auth", authRoutes);

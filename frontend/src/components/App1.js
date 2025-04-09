@@ -30,7 +30,7 @@ const Contact = lazy(() => import("./Contact"));
 const OrderDropdown = lazy(() => import("./OrderDropdown"));
 const BikeRentSection = lazy(() => import("./BikeRentSection"));
 const Testimonial = lazy(() => import("./Testimonial"));
-
+const SendOtp =lazy(()=>import("./SendOtp"));
 // Static Pages
 const AboutUs = lazy(() => import("./AboutUs"));
 const Faqs = lazy(() => import("./FAQs"));
@@ -71,6 +71,8 @@ const App1 = () => {
             <Route path="/reviews" element={<Testimonial />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/order/:slug" element={<Order />} />
+            <Route path="/sendOtp" element={<SendOtp />} />
+            
             <Route path="/payment-success" element={<PaymentSuccess/>} />
 
              {/* Admin Routes */}

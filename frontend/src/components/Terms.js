@@ -1,6 +1,6 @@
 /* global Razorpay */
 import React, { useState } from "react";
-import {useLocation } from "react-router-dom";
+import {useLocation, useNavigate } from "react-router-dom";
 import {
   Button,
   Checkbox,
@@ -17,7 +17,7 @@ import axios from 'axios';
 const { Title, Paragraph } = Typography;
 
 const Terms = () => {
- // const navigate = useNavigate();
+ const navigate = useNavigate();
   const location = useLocation();
   const [agreed, setAgreed] = useState(false);
   const [fileList, setFileList] = useState([]);
@@ -82,6 +82,16 @@ const Terms = () => {
       console.error("❌ Error during payment setup:", err.response || err);
       message.error("Something went wrong. Please try again.");
     }
+
+    if (fileList.length === 0) {
+      message.error("Please upload a valid driving license.");
+      return;
+    }
+    
+    message.success("Terms accepted! Proceeding to payment...");
+    navigate("/payment", {
+      state: { ...location.state, termsAccepted: true },
+    });
   };
   
   
