@@ -7,6 +7,8 @@ import authRoutes from "./routes/authRoute.js";
 import categoryRoutes from "./routes/categoryRoute.js";
 import bikeRoutes from "./routes/bikeRoute.js";
 import orderRoutes from "./routes/orderRoute.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
+
 
 import cors from "cors";
 // configure env
@@ -23,12 +25,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
+app.use("/api/v1/payment", paymentRoutes);
+
 
 // routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/bike", bikeRoutes);
 app.use("/api/v1/order", orderRoutes);
+app.use("/api/v1/payment", paymentRoutes); // 👈 Razorpay payment route
+
 //  rest api
 app.get("/", (req, res) => {
   res.send({

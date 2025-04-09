@@ -12,6 +12,7 @@ import {
   Col,
 } from "antd";
 import { UploadOutlined, CheckCircleOutlined } from "@ant-design/icons";
+//import axios from "axios";
 
 const { Title, Paragraph } = Typography;
 
@@ -35,7 +36,7 @@ const Terms = () => {
       message.error("Please upload a valid driving license.");
       return;
     }
-
+    
     message.success("Terms accepted! Proceeding to payment...");
     navigate("/payment", {
       state: { ...location.state, termsAccepted: true },

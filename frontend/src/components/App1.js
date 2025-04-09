@@ -11,6 +11,10 @@ import AddBike from "../dashboard/sidebar/Bikes/AddBike";
 import EditBike from "../dashboard/sidebar/Bikes/EditBike";
 import Ordertable from "../dashboard/sidebar/Order/Ordertable";
 import Attractions from "./attractions";
+//import SendOtp from "./components/SendOtp"; // Adjust path if needed
+
+//<Route path="/sendOtp" element={<sendOtp />} />
+
 
 // Lazy Load Components
 const Navbar = lazy(() => import("./Navbar"));
@@ -26,7 +30,7 @@ const Contact = lazy(() => import("./Contact"));
 const OrderDropdown = lazy(() => import("./OrderDropdown"));
 const BikeRentSection = lazy(() => import("./BikeRentSection"));
 const Testimonial = lazy(() => import("./Testimonial"));
-
+const SendOtp =lazy(()=>import("./SendOtp"));
 // Static Pages
 const AboutUs = lazy(() => import("./AboutUs"));
 const Faqs = lazy(() => import("./FAQs"));
@@ -66,6 +70,8 @@ const App1 = () => {
             <Route path="/reviews" element={<Testimonial />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/order/:slug" element={<Order />} />
+            <Route path="/sendOtp" element={<SendOtp />} />
+            
 
              {/* Admin Routes */}
           <Route path= '/admin' element = {<Dashboard/>}/>

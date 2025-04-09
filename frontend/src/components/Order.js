@@ -24,7 +24,7 @@ const Order = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   const { loading, success } = useSelector((state) => state.order);
   const { bikeBySlug } = useSelector((state) => state.bike);
   const { userInfo } = useSelector((state) => state.auth);
@@ -73,8 +73,8 @@ const Order = () => {
     setOpen(false);
 
     if (!userInfo) {
-      navigate("/login", { 
-        state: { from: "/Terms", orderData: { from, to, totalAmount, bikeId: bikeBySlug._id } } 
+      navigate("/login", {
+        state: { from: "/Terms", orderData: { from, to, totalAmount, bikeId: bikeBySlug._id } }
       });
       return;
     }
@@ -82,16 +82,16 @@ const Order = () => {
     navigate("/Terms", { state: { from, to, totalAmount, bikeId: bikeBySlug._id } });
 
     try {
-      
+
       const formData = {
         totalAmt: totalAmount,
         startDate: from,
         endDate: to,
         bikeId: bikeBySlug._id,
       };
-      
+
       const data = await dispatch(AddOrder(formData));
-     
+
       if (data.error) {
         setError(data.payload);
         dispatch(clearFields());
@@ -115,9 +115,17 @@ const Order = () => {
               <div className="w-full mt-6 lg:w-1/2 lg:pl-10 lg:py-6 lg:mt-0">
                 <h2 className="text-sm tracking-widest text-gray-500 title-font">Rent Now !!!</h2>
                 <h1 className="mb-1 text-3xl font-medium text-gray-900 title-font">{bikeBySlug.name}</h1>
-                <p className="text-justify">{bikeBySlug.description}</p>
+                {/* <p className="text-justify">{bikeBySlug.description}</p> */}
+                <p className="text-justify mb-2">{bikeBySlug.description}</p>
+                <div className="mb-2"><b>Category:</b> {bikeBySlug.category?.name || "N/A"}</div>
+                <div className="mb-2"><b>Start Type:</b> {bikeBySlug.startType}</div>
+                <div className="mb-2"><b>Year of Manufacture:</b> {bikeBySlug.year}</div>
+                <div className="mb-2"><b>Kilometers Used:</b> {bikeBySlug.kilometers} km</div>
+                <div className="mb-2"><b>Petrol Capacity:</b> {bikeBySlug.petrolCapacity} L</div>
+                {/* <h1 className="mb-1 text-xl font-normal text-gray-900">Rent per day: Rs {bikeBySlug.price}</h1> */}
+
                 <h1 className="mb-1 text-xl font-normal text-gray-900">Rent per day: Rs {bikeBySlug.price}</h1>
-                
+
                 <RangePicker format="DD MMMM YYYY" disabledDate={disabledDate} onChange={selectTimeSlots} className="mb-2" />
                 <div className="font-semibold">Total Days: {days}</div>
 

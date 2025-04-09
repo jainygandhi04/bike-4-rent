@@ -5,7 +5,8 @@ import slugify from "slugify";
 
 export const addBikeController = async (req, res) => {
   try {
-    const { name, number, slug, description, price, category, shipping } =
+    console.log('8:BE', req);
+    const { name, number, price, category, startType, year, kilometers, petrolCapacity } =
       req.fields;
     const { photo } = req.files;
     //    validation
@@ -14,26 +15,33 @@ export const addBikeController = async (req, res) => {
         return res.status(422).send({ message: "Name is required" });
       case !number:
         return res.status(422).send({ message: "Bike_Number is required" });
-      case !description:
-        return res.status(422).send({ message: "Description is required" });
       case !price:
         return res.status(422).send({ message: "Price is required" });
       case !category:
         return res.status(422).send({ message: "Category is required" });
+      case !startType:
+        return res.status(422).send({ message: "Start type is required" });
+      case !year:
+        return res.status(422).send({ message: "year is required" });
+      case !kilometers:
+        return res.status(422).send({ message: "Kilimeters is required" });
+      case !petrolCapacity:
+        return res.status(422).send({ message: "Petrol capacity is required" });
+
       case !photo && photo.size > 40000:
         return res
           .status(422)
           .send({ message: "Image is required & should be less than 5Mb" });
     }
-    // bike or received vako bikeproduct ko euta copy banauxam.
-    // kina bhani, photo ko data ma path lai sync garni, ani balla bike lai save garni database ma.
+    
     const bike = new bikeModel({ ...req.fields, slug: slugify(name) });
     if (photo) {
       // console.dir(photo);
       bike.photo.data = fs.readFileSync(photo.path);
       bike.photo.contentType = photo.type;
     }
-    await bike.save();
+    const bikdetails = await bike.save();
+    console.log('44:',bikdetails);
     res.status(201).send({
       success: true,
       message: "Bike added successfully",
@@ -130,7 +138,7 @@ export const getSingleBikeControllerById = async (req, res) => {
 // updatebikecontroller
 export const updateBikeController = async (req, res) => {
   try {
-    const { name, slug, description, price, category, shipping } = req.fields;
+    const { name, description, price, category, kilometers, startType,year,petrolCapacity  } = req.fields;
     const { photo } = req.files;
     //    validation
     switch (true) {
@@ -142,6 +150,14 @@ export const updateBikeController = async (req, res) => {
         return res.status(422).send({ message: "Price is required" });
       case !category:
         return res.status(422).send({ message: "Category is required" });
+        case !startType:
+          return res.status(422).send({ message: "Start type is required" });
+        case !year:
+          return res.status(422).send({ message: "year is required" });
+        case !kilometers:
+          return res.status(422).send({ message: "Kilometers is required" });
+        case !petrolCapacity:
+          return res.status(422).send({ message: "Petrol capacity is required" });
       case !photo && photo.size > 50000:
         return res
           .status(422)

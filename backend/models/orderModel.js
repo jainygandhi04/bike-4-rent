@@ -17,9 +17,9 @@ const orderSchema = new mongoose.Schema(
       enum: [
         "Not Processed",
         "Processing",
-        "Shipped",
-        "Delivered",
         "Cancelled",
+        //"Delivered",
+        //"Cancelled",
       ],
     },
     totalAmt: {

@@ -5,8 +5,12 @@ import {
   loginController,
   registerController,
   userProfileController,
+  verifyOtpController,
+  resetPasswordController,
 } from "../controllers/authController.js";
 import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
+import { sendOtpController } from "../controllers/authController.js";//new change
+
 
 //  router object
 const router = express.Router();
@@ -21,8 +25,22 @@ router.post("/login", loginController);
 // USERlOGGEDIN STATUS '' METHOD GET
 router.get("/me", requireSignIn, userProfileController);
 
+//ADMINLOGIN METHOD GET
+//outer.get("/adminLogin",(req,res)=>{
+//res.render("Login");
+//});
+
 // Forgot Password || POST
 router.post("/forgot-password", forgotPasswordController);
+
+//Send Otp
+router.post("/send-otp", sendOtpController);
+
+//verify otp
+router.post("/verify-otp", verifyOtpController);
+
+//reset password
+router.post("/reset-Password",resetPasswordController )
 
 // Get '' METHOD GET
 router.get("/getallusers", requireSignIn, isAdmin, AllUsersController);

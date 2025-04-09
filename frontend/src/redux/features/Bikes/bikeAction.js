@@ -4,6 +4,7 @@ import Http from "../../../Helper/Http";
 export const addBike = createAsyncThunk(
   "bike/add",
   async (bikesData, { rejectWithValue }) => {
+    console.log('7:bikeAction:', bikesData);
     try {
       const data = await Http.post("/api/v1/bike/add-bike", bikesData);
       return data.data;

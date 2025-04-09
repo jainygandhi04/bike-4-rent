@@ -14,6 +14,7 @@ import {
 import { clearFields } from "../../../redux/features/Bikes/bikeSlice";
 import { useParams } from "react-router-dom";
 import { CategoryAll } from "../../../redux/features/Category/categoryAction";
+import { parse } from "date-fns";
 const base_url = `http://localhost:5001`;
 
 const EditBike = () => {
@@ -33,6 +34,7 @@ const EditBike = () => {
 
   const { loading, success, bikeById } = useSelector((state) => state.bike);
   const { categories } = useSelector((state) => state.category);
+  const startType= ['Kick','Self','Both'];
   useEffect(() => {
     if (success) {
       dispatch(clearFields());
@@ -57,11 +59,15 @@ const EditBike = () => {
         >
           <Formik
             initialValues={{
-              name: bikeById.name,
-              number: bikeById.number,
-              price: bikeById.price,
-              description: bikeById.description,
-              category: bikeById.category._id,
+              name: bikeById?.name,
+              number: bikeById?.number,
+              price: bikeById?.price,
+              description: bikeById?.description,
+              category: bikeById?.category._id,
+              kilometers: bikeById?.kilometers,
+              petrolCapacity: bikeById?.petrolCapacity,
+              startType: bikeById?.startType,
+              year: bikeById?.year,
               photo: null,
             }}
             validationSchema={ValidateBikeAdd}
@@ -73,6 +79,11 @@ const EditBike = () => {
               formdata.append("category", values.category);
               formdata.append("description", values.description);
               formdata.append("price", parseInt(values.price));
+              formdata.append("kilometers",parseInt(values.kilometers));
+              formdata.append("startType", values.startType);
+              formdata.append("petrolCapacity", parseInt(values.petrolCapacity));
+              formdata.append("year",parseInt(values.year));
+
               let data = {
                 id: bikeById._id,
                 formdata: formdata,
@@ -174,6 +185,89 @@ const EditBike = () => {
                       <ErrorMessage name='category' />
                     </span>
                   </div>
+                  <div className='w-full px-4 mt-4 lg:w-6/12'>
+                    <div className='relative w-full mb-3'>
+                      <label className='block mb-2 text-xs font-bold uppercase text-blueGray-600'>
+                        Kilometers Used
+                      </label>
+                      <input
+                        type='string'
+                        className='w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring'
+                        name='kilometers'
+                        onChange={props.handleChange}
+                        onBlur={props.handleBlur}
+                        value={props.values.kilometers || ""}
+                      />
+                    </div>
+                    <span className='text-red-500 error'>
+                      <ErrorMessage name='kilometers' />
+                    </span>
+                  </div>
+                  <div className='w-full px-3 py-3 lg:w-6/12'>
+                    <div className='relative w-full mb-3'>
+                      <label className='block mb-2 text-xs font-bold uppercase text-blueGray-600'>
+                        Start Type
+                      </label>
+                      <select
+                        className='w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none'
+                        name='startType'
+                        onChange={props.handleChange}
+                        onBlur={props.handleBlur}
+                        value={props.values.startType}
+                        autoComplete='off'
+                      >
+                        <option value=''>Select</option>
+                        {startType.length !== 0 &&
+                          startType.map((item, i) => {
+                            return (
+                              <>
+                                <option value={item}>{item}</option>
+                              </>
+                            );
+                          })}
+                      </select>
+                    </div>
+                    <span className='text-red-500 error'>
+                      <ErrorMessage name='category' />
+                    </span>
+                  </div>
+                  <div className='w-full px-4 lg:w-6/12'>
+                    <div className='relative w-full mb-3'>
+                      <label className='block mb-2 text-xs font-bold uppercase text-blueGray-600'>
+                        Petrol Capacity
+                      </label>
+                      <input
+                        type='text'
+                        className='w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring'
+                        name='petrolCapacity'
+                        onChange={props.handleChange}
+                        onBlur={props.handleBlur}
+                        value={props.values.petrolCapacity || ""}
+                        max={30}
+                      />
+                    </div>
+                    <span className='text-red-500 error'>
+                      <ErrorMessage name='petrolCapacity' />
+                    </span>
+                  </div>
+                  <div className='w-full px-4 lg:w-6/12'>
+                    <div className='relative w-full mb-3'>
+                      <label className='block mb-2 text-xs font-bold uppercase text-blueGray-600'>
+                        Year of manufacture
+                      </label>
+                      <input
+                        type='text'
+                        className='w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring'
+                        name='year'
+                        onChange={props.handleChange}
+                        onBlur={props.handleBlur}
+                        value={props.values.year || ""}
+                      />
+                    </div>
+                    <span className='text-red-500 error'>
+                      <ErrorMessage name='year' />
+                    </span>
+                  </div>
                   <div className='w-full px-3 py-3 lg:w-3/12'>
                     <div className='relative w-full mb-3 '>
                       <label className='block mb-2 text-xs font-bold uppercase text-blueGray-600'>
@@ -261,3 +355,7 @@ const EditBike = () => {
 };
 
 export default EditBike;
+
+
+
+

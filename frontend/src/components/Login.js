@@ -102,7 +102,7 @@ const Login = () => {
                 />
               </div>
               <div className='flex flex-col mt-1 '>
-                <Link to='/forgotpassword' className='text-sm font-semibold text-right cursor-pointer text-slate-900'>
+                <Link to='/sendOtp' className='text-sm font-semibold text-right cursor-pointer text-slate-900'>
                   Forgot password?
                 </Link>
               </div>
