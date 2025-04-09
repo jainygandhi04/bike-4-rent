@@ -14,10 +14,11 @@ const formatDate = (date) => {
 
 const OrderDropdown = ({ color }) => {
   const dispatch = useDispatch();
+  const { userOrders } = useSelector((state) => state.order);
   useEffect(() => {
     dispatch(GetOrder());
-  }, []);
-  const { userOrders } = useSelector((state) => state.order);
+  }, [dispatch]);
+  
   return (
     <Layout title={"Bike-4-Rent : Your Orders"}>
       <div className="flex items-center justify-center">
@@ -35,6 +36,7 @@ const OrderDropdown = ({ color }) => {
                       ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                       : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                   }
+      
                 >
                   SN
                 </th>
@@ -45,6 +47,7 @@ const OrderDropdown = ({ color }) => {
                       ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                       : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                   }
+                  
                 >
                   Bikename
                 </th>
@@ -55,6 +58,7 @@ const OrderDropdown = ({ color }) => {
                       ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                       : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                   }
+                  
                 >
                   Bike_number
                 </th>
@@ -65,6 +69,7 @@ const OrderDropdown = ({ color }) => {
                       ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                       : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                   }
+                  
                 >
                   Renter name
                 </th>
@@ -75,6 +80,7 @@ const OrderDropdown = ({ color }) => {
                       ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                       : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                   }
+                  
                 >
                   Total Amount
                 </th>
@@ -85,6 +91,7 @@ const OrderDropdown = ({ color }) => {
                       ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                       : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                   }
+                  
                 >
                   Start Date
                 </th>
@@ -95,6 +102,7 @@ const OrderDropdown = ({ color }) => {
                       ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                       : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                   }
+                  
                 >
                   End Date
                 </th>
@@ -105,6 +113,7 @@ const OrderDropdown = ({ color }) => {
                       ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                       : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                   }
+                  
                 >
                   Status
                 </th>
@@ -158,7 +167,7 @@ const OrderDropdown = ({ color }) => {
         </div>
       </div>
     </Layout>
+    
   );
 };
-
 export default OrderDropdown;

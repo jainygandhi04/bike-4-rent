@@ -121,3 +121,41 @@ export const updateStatusController = async (req, res) => {
     });
   }
 };
+// Razorpay payment success controller
+export const razorpaySuccessController = async (req, res) => {
+  try {
+    const { orderId, paymentId } = req.body;
+
+    if (!orderId || !paymentId) {
+      return res.status(400).send({
+        success: false,
+        message: "orderId and paymentId are required",
+      });
+    }
+
+    const updatedOrder = await orderModel.findByIdAndUpdate(
+      orderId,
+      { status: "Delivered", paymentId },
+      { new: true }
+    );
+
+    if (!updatedOrder) {
+      return res.status(404).send({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    res.status(200).send({
+      success: true,
+      message: "Order payment verified and status updated",
+      updatedOrder,
+    });
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "Failed to update payment info",
+      error: error.message,
+    });
+  }
+};

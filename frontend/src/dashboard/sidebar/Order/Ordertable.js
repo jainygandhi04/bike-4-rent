@@ -15,18 +15,62 @@ const Ordertable = ({ color }) => {
     dispatch(AllOrder());
   }, [dispatch]);
 
-  const { loading, error, orders } = useSelector((state) => state.order);
+  const { loading, error } = useSelector((state) => state.order);
 
   const statusOptions = useMemo(() => ["Not Processed", "Processing", "Shipped", "Delivered", "Cancelled"], []);
 
   // Local state to track status changes immediately
   const [localOrders, setLocalOrders] = useState([]);
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwR8HIuUE1VOgPSCLyPsUG6Xvvqt1naNQCgmRlO127cl9QYNWJvN1Spn9qN7XFAmKdQ/exec';
+
+   const sendOrdersToGoogleSheet = async (orders) => {
+   for (let i = 0; i < orders.length; i++) {
+    const order = orders[i];
+
+    const formData = new FormData();
+    formData.append("SN", i + 1);
+    formData.append("Bikename", order.bikes?.name || "N/A");
+    formData.append("Bike_number", order.bikes?.number || "N/A");
+    formData.append("Renter_name", order.renter?.name || "N/A");
+    formData.append("Total_Amount", order.totalAmt);
+    formData.append("Start_Date", order.startDate);
+    formData.append("End_Date", order.endDate);
+    formData.append("Status", order.status);
+    formData.append("object_id",order.orderId);
+
+    try {
+      await fetch(scriptURL, {
+        method: "POST",
+        body: formData,
+      });
+    } catch (error) {
+      console.error("Error sending order to Google Sheet:", error);
+    }
+  }
+
+  console.log("All orders sent to Google Sheet");
+};
 
   useEffect(() => {
-    if (orders?.length) {
-      setLocalOrders(orders);
-    }
-  }, [orders]);
+    dispatch(AllOrder()).then((res) => {
+      const allOrders = res.payload || [];
+      const sentOrderIds = JSON.parse(localStorage.getItem("sent_order_ids")) || [];
+  
+      // Filter orders that haven't been sent yet
+      const newOrders = allOrders.filter((order) => !sentOrderIds.includes(order._id));
+  
+      if (newOrders.length > 0) {
+        sendOrdersToGoogleSheet(newOrders);
+  
+        // Update the localStorage with new sent IDs
+        const updatedSentIds = [...sentOrderIds, ...newOrders.map((order) => order._id)];
+        localStorage.setItem("sent_order_ids", JSON.stringify(updatedSentIds));
+      }
+  
+      // Update local state regardless
+      setLocalOrders(allOrders);
+    });
+  }, [dispatch]);
 
   const handleChange = (orderId, value) => {
     setLocalOrders((prev) =>
@@ -46,7 +90,7 @@ const Ordertable = ({ color }) => {
       <table className="items-center w-full bg-white border-collapse">
         <thead>
           <tr>
-            {["SN", "Bike Name", "Bike Number", "Rented User", "Total Amount", "Start Date", "End Date", "Status"].map(
+            {["SN", "Bike Name", "Bike Number", "Rented User", "Total Amount", "Start Date", "End Date", "Status","object_id"].map(
               (header, index) => (
                 <th
                   key={index}
@@ -90,6 +134,7 @@ const Ordertable = ({ color }) => {
                     ))}
                   </Select>
                 </td>
+                <td className="px-5 py-3 border">{order._id || "N/A"}</td>
               </tr>
             ))
           ) : (

@@ -11,6 +11,7 @@ import AddBike from "../dashboard/sidebar/Bikes/AddBike";
 import EditBike from "../dashboard/sidebar/Bikes/EditBike";
 import Ordertable from "../dashboard/sidebar/Order/Ordertable";
 import Attractions from "./attractions";
+import PaymentSuccess from "./paymentSuccess";
 
 // Lazy Load Components
 const Navbar = lazy(() => import("./Navbar"));
@@ -66,6 +67,7 @@ const App1 = () => {
             <Route path="/reviews" element={<Testimonial />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/order/:slug" element={<Order />} />
+            <Route path="/payment-success" element={<PaymentSuccess/>} />
 
              {/* Admin Routes */}
           <Route path= '/admin' element = {<Dashboard/>}/>

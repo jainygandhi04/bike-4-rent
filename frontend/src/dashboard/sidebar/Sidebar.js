@@ -173,6 +173,59 @@ export default function Sidebar() {
                 </Link>
               </li>
             </ul>
+            <ul className='flex flex-col pt-1 list-none md:flex-col md:min-w-full md:mb-4'>
+              <li className='items-center'>
+                <a
+                  href='https://docs.google.com/spreadsheets/d/1P_US4lNRlt6R1XfVw94XxaxfsMGpf_X1DbRmVtZZ8Kc/edit?usp=sharing'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='flex items-center text-sm font-bold uppercase '
+                >
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    strokeWidth={1.5}
+                    stroke='currentColor'
+                    className='w-6 h-6 mr-2'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      d='M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+                    />
+                  </svg>
+                  Download Order List
+                </a>
+              </li>
+            </ul>
+
+            <ul className='flex flex-col pt-1 list-none md:flex-col md:min-w-full md:mb-4'>
+              <li className='items-center'>
+                <a
+                  href='https://mvts11.millitrack.com/modern/#/'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='flex items-center text-sm font-bold uppercase '
+                >
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    strokeWidth={1.5}
+                    stroke='currentColor'
+                    className='w-6 h-6 mr-2'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      d='M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+                    />
+                  </svg>
+                  GPS Tracking
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </nav>

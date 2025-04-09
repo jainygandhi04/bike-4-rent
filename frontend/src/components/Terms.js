@@ -1,5 +1,6 @@
+/* global Razorpay */
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import {useLocation } from "react-router-dom";
 import {
   Button,
   Checkbox,
@@ -12,36 +13,79 @@ import {
   Col,
 } from "antd";
 import { UploadOutlined, CheckCircleOutlined } from "@ant-design/icons";
-
+import axios from 'axios';
 const { Title, Paragraph } = Typography;
 
 const Terms = () => {
-  const navigate = useNavigate();
+ // const navigate = useNavigate();
   const location = useLocation();
   const [agreed, setAgreed] = useState(false);
   const [fileList, setFileList] = useState([]);
+  const price = location.state?.totalAmount || 100;
+  const orderId = localStorage.getItem("orderId");
 
   // Handle file upload
   const handleFileChange = ({ fileList }) => setFileList(fileList);
 
   // Handle form submission
-  const handleProceed = () => {
-    if (!agreed) {
-      message.error("You must agree to the terms before proceeding.");
-      return;
+  const checkoutHandler = async (amount, orderId) => {
+    try {
+      const { data: keyData } = await axios.get("/api/v1/getKey");
+      const { key } = keyData;
+  
+      const { data: orderData } = await axios.post("/api/v1/payment/process", {
+        amount: amount,
+      });
+  
+      const { order } = orderData;
+  
+      const options = {
+        key,
+        amount: order.amount,
+        currency: "INR",
+        name: "Bike4Rent",
+        description: "Rental Payment",
+        order_id: order.id,
+        handler: async function (response) {
+          // ✅ Razorpay payment successful
+          await axios.put(`/api/v1/order/update-status/${orderId}`, {
+            status: "Delivered",
+            paymentId: response.razorpay_payment_id,
+          });
+  
+          window.location.href = `/payment-success?paymentId=${response.razorpay_payment_id}`;
+        },
+        modal: {
+          ondismiss: async function () {
+            // ❌ Payment closed or failed
+            await axios.put(`/api/v1/order/update-status/${orderId}`, {
+              status: "Not Delivered",
+              paymentId: "",
+            });
+  
+            message.warning("Payment was cancelled.");
+          },
+        },
+        prefill: {
+          name: "Mannan Agrawal",
+          email: "mannanagrawal17@gmail.com",
+          contact: "9979934238",
+        },
+        theme: {
+          color: "#F37254",
+        },
+      };
+  
+      const razor = new Razorpay(options);
+      razor.open();
+    } catch (err) {
+      console.error("❌ Error during payment setup:", err.response || err);
+      message.error("Something went wrong. Please try again.");
     }
-
-    if (fileList.length === 0) {
-      message.error("Please upload a valid driving license.");
-      return;
-    }
-
-    message.success("Terms accepted! Proceeding to payment...");
-    navigate("/payment", {
-      state: { ...location.state, termsAccepted: true },
-    });
   };
-
+  
+  
+  
   return (
     <div
       style={{
@@ -148,7 +192,7 @@ const Terms = () => {
                 icon={<CheckCircleOutlined />}
                 size="large"
                 className="mt-4"
-                onClick={handleProceed}
+                onClick={()=>checkoutHandler(price)}
                 disabled={!agreed || fileList.length === 0}
                 style={{
                   backgroundColor: agreed && fileList.length > 0 ? "#52c41a" : "#d9d9d9",
@@ -157,7 +201,7 @@ const Terms = () => {
                   marginTop: "15px",
                 }}
               >
-                Proceed to Payment
+                Proceed to Payment({price})
               </Button>
             </Col>
           </Row>
@@ -166,5 +210,4 @@ const Terms = () => {
     </div>
   );
 };
-
 export default Terms;
