@@ -12,6 +12,9 @@ import EditBike from "../dashboard/sidebar/Bikes/EditBike";
 import Ordertable from "../dashboard/sidebar/Order/Ordertable";
 import Attractions from "./attractions";
 import PaymentSuccess from "./paymentSuccess";
+import TermsCond from "./TermsCond";
+
+
 
 // Lazy Load Components
 const Navbar = lazy(() => import("./Navbar"));
@@ -32,6 +35,7 @@ const Testimonial = lazy(() => import("./Testimonial"));
 const AboutUs = lazy(() => import("./AboutUs"));
 const Faqs = lazy(() => import("./FAQs"));
 const Terms = lazy(() => import("./Terms"));
+const Termsc = lazy(() => import("./TermsCond"));
 const Payment = lazy(() => import("./Payment"));
 
 
@@ -82,11 +86,13 @@ const App1 = () => {
           {/* New pages */}
           
           <Route path="/attractions" element={<Attractions />} />
+          <Route path="/terms" element={<Terms />} />
+
 
             {/* Static Pages */}
             <Route path="/about" element={<AboutUs />} />
             <Route path="/faqs" element={<Faqs />} />
-            <Route path="/terms" element={<Terms />} />
+            <Route path="/termsc" element={<TermsCond />} />
             <Route path="/payment" element={<Payment />} />
 
             {/* Catch-All Route */}
