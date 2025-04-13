@@ -20,7 +20,7 @@
 // //     if (!answer) {
 // //       return res.send({ error: "Security Question field is required" });
 // //     }
-// //     if(email==='admin@gmail.com'){
+// //     if(email==='djmgroup23@gmail.com'){
 // //       isAdmin=true;
 // //     }
 // //     // check user
@@ -281,7 +281,7 @@
 //     if (!password) return res.send({ error: "Password is required" });
 //     if (!answer) return res.send({ error: "Security Question field is required" });
 
-//     if (email === "admin@gmail.com") isAdmin = true;
+//     if (email === "djmgroup23@gmail.com") isAdmin = true;
 
 //     const existingUser = await userModel.findOne({ email });
 //     if (existingUser && !isAdmin) {
@@ -512,7 +512,7 @@
 //     if (!password) return res.send({ error: "Password is required" });
 //     if (!answer) return res.send({ error: "Security Question field is required" });
 
-//     if (email === "admin@gmail.com") isAdmin = true;
+//     if (email === "djmgroup23@gmail.com") isAdmin = true;
 
 //     const existingUser = await userModel.findOne({ email });
 //     if (existingUser && !isAdmin) {
@@ -646,7 +646,7 @@ import JWT from "jsonwebtoken";
 import nodemailer from "nodemailer";
 
 // ✅ Utility to generate 6-digit OTP
-const generateOTP = () => Math.floor(10000 + Math.random() * 10000).toString();
+const generateOTP = () => Math.floor(1000 + Math.random() * 1000).toString();
 
 // ✅ Nodemailer setup to send OTP email
 const sendOtpEmail = async (email, otp) => {
@@ -659,18 +659,17 @@ const sendOtpEmail = async (email, otp) => {
   });
 
   await transporter.sendMail({
-    from: `"BikeRental App" <${process.env.MAIL_USER}>`,
+    from: `"Bike-4-Rent App" <${process.env.MAIL_USER}>`,
     to: email,
     subject: "Your OTP Code",
     html: `<p>Your OTP is <strong>${otp}</strong>. It will expire in 1 minute.</p>`,
   });
 };
 
-// ✅ REGISTER Controller
 export const registerController = async (req, res) => {
   try {
     const { name, email, password, role, answer } = req.body;
-    let isAdmin = email === "admin@gmail.com";
+    let isAdmin = email === "djmgroup23@gmail.com";
 
     if (!name || !email || !password || !answer) {
       return res.status(400).send({ error: "All fields are required" });
@@ -699,6 +698,39 @@ export const registerController = async (req, res) => {
     res.status(500).send({ success: false, message: "Registration error", error });
   }
 };
+// export const registerController = async (req, res) => {
+//   try {
+//     const { name, email, password} = req.body;
+
+//     let isAdmin = email === "djmgroup23@gmail.com";
+
+//     if (!name || !email || !password ) {
+//       return res.status(400).send({ error: "All fields are required" });
+//     }
+
+//     const existingUser = await userModel.findOne({ email });
+//     if (existingUser && !isAdmin) {
+//       return res.status(409).send({ success: false, message: "Email already exists!" });
+//     }
+
+//     const hashedPassword = await hashPassword(password);
+//     const user = await new userModel({
+//       name,
+//       email,
+//       password: hashedPassword,
+//       answer,
+//       role: isAdmin ? 1 : 0,
+//     }).save();
+
+//     res.status(201).send({
+//       success: true,
+//       message: "User registered successfully",
+//       user: { name: user.name, email: user.email, _id: user._id},
+//     });
+//   } catch (error) {
+//     res.status(500).send({ success: false, message: "Registration error", error });
+//   }
+// };
 
 // ✅ LOGIN Controller
 export const loginController = async (req, res) => {
@@ -856,20 +888,43 @@ export const AllUsersController = async (req, res) => {
   }
 };
 
-// ✅ USER PROFILE Controller
+// // ✅ USER PROFILE Controller
+// export const userProfileController = async (req, res) => {
+//   try {
+//     const user = await userModel.findById(req.user._id);
+//     if (!user) {
+//       return res.status(400).send({ success: false, message: "User not found" });
+//     }
+
+//     res.status(200).send({
+//       success: true,
+//       user,
+//       message: "User info fetched successfully",
+//     });
+//   } catch (error) {
+//     res.status(500).send({ success: false, error, message: "Something went wrong" });
+//   }
+// };
+
 export const userProfileController = async (req, res) => {
   try {
-    const user = await userModel.findById(req.user._id);
+    const user = await userModel.findById(req.user._id).select("-password"); // Exclude password
     if (!user) {
       return res.status(400).send({ success: false, message: "User not found" });
     }
 
     res.status(200).send({
       success: true,
-      user,
+      user: {
+        name: user.name,
+        email: user.email,
+        _id: user._id,
+      },
       message: "User info fetched successfully",
     });
   } catch (error) {
     res.status(500).send({ success: false, error, message: "Something went wrong" });
   }
 };
+
+

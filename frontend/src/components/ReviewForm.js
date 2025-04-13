@@ -90,12 +90,17 @@ import {
   message,
 } from "antd";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 const { Title } = Typography;
+
+
 
 const AddReviewForm = () => {
   const [form] = Form.useForm();
   const [submitting, setSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   const onFinish = async (values) => {
     setSubmitting(true);
@@ -103,6 +108,8 @@ const AddReviewForm = () => {
       await axios.post("/api/v1/review/add", values);
       message.success("Review submitted successfully!");
       form.resetFields();
+      
+      navigate("/");
     } catch (error) {
       message.error("Failed to submit review. Try again.");
     } finally {
@@ -158,19 +165,21 @@ const AddReviewForm = () => {
           </Form.Item>
 
           <Form.Item
-            label="Rating"
-            name="rating"
-            rules={[{ required: true, message: "Please give a rating" }]}
-          >
-            <Rate
-              style={{
-                fontSize: 24,
-                color: "#fa8c16", // Selected star color (orange)
-                '--antd-rate-star-color': '#ffcc80', // Light orange for unselected (custom fallback)
-              }}
-              className="custom-rate"
-            />
-          </Form.Item>
+  label="Rating"
+  name="rating"
+  rules={[{ required: true, message: "Please give a rating" }]}
+>
+  <Rate
+    style={{
+      fontSize: 24,
+      color: "#fa8c16",
+    }}
+    className="custom-rate"
+    value={form.getFieldValue("rating")} // 👈 This ensures it reflects the selected value
+    onChange={(value) => form.setFieldsValue({ rating: value })} // 👈 This updates the form value
+  />
+</Form.Item>
+
 
           <Form.Item>
             <Button

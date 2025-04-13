@@ -169,6 +169,7 @@ const Ordertable = () => {
 
   useEffect(() => {
     dispatch(AllOrder()).then((res) => {
+      console.log('172:',res);
       const allOrders = res.payload || [];
       const sentOrderIds = JSON.parse(localStorage.getItem("sent_order_ids")) || [];
   

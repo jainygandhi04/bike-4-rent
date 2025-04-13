@@ -154,7 +154,7 @@ const SendOtp = () => {
         setStep(1);
         form.resetFields();
         
-          navigate("/"); // 🔁 Redirect to Login page (adjust the path if needed)
+          navigate("/login"); // 🔁 Redirect to Login page (adjust the path if needed)
         
         
       } else {

@@ -194,9 +194,13 @@ import {
   AppstoreOutlined,
   CarOutlined,
   ShoppingCartOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
+  DownloadOutlined,
+  EnvironmentOutlined,
+  MailOutlined 
 } from "@ant-design/icons";
+
+
+
 import { Link } from "react-router-dom";
 
 const { Sider } = Layout;
@@ -224,16 +228,16 @@ export default function Sidebar() {
       }}
     >
       <div className="flex items-center justify-center p-4">
-  <img
-    src="/images/BikeForRentFinalLogo.png" // replace this with the actual bike-only logo path
-    alt="Bike Logo"
-    style={{
-      height: collapsed ? "40px" : "70px",
-      transition: "all 0.3s ease-in-out",
-      cursor: "default",
-    }}
-  />
-</div>
+        <img
+          src="/images/BikeForRentFinalLogo.png" // replace this with the actual bike-only logo path
+          alt="Bike Logo"
+          style={{
+            height: collapsed ? "40px" : "70px",
+            transition: "all 0.3s ease-in-out",
+            cursor: "default",
+          }}
+        />
+      </div>
 
 
 
@@ -259,13 +263,29 @@ export default function Sidebar() {
           <Link to="/userorders">Bike Orders</Link>
         </Menu.Item>
 
-        <Menu.Item key="/downloadreports" icon={<ShoppingCartOutlined />}>
-          <Link to="https://docs.google.com/spreadsheets/d/1P_US4lNRlt6R1XfVw94XxaxfsMGpf_X1DbRmVtZZ8Kc/edit?usp=sharing" target="blank">Download Reports</Link>
+        <Menu.Item key="/downloadreports" icon={<DownloadOutlined />}>
+          <Link
+            to="https://docs.google.com/spreadsheets/d/1P_US4lNRlt6R1XfVw94XxaxfsMGpf_X1DbRmVtZZ8Kc/edit?usp=sharing"
+            target="_blank"
+          >
+            Download Reports
+          </Link>
         </Menu.Item>
 
-        <Menu.Item key="/downloadreports" icon={<ShoppingCartOutlined />}>
-          <Link to="https://mvts11.millitrack.com/modern/#/" target="blank">GPS Tracking</Link>
+        <Menu.Item key="/gpstracking" icon={<EnvironmentOutlined />}>
+          <Link
+            to="https://mvts11.millitrack.com/modern/#/"
+            target="_blank"
+          >
+            GPS Tracking
+          </Link>
         </Menu.Item>
+
+        <Menu.Item key="contact" icon={<MailOutlined />}>
+          <Link to="/AdminMessages">Messages</Link>
+        </Menu.Item>
+
+
 
 
       </Menu>

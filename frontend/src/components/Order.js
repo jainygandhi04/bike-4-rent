@@ -244,10 +244,26 @@ const Order = () => {
   const disabledDate = (current) => current && current < moment().startOf("day");
 
   const selectTimeSlots = (values) => {
-    setFrom(values[0].format("YYYY-MM-DD"));
-    setTo(values[1].format("YYYY-MM-DD"));
-    setDays(values[1].diff(values[0], "days"));
+    if (!values || values.length < 2) {
+      setFrom(null);
+      setTo(null);
+      setDays(0);
+      return;
+    }
+
+    // Format the start and end date
+    const start = values[0].format("YYYY-MM-DD");
+    const end = values[1].format("YYYY-MM-DD");
+
+    // Set the start and end date in state
+    setFrom(start);
+    setTo(end);
+
+    // Calculate the days including both the start and end date
+    const rentalDays = values[1].diff(values[0], "days") + 1;  // Add 1 to include the end date
+    setDays(rentalDays);
   };
+
 
   const showModal = () => setOpen(true);
   const hideModal = () => setOpen(false);
@@ -328,10 +344,10 @@ const Order = () => {
                   <FontAwesomeIcon icon={faGasPump} className="text-[#A15E48] w-5 mr-2" />
                   <span className="text-[#5a4239]"><b>Fuel Capacity:</b> {bikeBySlug.petrolCapacity} L</span>
                 </div>
-                <div className="flex items-center">
+                {/* <div className="flex items-center">
                   <FontAwesomeIcon icon={faGauge} className="text-[#A15E48] w-5 mr-2" />
                   <span className="text-[#5a4239]"><b>Mileage:</b> {bikeBySlug.mileage || "N/A"} kmpl</span>
-                </div>
+                </div> */}
               </div>
 
               {/* Rental Details */}
@@ -346,10 +362,10 @@ const Order = () => {
                     <FontAwesomeIcon icon={faCalendarAlt} className="text-[#A15E48] mr-2" />
                     <span className="text-[#5a4239] font-medium">Select Rental Period:</span>
                   </div>
-                  <RangePicker 
-                    format="DD MMMM YYYY" 
-                    disabledDate={disabledDate} 
-                    onChange={selectTimeSlots} 
+                  <RangePicker
+                    format="DD MMMM YYYY"
+                    disabledDate={disabledDate}
+                    onChange={selectTimeSlots}
                     className="w-full"
                   />
                 </div>
@@ -443,3 +459,5 @@ const Order = () => {
 };
 
 export default Order;
+
+

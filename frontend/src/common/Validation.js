@@ -25,14 +25,20 @@ export const ValidateUser = Yup.object().shape({
       "Email must have '@' followed by '.com'."
     )
     .required("Email is required."),
-  answer: Yup.string()
-    .matches(
-      /^[a-zA-Z]+$/,
-      "Security Answer can only contain alphabetical characters."
-    )
-    .min(3, "Security answer must be at least 3 characters long.")
-    .max(20, "Security answer cannot be longer than 20 characters.")
-    .required("*Security answer is required"),
+  // answer: Yup.string()
+  //   .matches(
+  //     /^[a-zA-Z]+$/,
+  //     "Security Answer can only contain alphabetical characters."
+  //   )
+  //   .min(3, "Security answer must be at least 3 characters long.")
+  //   .max(20, "Security answer cannot be longer than 20 characters.")
+  //   .required("*Security answer is required"),
+  //   phone: Yup.string()
+  //   .matches(/^[6-9]\d{9}$/, "Enter a valid Indian phone number")
+  //   .required("Phone number is required"),
+  // gender: Yup.string()
+  //   .oneOf(["male", "female", "other"], "Select a valid gender")
+  //   .required("Gender is required"),
 });
 
 export const ValidateForgotPassword = Yup.object().shape({

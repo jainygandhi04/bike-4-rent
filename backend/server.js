@@ -11,6 +11,8 @@ import Razorpay from "razorpay";
 import payment from './routes/paymentRoute.js';
 import reviewRoutes from "./routes/reviewRoute.js";
 import paymentRoute from "./routes/paymentRoute.js";
+import contactRoutes from "./routes/contactRoutes.js";
+
 
 
 
@@ -40,6 +42,7 @@ app.use("/api/v1/bike", bikeRoutes);
 app.use("/api/v1/order", orderRoutes);
 app.use("/api/v1/",payment);
 app.use("/api/v1/review", reviewRoutes);
+app.use("/api/v1/contact", contactRoutes); 
 
 //  rest api
 app.get("/", (req, res) => {

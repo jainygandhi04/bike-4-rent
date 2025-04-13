@@ -27,7 +27,7 @@
 //       const locationState = location.state;
 //       if (locationState?.from) {
 //         navigate(locationState.from, { state: locationState.orderData });
-//       } else if (email === "admin@gmail.com") {
+//       } else if (email === "djmgroup23@gmail.com") {
 //         navigate("/admin");
 //       } else {
 //         navigate("/");
@@ -40,7 +40,7 @@
 //     const data = {
 //       email: email,
 //       password: password,
-//       role: email === "admin@gmail.com" ? 1 : 0,
+//       role: email === "djmgroup23@gmail.com" ? 1 : 0,
 //     };
 //     const datas = await dispatch(userLogin(data));
 //     if (datas.error) {
@@ -164,7 +164,7 @@
 //       const locationState = location.state;
 //       if (locationState?.from) {
 //         navigate(locationState.from, { state: locationState.orderData });
-//       } else if (email === "admin@gmail.com") {
+//       } else if (email === "djmgroup23@gmail.com") {
 //         navigate("/admin");
 //       } else {
 //         navigate("/");
@@ -177,7 +177,7 @@
 //     const data = {
 //       email: email,
 //       password: password,
-//       role: email === "admin@gmail.com" ? 1 : 0,
+//       role: email === "djmgroup23@gmail.com" ? 1 : 0,
 //     };
 //     const datas = await dispatch(userLogin(data));
 //     if (datas.error) {
@@ -315,7 +315,7 @@ const Login = () => {
       const locationState = location.state;
       if (locationState?.from) {
         navigate(locationState.from, { state: locationState.orderData });
-      } else if (email === "admin@gmail.com") {
+      } else if (email === "djmgroup23@gmail.com") {
         navigate("/admin");
       } else {
         navigate("/");
@@ -328,7 +328,7 @@ const Login = () => {
     const data = {
       email: email,
       password: password,
-      role: email === "admin@gmail.com" ? 1 : 0,
+      role: email === "djmgroup23@gmail.com" ? 1 : 0,
     };
     const datas = await dispatch(userLogin(data));
     if (datas.error) {
