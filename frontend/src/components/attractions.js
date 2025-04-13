@@ -66,14 +66,85 @@ const Attractions = () => {
   }, []);
 
   return (
-    <div className="bg-gradient-to-b from-orange-100 to-orange-300 min-h-screen p-8">
+    <div className="mt-10 bg-gradient-to-r from-[#fff7f0] to-[#fde9dc] min-h-screen">
+      {/* <div
+        className={`${
+          animate ? "translate-y-0 opacity-100" : "-translate-y-10 opacity-0"
+        } transform transition-all duration-700 ease-out flex items-center justify-center space-x-4 p-6 rounded-lg shadow-lg `}
+      >
       <h1 className={`text-4xl md:text-5xl font-extrabold text-orange-900 text-center transition-all duration-700 ${animate ? "opacity-100 translate-y-0 scale-110" : "opacity-0 translate-y-10 scale-90"}`}>
       <FontAwesomeIcon icon={faLocationDot} className="text-orange-800 mr-2" />
         Nearby Attractions
       </h1>
+      <span className="block">
       <p className={`text-lg md:text-xl text-gray-700 text-center mt-2 transition-all duration-700 ${animate ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-        Explore the best tourist spots in Udaipur!
+      Explore the best tourist spots in Udaipur!
       </p>
+      </span>
+      </div> */}
+      {/* <div
+  className={`${
+    animate ? "translate-y-0 opacity-100" : "-translate-y-10 opacity-0"
+  } transform transition-all duration-700 ease-out flex flex-col items-center justify-center p-6 rounded-lg shadow-lg`}
+>
+  <h1
+    className={`text-4xl  font-extrabold text-orange-900 text-center transition-all duration-700 ${
+      animate ? "opacity-100 translate-y-0 scale-110" : "opacity-0 translate-y-10 scale-90"
+    }`}
+  >
+    <FontAwesomeIcon icon={faLocationDot} className="text-orange-800 mr-2" />
+    Nearby Attractions
+  </h1>
+  <p
+    className={`text-lg  text-gray-700 text-center mt-2 transition-all duration-700 ${
+      animate ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+    }`}
+  >
+    <span className="block">Explore the best tourist spots in Udaipur!</span> 
+  </p>
+</div> */}
+
+
+{/* 
+<div
+        className={`text-center pt-8 pb-8  transform transition-all duration-700 ${
+          animate ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }transform transition-all duration-700 ease-out flex items-center justify-center space-x-4 p-6 rounded-lg shadow-lg `}
+      >
+        
+        <h2 className="text-4xl font-extrabold tracking-tight text- text-orange-900">
+        <FontAwesomeIcon icon={faLocationDot} className="text-orange-800 mr-2" />
+        Nearby Attractions
+        </h2>
+
+        <p className={`text-[#5a4239] mt-2 transition-all duration-700 ${
+      animate ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+    }`}>
+       <span className="block">Explore the best tourist spots in Udaipur!</span>
+        </p>
+      </div> */}
+      <div
+  className={`text-center pt-8 pb-8 transform transition-all duration-700 ${
+    animate ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+  } flex flex-col items-center space-y-4 p-6 rounded-lg shadow-lg`}
+>
+  {/* Heading */}
+  <h2 className="text-4xl font-extrabold tracking-tight text-orange-900">
+    <FontAwesomeIcon icon={faLocationDot} className="text-orange-800 mr-2" />
+    Nearby Attractions
+  </h2>
+  
+  {/* Subtext */}
+  <p
+    className={`text-[#5a4239] text-lg mt-2 transition-all duration-700 ${
+      animate ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+    }`}
+  >
+    Explore the best tourist spots in Udaipur!
+  </p>
+</div>
+
+
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mt-10">
         {attractions.map((place, index) => (
           <div

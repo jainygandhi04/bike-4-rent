@@ -14,7 +14,7 @@ import {
 import { clearFields } from "../../../redux/features/Bikes/bikeSlice";
 import { useParams } from "react-router-dom";
 import { CategoryAll } from "../../../redux/features/Category/categoryAction";
-import { parse } from "date-fns";
+
 const base_url = `http://localhost:5001`;
 
 const EditBike = () => {

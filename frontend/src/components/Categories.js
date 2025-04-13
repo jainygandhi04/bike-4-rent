@@ -170,6 +170,7 @@
 
 // export default Categories;
 
+
 import { Card, Row, Col, Divider, Typography, Button } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -221,7 +222,7 @@ const Categories = () => {
             <Col xs={24} md={8} key={index}>
               <Card
                 hoverable
-                className=" !bg-[#8B4D3A] !text-[#FFD9A0] !rounded-xl !overflow-hidden !bg-[#ffffff1a]  hover:!bg-[#6F513F] !backdrop-blur-md !border !border-white/20 !border-orange-700 hover:!border-[#f59e0b]  hover:!bg-[#ffffff33] hover:!shadow-2xl hover:!-translate-y-1 transition-all duration-300"
+                className=" !bg-[#8B4D3A] !text-[#FFD9A0] !rounded-xl !overflow-hidden !bg-[#ffffff1a]  hover:!bg-[#733F30] !backdrop-blur-md !border !border-white/20 !border-orange-700 hover:!border-[#f59e0b]  hover:!bg-[#ffffff33] hover:!shadow-2xl hover:!-translate-y-1 transition-all duration-300"
                 bodyStyle={{ padding: 24 }}
                 cover={
                   <div className="h-60 w-full overflow-hidden relative group">
@@ -239,7 +240,7 @@ const Categories = () => {
               >
                 <Title
                   level={4}
-                  className="!text-2xl  !font-bold !text-[#FFD9A0]   group-hover:!text-orange-900 transition-colors duration-300"
+                  className="!text-2xl   !font-bold !text-[#FFD9A0]   group-hover:!text-orange-900 transition-colors duration-300"
                 >
                   {item.name}
                 </Title>

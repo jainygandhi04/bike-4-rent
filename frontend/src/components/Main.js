@@ -176,6 +176,7 @@ const ImageSlider = () => {
 
   const [currentImage, setCurrentImage] = useState(0);
   const [weather, setWeather] = useState("");
+  const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
     const imageInterval = setInterval(() => {
@@ -194,6 +195,10 @@ const ImageSlider = () => {
     };
 
     fetchWeather();
+    const animationTimeout = setTimeout(() => {
+      setAnimate(true);
+    }, 100);
+
 
     return () => {
       clearInterval(imageInterval);
@@ -202,8 +207,11 @@ const ImageSlider = () => {
 
   return (
     <div className="flex flex-col lg:flex-row w-full h-screen bg-gradient-to-r from-[#fff7f0] to-[#fde9dc]">
+      
       {/* Left Section: Image Slider */}
       <div className="lg:w-1/2 w-full h-1/2 lg:h-full relative overflow-hidden">
+    
+
         {images.map((image, index) => (
           <img
             key={index}
@@ -235,7 +243,11 @@ const ImageSlider = () => {
             <img src="/images/p2.png" alt="Welcome Hand Icon" className="w-6 sm:w-8 h-6 sm:h-8 mx-1 sm:mx-2" />
           </h2>
         </div>
-
+        <div
+          className={`${
+            animate ? "translate-x-0 opacity-100" : "-translate-x-10 opacity-0"
+          } transform transition-all duration-700 ease-out flex items-center justify-center`}
+        >
         <div className="relative z-10 text-center lg:text-left">
           <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-orange-900 mb-4 sm:mb-8 leading-tight">
             Explore the Majesty of Udaipur
@@ -256,6 +268,7 @@ const ImageSlider = () => {
           >
             Book Now
           </Link>
+        </div>
         </div>
       </div>
     </div>
