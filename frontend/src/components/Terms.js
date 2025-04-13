@@ -469,7 +469,7 @@ const Terms = () => {
   
       const options = {
         key,
-        amount: order.amount,
+        amount: order.amount, // in paise
         currency: "INR",
         name: "Bike4Rent",
         description: "Rental Payment",

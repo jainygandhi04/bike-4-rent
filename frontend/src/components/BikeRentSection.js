@@ -403,6 +403,7 @@ import {
   faGauge
 } from "@fortawesome/free-solid-svg-icons";
 
+
 const BikeRentSection = () => {
   const [checked, setChecked] = useState([]);
   const [radio, setRadio] = useState([]);
@@ -638,12 +639,12 @@ const BikeRentSection = () => {
                             {bike.enginePower}
                           </span>
                         )}
-                        {bike.mileage && (
+                        {/* {bike.mileage && (
                           <span className="text-xs bg-[#f8d9c6] text-[#5a4239] px-2 py-1 rounded-full flex items-center gap-1">
                             <FontAwesomeIcon icon={faGauge} />
                             {bike.mileage} kmpl
                           </span>
-                        )}
+                        )} */}
                       </div>
                     </div>
                     

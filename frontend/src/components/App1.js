@@ -9,6 +9,8 @@ import EditCategory from "../dashboard/sidebar/Category/EditCategory";
 import Bike from "../dashboard/sidebar/Bikes/Bike";
 import AddBike from "../dashboard/sidebar/Bikes/AddBike";
 import EditBike from "../dashboard/sidebar/Bikes/EditBike";
+import AdminMessages from "../dashboard/sidebar/AdminMessages"; // Adjust path if it's in a different folder
+
 import Ordertable from "../dashboard/sidebar/Order/Ordertable";
 import Attractions from "./attractions";
 import PaymentSuccess from "./paymentSuccess";
@@ -30,12 +32,12 @@ const Contact = lazy(() => import("./Contact"));
 const OrderDropdown = lazy(() => import("./OrderDropdown"));
 const BikeRentSection = lazy(() => import("./BikeRentSection"));
 const Testimonial = lazy(() => import("./Testimonial"));
-const SendOtp =lazy(()=>import("./SendOtp"));
+const SendOtp = lazy(() => import("./SendOtp"));
 // Static Pages
 const AboutUs = lazy(() => import("./AboutUs"));
 const Faqs = lazy(() => import("./FAQs"));
 const Terms = lazy(() => import("./Terms"));
-const Termsc = lazy(() => import("./TermsCond"));
+
 const Payment = lazy(() => import("./Payment"));
 
 
@@ -72,23 +74,25 @@ const App1 = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/order/:slug" element={<Order />} />
             <Route path="/sendOtp" element={<SendOtp />} />
-            
-            <Route path="/payment-success" element={<PaymentSuccess/>} />
 
-             {/* Admin Routes */}
-          <Route path= '/admin' element = {<Dashboard/>}/>
-          <Route path='/users' element={<User />} />
-              <Route path='/category' element={<Category/>} />
-              <Route path='/category/add' element={<AddCategory />} />
-              <Route path='/category/edit/:id' element={<EditCategory />} />
-              <Route path='/bikes' element={<Bike />} />
-              <Route path='/bikes/add' element={<AddBike />} />
-              <Route path='/bikes/edit/:id' element={<EditBike />} />
-              <Route path='/userorders' element={<Ordertable />} />
-          {/* New pages */}
-          
-          <Route path="/attractions" element={<Attractions />} />
-          <Route path="/terms" element={<Terms />} />
+            <Route path="/payment-success" element={<PaymentSuccess />} />
+
+            {/* Admin Routes */}
+            <Route path='/admin' element={<Dashboard />} />
+            <Route path='/users' element={<User />} />
+            <Route path='/category' element={<Category />} />
+            <Route path='/category/add' element={<AddCategory />} />
+            <Route path='/category/edit/:id' element={<EditCategory />} />
+            <Route path='/bikes' element={<Bike />} />
+            <Route path='/bikes/add' element={<AddBike />} />
+            <Route path='/bikes/edit/:id' element={<EditBike />} />
+            <Route path='/userorders' element={<Ordertable />} />
+            <Route path="/AdminMessages" element={<AdminMessages />} />
+
+            {/* New pages */}
+
+            <Route path="/attractions" element={<Attractions />} />
+            <Route path="/terms" element={<Terms />} />
 
 
             {/* Static Pages */}

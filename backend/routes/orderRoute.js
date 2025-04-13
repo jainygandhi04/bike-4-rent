@@ -1,29 +1,29 @@
-/*import express from "express";
-import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
-import {
-  AllOrdersController,
-  getOrdersController,
-  makeOrderController,
-  updateStatusController,
-} from "../controllers/orderController.js";
-const router = express.Router();
+// import express from "express";
+// import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
+// import {
+//   AllOrdersController,
+//   getOrdersController,
+//   makeOrderController,
+//   updateStatusController,
+// } from "../controllers/orderController.js";
+// const router = express.Router();
 
-router.post("/make-order", requireSignIn, makeOrderController);
+// router.post("/make-order", requireSignIn, makeOrderController);
 
-// orders of particular user in customer your order's section
-router.get("/orders", requireSignIn, getOrdersController);
+// // orders of particular user in customer your order's section
+// router.get("/orders", requireSignIn, getOrdersController);
 
-// orders of users in admin dashboard
-router.get("/allorders", requireSignIn, isAdmin, AllOrdersController);
+// // orders of users in admin dashboard
+// router.get("/allorders", requireSignIn, isAdmin, AllOrdersController);
 
-// order status update by admin
-router.put(
-  "/order-status/:orderId",
-  requireSignIn,
-  isAdmin,
-  updateStatusController
-);
-export default router;*/
+// // order status update by admin
+// router.put(
+//   "/order-status/:orderId",
+//   requireSignIn,
+//   isAdmin,
+//   updateStatusController
+// );
+// export default router;
 
 
 import express from "express";
@@ -73,6 +73,6 @@ router.put("/update-status/:orderId", async (req, res) => {
     res.status(500).json({ message: "Error updating order", error });
   }
 });
-export default router;
 
+export default router;
 

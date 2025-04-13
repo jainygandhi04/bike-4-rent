@@ -173,7 +173,7 @@
 
 import { Card, Row, Col, Divider, Typography, Button } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -263,4 +263,5 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default Categories; //good
+

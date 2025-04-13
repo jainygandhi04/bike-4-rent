@@ -15,6 +15,7 @@ const formatDate = (date) => {
 const OrderDropdown = ({ color }) => {
   const dispatch = useDispatch();
   const { userOrders } = useSelector((state) => state.order);
+  console.log('18:',userOrders)
   useEffect(() => {
     dispatch(GetOrder());
   }, [dispatch]);
@@ -171,3 +172,118 @@ const OrderDropdown = ({ color }) => {
   );
 };
 export default OrderDropdown;
+
+
+
+// import React, { useEffect } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { GetOrder } from "../redux/features/Order/orderAction";
+// import { Table, Card, Typography, Tag, Empty } from "antd";
+// import Layout from "./Layout";
+
+// const { Title } = Typography;
+
+// // Format date to dd/mm/yyyy
+// const formatDate = (date) => {
+//   const d = new Date(date);
+//   const day = ("0" + d.getDate()).slice(-2);
+//   const month = ("0" + (d.getMonth() + 1)).slice(-2);
+//   const year = d.getFullYear();
+//   return `${day}/${month}/${year}`;
+// };
+
+// const OrderDropdown = () => {
+//   const dispatch = useDispatch();
+//   const { userOrders } = useSelector((state) => state.order);
+
+//   useEffect(() => {
+//     dispatch(GetOrder());
+//   }, [dispatch]);
+
+//   const columns = [
+//     {
+//       title: "SN",
+//       dataIndex: "sn",
+//       key: "sn",
+//       render: (text, record, index) => index + 1,
+//       fixed: "left",
+//       width: 60,
+//     },
+//     {
+//       title: "Bike Name",
+//       dataIndex: ["bikes", "name"],
+//       key: "bikeName",
+//       render: (name) => name || "N/A",
+//     },
+//     {
+//       title: "Bike Number",
+//       dataIndex: ["bikes", "number"],
+//       key: "bikeNumber",
+//       render: (num) => num || "N/A",
+//     },
+//     {
+//       title: "Renter Name",
+//       dataIndex: ["renter", "name"],
+//       key: "renterName",
+//     },
+//     {
+//       title: "Total Amount",
+//       dataIndex: "totalAmt",
+//       key: "totalAmt",
+//       render: (amt) => `₹${amt}`,
+//     },
+//     {
+//       title: "Start Date",
+//       dataIndex: "startDate",
+//       key: "startDate",
+//       render: (date) => (date ? formatDate(date) : "N/A"),
+//     },
+//     {
+//       title: "End Date",
+//       dataIndex: "endDate",
+//       key: "endDate",
+//       render: (date) => (date ? formatDate(date) : "N/A"),
+//     },
+//     {
+//       title: "Status",
+//       dataIndex: "status",
+//       key: "status",
+//       render: (status) => (
+//         <Tag color={status === "completed" ? "green" : status === "pending" ? "orange" : "blue"}>
+//           {status?.toUpperCase()}
+//         </Tag>
+//       ),
+//     },
+//   ];
+
+//   return (
+//     <Layout title="Bike-4-Rent : Your Orders">
+//       <div className="flex justify-center mt-6 px-4">
+//         <Card style={{ width: "100%", maxWidth: "1200px" }}>
+//           <Title level={3} style={{ textAlign: "center", fontFamily: "serif" }}>
+//             Your Orders
+//           </Title>
+
+//           {userOrders && userOrders.length > 0 ? (
+//             <Table
+//               dataSource={userOrders}
+//               columns={columns}
+//               rowKey="_id"
+//               pagination={false}
+//               scroll={{ y: 400, x: "max-content" }} // Enables vertical + horizontal scroll
+//               bordered
+//               sticky
+//             />
+//           ) : (
+//             <Empty
+//               description={<span className="text-red-500 font-semibold">No Orders Found</span>}
+//               style={{ marginTop: 50 }}
+//             />
+//           )}
+//         </Card>
+//       </div>
+//     </Layout>
+//   );
+// };
+
+// export default OrderDropdown;

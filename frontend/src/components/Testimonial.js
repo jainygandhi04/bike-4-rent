@@ -23,7 +23,7 @@
 
 //   return (
 //     <section className='bg-orange-50 text-gray-700 body-font flex-wrap justify-center'>
-      
+
 //       <div className='container px-5 py-8 mx-auto'>
 //       <Divider className="!h-1 !w-24 !min-w-0 !mx-auto !my-0 !mb-4 bg-gradient-to-r from-[#5a4239] to-orange-900" />
 //       <h2 className="!text-4xl !font-bold !text-orange-900 flex items-center justify-center gap-3 !mb-2 !mt-4">
@@ -110,6 +110,7 @@ const Testimonial = () => {
 
   // Divide reviews into 3 groups
   const reviewChunks = chunkReviews(reviews, Math.ceil(reviews.length / 3));
+  console.log('113:', reviewChunks);
 
   return (
     <section className="bg-orange-50 text-gray-700 body-font flex-wrap justify-center">
@@ -137,15 +138,25 @@ const Testimonial = () => {
                     <p className="mb-4 text-sm text-[#5a4239] leading-relaxed">" {review.message} "</p>
                     <div className="flex mt-4">
                       {[...Array(5)].map((_, i) => (
-                        <span
+                        <svg
                           key={i}
-                          className={`text-yellow-500 text-lg ${
-                            i < review.rating ? "fas fa-star" : "far fa-star"
-                          }`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill={i < review.rating ? "#FACC15" : "none"} // yellow-400
+                          viewBox="0 0 24 24"
+                          stroke="#FACC15"
+                          strokeWidth={1.5}
+                          className="w-8 h-8 inline-block" // Larger stars, no margin
                         >
-                          ★
-                        </span>
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M11.48 3.499l2.122 4.296 4.74.689-3.431 3.343.81 4.725-4.241-2.229-4.241 2.23.81-4.726-3.431-3.343 4.74-.689 2.122-4.296z"
+                          />
+                        </svg>
                       ))}
+
+
+
                     </div>
                     <h2 className="text-lg font-semibold tracking-wide text-orange-900">
                       - {review.name}
