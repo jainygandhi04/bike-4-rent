@@ -5,7 +5,7 @@ export const ValidateUser = Yup.object().shape({
       /^[A-Za-z]+(?:\s[A-Za-z]+){0,1}$/,
       "Username can only contain alphabetical characters with one whitespace."
     )
-    .min(5, "Username must be at least 5 characters long.")
+    .min(3, "Username must be at least 3 characters long.")
     .max(15, "Username cannot be longer than 15 characters.")
     .required("*Name is required"),
   password: Yup.string()
@@ -25,20 +25,13 @@ export const ValidateUser = Yup.object().shape({
       "Email must have '@' followed by '.com'."
     )
     .required("Email is required."),
-  // answer: Yup.string()
-  //   .matches(
-  //     /^[a-zA-Z]+$/,
-  //     "Security Answer can only contain alphabetical characters."
-  //   )
-  //   .min(3, "Security answer must be at least 3 characters long.")
-  //   .max(20, "Security answer cannot be longer than 20 characters.")
-  //   .required("*Security answer is required"),
-  //   phone: Yup.string()
-  //   .matches(/^[6-9]\d{9}$/, "Enter a valid Indian phone number")
-  //   .required("Phone number is required"),
-  // gender: Yup.string()
-  //   .oneOf(["male", "female", "other"], "Select a valid gender")
-  //   .required("Gender is required"),
+  
+    phone: Yup.string()
+    .matches(/^[6-9]\d{9}$/, "Enter a valid Indian phone number")
+    .required("Phone number is required"),
+  gender: Yup.string()
+    .oneOf(["male", "female", "other"], "Select a valid gender")
+    .required("Gender is required"),
 });
 
 export const ValidateForgotPassword = Yup.object().shape({
@@ -73,4 +66,5 @@ export const ValidateCategoryAdd = Yup.object().shape({
     .required("Category name is required")
     .min(3, "Category name must be at least 3 characters long.")
     .max(15, "Category name cannot be longer than 15 characters."),
+    //photo: Yup.mixed().required("Image selection is required"),
 });

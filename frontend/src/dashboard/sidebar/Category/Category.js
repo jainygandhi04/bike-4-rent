@@ -1,21 +1,3 @@
-// import React from "react";
-// import TableWrapper from "../../common/TableWrapper";
-// import CategoryTable from "./CategoryTable";
-
-// const Category = () => {
-//   return (
-//     <TableWrapper
-//       title='Total Category'
-//       addlink='/category/add'
-//       addTitle='Add Category' a
-//       layouttitle='Dashboard Category table'
-//     >
-//       <CategoryTable />
-//     </TableWrapper>
-//   );
-// };
-
-// export default Category;
 import React from "react";
 import { Card, Typography, Button, Breadcrumb } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
