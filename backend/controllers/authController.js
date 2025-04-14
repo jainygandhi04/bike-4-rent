@@ -668,10 +668,10 @@ const sendOtpEmail = async (email, otp) => {
 
 export const registerController = async (req, res) => {
   try {
-    const { name, email, password, role, answer } = req.body;
+    const { name, email, password,phone,gender } = req.body;
     let isAdmin = email === "djmgroup23@gmail.com";
 
-    if (!name || !email || !password || !answer) {
+    if (!name || !email || !password || !phone || !gender) {
       return res.status(400).send({ error: "All fields are required" });
     }
 
@@ -685,14 +685,15 @@ export const registerController = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      answer,
       role: isAdmin ? 1 : 0,
+      phone,
+      gender,
     }).save();
 
     res.status(201).send({
       success: true,
       message: "User registered successfully",
-      user: { name: user.name, email: user.email, _id: user._id },
+      user: { name: user.name, email: user.email, _id: user._id,phone: user.phone,gender: user.gender },
     });
   } catch (error) {
     res.status(500).send({ success: false, message: "Registration error", error });
@@ -888,23 +889,6 @@ export const AllUsersController = async (req, res) => {
   }
 };
 
-// // ✅ USER PROFILE Controller
-// export const userProfileController = async (req, res) => {
-//   try {
-//     const user = await userModel.findById(req.user._id);
-//     if (!user) {
-//       return res.status(400).send({ success: false, message: "User not found" });
-//     }
-
-//     res.status(200).send({
-//       success: true,
-//       user,
-//       message: "User info fetched successfully",
-//     });
-//   } catch (error) {
-//     res.status(500).send({ success: false, error, message: "Something went wrong" });
-//   }
-// };
 
 export const userProfileController = async (req, res) => {
   try {
@@ -919,6 +903,8 @@ export const userProfileController = async (req, res) => {
         name: user.name,
         email: user.email,
         _id: user._id,
+        gender: user.gender,
+        phone: user.phone,
       },
       message: "User info fetched successfully",
     });
@@ -928,3 +914,69 @@ export const userProfileController = async (req, res) => {
 };
 
 
+export const editUserController = async (req, res) => {
+  try {
+    const { id, formdata } = req.body;
+    
+    // Validate input
+    if (!id) {
+      return res.status(400).json({ 
+        success: false, 
+        message: "User ID is required" 
+      });
+    }
+    
+    if (!formdata || Object.keys(formdata).length === 0) {
+      return res.status(400).json({ 
+        success: false, 
+        message: "No data provided for update" 
+      });
+    }
+    
+    // Find user by ID and update
+    const updatedUser = await userModel.findByIdAndUpdate(
+      id,
+      { $set: formdata },
+      { new: true, runValidators: true }
+    ).select("-password"); // Exclude password from the returned document
+    
+    // Check if user exists
+    if (!updatedUser) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found"
+      });
+    }
+    
+    // Return success response
+    return res.status(200).json({
+      success: true,
+      message: "User updated successfully",
+      user: updatedUser
+    });
+    
+  } catch (error) {
+    console.error("Error updating user:", error);
+    
+    // Handle specific MongoDB errors
+    if (error.name === 'CastError') {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid user ID format"
+      });
+    }
+    
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({
+        success: false,
+        message: error.message
+      });
+    }
+    
+    // Generic error response
+    return res.status(500).json({
+      success: false,
+      message: "Error updating user profile"
+    });
+  }
+};

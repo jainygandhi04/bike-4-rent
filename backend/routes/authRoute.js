@@ -7,6 +7,7 @@ import {
   userProfileController,
   verifyOtpController,
   resetPasswordController,
+  editUserController,
 } from "../controllers/authController.js";
 import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
 import { sendOtpController } from "../controllers/authController.js";//new change
@@ -41,6 +42,8 @@ router.post("/verify-otp", verifyOtpController);
 
 //reset password
 router.post("/reset-Password",resetPasswordController )
+
+router.put("/edit-user",editUserController)
 
 // Get '' METHOD GET
 router.get("/getallusers", requireSignIn, isAdmin, AllUsersController);

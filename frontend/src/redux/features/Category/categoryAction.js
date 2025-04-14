@@ -4,12 +4,13 @@ import Http from "../../../Helper/Http";
 export const addCategory = createAsyncThunk(
   "category/add",
   async (categoryData, { rejectWithValue }) => {
+    console.log('7:',categoryData);
     try {
       const data = await Http.post(
         "/api/v1/category/create-category",
         categoryData
       );
-      return data.data.category;
+      return data.data;
     } catch (error) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);

@@ -15,6 +15,8 @@ import Ordertable from "../dashboard/sidebar/Order/Ordertable";
 import Attractions from "./attractions";
 import PaymentSuccess from "./paymentSuccess";
 import TermsCond from "./TermsCond";
+import UserProfile from "./UserProfile";
+import { useSelector } from "react-redux";
 
 
 
@@ -46,6 +48,8 @@ const Unauthorized = lazy(() => import("../Helper/Unauthorized"));
 
 const App1 = () => {
   const [scrolled, setScrolled] = useState(false);
+  const { userInfo } = useSelector((state) => state.auth); 
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -58,7 +62,8 @@ const App1 = () => {
   return (
     <>
       <Suspense fallback={<Loading />}>
-        <Navbar scrolled={scrolled} />
+      {userInfo?.role !== 1 && <Navbar scrolled={scrolled} />}
+
         <div className="mt-16 bg-slate-50 min-h-screen">
           <Routes>
             {/* Public Routes */}
@@ -74,6 +79,7 @@ const App1 = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/order/:slug" element={<Order />} />
             <Route path="/sendOtp" element={<SendOtp />} />
+            <Route path="/userProfile" element={<UserProfile/>}/>
 
             <Route path="/payment-success" element={<PaymentSuccess />} />
 
@@ -105,7 +111,7 @@ const App1 = () => {
             <Route path="*" element={<Unauthorized />} />
           </Routes>
         </div>
-        <Footer />
+        {userInfo?.role !== 1 && <Footer />}
       </Suspense>
     </>
   );

@@ -5,7 +5,6 @@ import slugify from "slugify";
 
 export const addBikeController = async (req, res) => {
   try {
-    console.log('8:BE', req);
     const { name, number, price, category, startType, year, kilometers, petrolCapacity } =
       req.fields;
     const { photo } = req.files;

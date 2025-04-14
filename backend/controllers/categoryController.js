@@ -1,37 +1,44 @@
 import slugify from "slugify";
+import fs from "fs";
 import categoryModel from "../models/categoryModel.js";
 
 export const createCategoryController = async (req, res) => {
-  try {
-    const { name } = req.body;
-    if (!name) {
-      return res.status(400).send({
-        message: "Name is required",
-      });
-    }
-    const existingCategory = await categoryModel.findOne({ name });
-    if (existingCategory) {
-      return res.status(409).json({
-        success: false,
-        message: "Category already exists",
-      });
-    }
-    const category = await new categoryModel({
-      name,
-      slug: slugify(name),
-    }).save();
-    res.status(201).send({
-      success: true,
-      message: "Category created",
-      category,
-    });
-  } catch (error) {
-    res.status(500).send({
-      success: false,
-      error,
-      message: "Error in creating category",
-    });
-  }
+  console.log(req.fields);
+  console.log(req.files);
+
+ try {
+     const { name} = req.fields;
+     const { photo } = req.files;
+     //    validation
+    //  switch (true) {
+    //    case !name:
+    //      return res.status(422).send({ message: "Name is required" });
+     
+    //    case !photo && photo.size > 40000:
+    //      return res
+    //        .status(422)
+    //        .send({ message: "Image is required & should be less than 5Mb" });
+    //  }
+     
+     const category = new categoryModel({ name, slug: slugify(name) });
+     if (photo) {
+       // console.dir(photo);
+       category.photo.data = fs.readFileSync(photo.path);
+       category.photo.contentType = photo.type;
+     }
+     await category.save();
+     res.status(201).send({
+       success: true,
+       message: "Category added successfully",
+       category,
+     });
+   } catch (error) {
+     res.status(500).send({
+       success: false,
+       message: "Error in adding category",
+       error,
+     });
+   }
 };
 
 export const updateCategoryController = async (req, res) => {
@@ -151,6 +158,22 @@ export const deleteCategoryController = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Error in deleting category",
+      error,
+    });
+  }
+};
+
+export const categoryPhotoController = async (req, res) => {
+  try {
+    const category = await categoryModel.findById(req.params.cid).select("photo");
+    if (category.photo.data) {
+      res.set("Content-type", category.photo.contentType);
+      return res.status(200).send(category.photo.data);
+    }
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "Error while getting category image",
       error,
     });
   }

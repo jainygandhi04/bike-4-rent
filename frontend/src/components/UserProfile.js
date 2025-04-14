@@ -1,35 +1,111 @@
-
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-import { userRegister } from "../redux/features/User/authAction";
-import { Formik, ErrorMessage } from "formik";
-import { ValidateUser } from "../common/Validation";
-import { clearFields } from "../redux/features/User/authSlice";
+import { Formik, ErrorMessage, Form, useFormik } from "formik";
 import Error from "../Helper/Error";
 import Layout from "./Layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faKey, faUser, faPhone, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faKey, faUser, faPhone, faEnvelope, faSave, faListCheck } from "@fortawesome/free-solid-svg-icons";
+import { LoggedInUser, editUserById } from "../redux/features/User/authAction";
+import * as Yup from "yup";
 
-const Signup = () => {
-  const navigate = useNavigate();
+export const ValidateProfile = Yup.object().shape({
+
+  name: Yup.string()
+    .matches(
+      /^[A-Za-z]+(?:\s[A-Za-z]+){0,1}$/,
+      "Username can only contain alphabetical characters with one whitespace."
+    )
+    .min(3, "Username must be at least 3 characters long.")
+    .max(15, "Username cannot be longer than 15 characters.")
+    .required("*Name is required"),
+    phone: Yup.string()
+    .matches(/^[6-9]\d{9}$/, "Enter a valid Indian phone number")
+    .required("Phone number is required"),
+  gender: Yup.string()
+    .oneOf(["male", "female", "other"], "Select a valid gender")
+    .required("Gender is required"),
+});
+
+const UserProfile = () => {
   const dispatch = useDispatch();
-  const { success } = useSelector((state) => state.auth);
-  const [errors, setErrors] = useState("");
+  const navigate = useNavigate();
+  const { userInfo, loading } = useSelector((state) => state.auth);
+  const [profileError, setProfileError] = useState("");
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [formValues, setFormValues] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    gender: ""
+  });
 
+  // Fetch user data on component mount
+  useEffect(() => {
+    dispatch(LoggedInUser());
+  }, [dispatch]);
+
+  // Update local form values whenever userInfo changes
+  useEffect(() => {
+    if (userInfo) {
+      setFormValues({
+        name: userInfo.name || "",
+        email: userInfo.email || "",
+        phone: userInfo.phone || "",
+        gender: userInfo.gender || "",
+      });
+    }
+  }, [userInfo]);
+
+  // Success message timeout
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
-
-  useEffect(() => {
-    if (success) {
-      dispatch(clearFields());
-      navigate("/login");
+    
+    if (updateSuccess) {
+      const timer = setTimeout(() => {
+        setUpdateSuccess(false);
+      }, 3000);
+      return () => clearTimeout(timer);
     }
-  }, [success]);
+  }, [updateSuccess]);
+
+  // Handle form submission
+  const handleSubmit = async (values, actions) => {
+     
+    const updateData = {
+      name: values.name,
+      phone: values.phone,
+      gender: values.gender,
+    };
+    let data = {
+        id: userInfo._id,
+        formdata: updateData,
+      };
+    try {
+    await dispatch(editUserById(data));
+      setUpdateSuccess(true);
+      setProfileError("");
+      // Refresh user data
+      dispatch(LoggedInUser());
+    } catch (error) {
+      setProfileError(error?.message || "Update failed. Please try again.");
+    } finally {
+      actions.setSubmitting(false);
+    }
+  };
+
+  if (loading || !userInfo) {
+    return (
+      <Layout title="Bike-4-Rent : Profile Loading">
+        <div className="flex justify-center items-center min-h-[calc(100vh-80px)]">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#8B4D3A]"></div>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
-    <Layout title={"Bike-4-Rent : Signup"}>
+    <Layout title="Bike-4-Rent : User Profile">
       <div className="flex items-center justify-center min-h-[calc(100vh-80px)] bg-gradient-to-br from-[#fff7f0] via-[#fde9dc] to-[#f8d9c6] py-8 px-4">
         {/* Card container with proper spacing */}
         <div className="w-full max-w-md p-6 bg-white/95 backdrop-blur-sm rounded-xl shadow-lg">
@@ -47,26 +123,20 @@ const Signup = () => {
 
           {/* Heading */}
           <h2 className="text-xl font-bold text-center text-[#5a4239] mb-6">
-            Sign up for your account
+            User Profile
           </h2>
 
+          {updateSuccess && (
+            <div className="mb-4 p-2 bg-green-100 border border-green-400 text-green-700 rounded">
+              Profile updated successfully!
+            </div>
+          )}
+
           <Formik
-            initialValues={{
-              name: "",
-              email: "",
-              password: "",
-              confirmPassword: "",
-              phone: "", // Added phone number field
-              gender: "", // New field for gender
-            }}
-            validationSchema={ValidateUser}
-            onSubmit={async (values, actions) => {
-              const data = await dispatch(userRegister(values));
-              if (data.error) {
-                setErrors(data.payload);
-                dispatch(clearFields());
-              }
-            }}
+            enableReinitialize={true} // This is key to updating when props change
+            initialValues={formValues} // Use the state that updates with userInfo
+           validationSchema={ValidateProfile}
+            onSubmit={handleSubmit}
           >
             {(props) => (
               <form onSubmit={props.handleSubmit} className="space-y-4">
@@ -87,7 +157,7 @@ const Signup = () => {
                       autoComplete="name"
                       onChange={props.handleChange}
                       onBlur={props.handleBlur}
-                      value={props.values.name || ""}
+                      value={props.values.name}
                       className="w-full pl-9 pr-3 py-2 text-sm border border-[#DCA689]/70 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#733F30]"
                       required
                     />
@@ -97,10 +167,10 @@ const Signup = () => {
                   </span>
                 </div>
 
-                {/* Email Field */}
+                {/* Email Field (Read-only) */}
                 <div className="group">
                   <label className="block text-sm font-medium text-[#5a4239]/90 mb-1.5">
-                    Email address
+                    Email address (cannot be changed)
                   </label>
                   <div className="relative">
                     <FontAwesomeIcon
@@ -112,16 +182,11 @@ const Signup = () => {
                       name="email"
                       type="email"
                       autoComplete="email"
-                      onChange={props.handleChange}
-                      onBlur={props.handleBlur}
-                      value={props.values.email || ""}
-                      className="w-full pl-9 pr-3 py-2 text-sm border border-[#DCA689]/70 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#733F30]"
-                      required
+                      value={props.values.email}
+                      className="w-full pl-9 pr-3 py-2 text-sm border border-[#DCA689]/70 rounded-lg bg-gray-100 cursor-not-allowed"
+                      disabled
                     />
                   </div>
-                  <span className="text-red-500 text-xs">
-                    <ErrorMessage name="email" />
-                  </span>
                 </div>
 
                 {/* Phone Field */}
@@ -141,67 +206,13 @@ const Signup = () => {
                       autoComplete="tel"
                       onChange={props.handleChange}
                       onBlur={props.handleBlur}
-                      value={props.values.phone || ""}
+                      value={props.values.phone}
                       className="w-full pl-9 pr-3 py-2 text-sm border border-[#DCA689]/70 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#733F30]"
                       required
                     />
                   </div>
                   <span className="text-red-500 text-xs">
                     <ErrorMessage name="phone" />
-                  </span>
-                </div>
-
-                {/* Password Field */}
-                <div className="group">
-                  <label className="block text-sm font-medium text-[#5a4239]/90 mb-1.5">
-                    Password
-                  </label>
-                  <div className="relative">
-                    <FontAwesomeIcon
-                      icon={faKey}
-                      className="absolute left-3 top-3 text-[#A15E48] text-sm"
-                    />
-                    <input
-                      id="password"
-                      name="password"
-                      type="password"
-                      autoComplete="new-password"
-                      onChange={props.handleChange}
-                      onBlur={props.handleBlur}
-                      value={props.values.password || ""}
-                      className="w-full pl-9 pr-3 py-2 text-sm border border-[#DCA689]/70 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#733F30]"
-                      required
-                    />
-                  </div>
-                  <span className="text-red-500 text-xs">
-                    <ErrorMessage name="password" />
-                  </span>
-                </div>
-
-                {/* Confirm Password Field */}
-                <div className="group">
-                  <label className="block text-sm font-medium text-[#5a4239]/90 mb-1.5">
-                    Confirm Password
-                  </label>
-                  <div className="relative">
-                    <FontAwesomeIcon
-                      icon={faKey}
-                      className="absolute left-3 top-3 text-[#A15E48] text-sm"
-                    />
-                    <input
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      type="password"
-                      autoComplete="new-password"
-                      onChange={props.handleChange}
-                      onBlur={props.handleBlur}
-                      value={props.values.confirmPassword || ""}
-                      className="w-full pl-9 pr-3 py-2 text-sm border border-[#DCA689]/70 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#733F30]"
-                      required
-                    />
-                  </div>
-                  <span className="text-red-500 text-xs">
-                    <ErrorMessage name="confirmPassword" />
                   </span>
                 </div>
 
@@ -253,26 +264,38 @@ const Signup = () => {
                   </span>
                 </div>
 
-                {errors && <Error>{errors}</Error>}
+                {profileError && <Error>{profileError}</Error>}
 
-                <button
-                  type="submit"
-                  className="w-full py-2.5 px-4 mt-5 bg-gradient-to-r from-[#8B4D3A] to-[#A15E48] text-white rounded-lg hover:from-[#733F30] hover:to-[#8B4D3A] focus:outline-none focus:ring-1 focus:ring-[#733F30]"
-                  disabled={props.isSubmitting}
-                >
-                  {props.isSubmitting ? "Signing up..." : "Sign up"}
-                </button>
+                <div className="flex flex-col sm:flex-row gap-3 mt-5">
+  <button
+    type="submit"
+    className="flex-1 py-2.5 px-4 bg-gradient-to-r from-[#8B4D3A] to-[#A15E48] text-white rounded-lg hover:from-[#733F30] hover:to-[#8B4D3A] focus:outline-none focus:ring-1 focus:ring-[#733F30] flex items-center justify-center"
+    disabled={props.isSubmitting}
+  >
+    <FontAwesomeIcon icon={faSave} className="mr-2" />
+    {props.isSubmitting ? "Updating..." : "Update Profile"}
+  </button>
+  
+  <Link
+  to="/orderdropdown"
+  className="flex-1 py-2.5 px-4 bg-gradient-to-r from-[#5a4239] to-[#785c51] text-white rounded-lg hover:from-[#4a352d] hover:to-[#5a4239] focus:outline-none focus:ring-1 focus:ring-[#4a352d] flex items-center justify-center"
+>
+  <FontAwesomeIcon icon={faListCheck} className="mr-2" />
+  Your Orders
+</Link>
+
+</div>
               </form>
             )}
           </Formik>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-[#5a4239]/80">
-              Already have an account?{" "}
-              <Link to="/login" className="text-[#8B4D3A] hover:underline font-medium">
-                Login
-              </Link>
-            </p>
+            <Link 
+              to="/" 
+              className="text-sm text-[#8B4D3A] hover:underline font-medium"
+            >
+              Back to Home
+            </Link>
           </div>
         </div>
       </div>
@@ -280,4 +303,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default UserProfile;

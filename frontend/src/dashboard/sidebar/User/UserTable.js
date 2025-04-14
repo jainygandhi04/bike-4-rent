@@ -163,6 +163,18 @@ const UserTable = ({ searchText = "" }) => {
       align: "center",
       render: (role) => (role === 1 ? "Admin" : "User"),
     },
+    {
+      title: "Gender",
+      dataIndex: "gender",
+      key: "gender",
+      align: "center",
+    },
+    {
+      title: "Phone",
+      dataIndex: "phone",
+      key: "phone",
+      align: "center",
+    },
   ];
 
   const dataSource = filteredUsers?.map((user, index) => ({
@@ -170,6 +182,8 @@ const UserTable = ({ searchText = "" }) => {
     name: user.name,
     email: user.email,
     role: user.role,
+    gender: user.gender,
+    phone: user.phone
   }));
 
   return (
