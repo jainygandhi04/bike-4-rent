@@ -136,6 +136,43 @@ const AddCategory = () => {
   }, [success]);
 
   return (
+
+    <div style={{ position: "relative" }}>
+      <button
+        onClick={() => navigate('/category')}
+        style={{
+          position: 'absolute',
+          top: '  23px',
+          left: '1470px',
+          backgroundColor: '#A15E48',
+          color: 'white',
+          padding: '8px 16px',
+          borderRadius: '4px',
+          border: '1px solid #A15E48',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          zIndex: 10,
+          marginBottom: '20px'
+        }}
+      >
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          width="16" 
+          height="16" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          strokeWidth="2" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"
+        >
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back To Categories
+      </button>
     <AddEditWrapper
       title='Add Category'
       method='create'
@@ -195,8 +232,8 @@ const AddCategory = () => {
                   type='primary'
                   htmlType='submit'
                   style={{
-                    backgroundColor: "#fa8c16", // Custom orange
-                    borderColor: "#fa8c16",
+                    backgroundColor: "#A15E48", // Custom orange
+                    borderColor: "#A15E48",
                   }}
                 >
                   Submit
@@ -207,6 +244,7 @@ const AddCategory = () => {
         )}
       </Formik>
     </AddEditWrapper>
+    </div>
   );
 };
 

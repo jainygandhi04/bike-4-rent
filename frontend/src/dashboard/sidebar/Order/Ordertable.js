@@ -112,6 +112,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AllOrder, updateStatus } from "../../../redux/features/Order/orderAction";
 import toast from "react-hot-toast";
 import moment from "moment";
+import { Link, useNavigate } from "react-router-dom";
 
 const { Option } = Select;
 
@@ -126,6 +127,7 @@ const statusColors = {
 const Ordertable = () => {
   const dispatch = useDispatch();
   const { loading, error, orders } = useSelector((state) => state.order);
+  const navigate = useNavigate();
 
   const [localOrders, setLocalOrders] = useState([]);
 
@@ -449,6 +451,41 @@ const downloadCSV = () => {
         style={{ flex: 1, display: "flex", flexDirection: "column" }}
         bodyStyle={{ flex: 1, display: "flex", flexDirection: "column", padding: 0 }}
       >
+        <button
+        onClick={() => navigate('/admin')}
+        style={{
+          position: 'absolute',
+          top: '10px',
+          left: '1500px',
+          backgroundColor: '#A15E48',
+          color: 'white',
+          padding: '8px 16px',
+          borderRadius: '4px',
+          border: '1px solid #A15E48',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          zIndex: 10,
+          marginBottom: '20px'
+        }}
+      >
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          width="16" 
+          height="16" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          strokeWidth="2" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"
+        >
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back To Dashboard
+      </button>
         {loading ? (
           <div style={{ textAlign: "center", padding: "2rem" }}>
             <Spin size="large" />

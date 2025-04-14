@@ -41,7 +41,7 @@ const Category = () => {
             type="primary"
             icon={<PlusOutlined />}
             onClick={() => navigate("/category/add")}
-            style={{ backgroundColor: "#52c41a", borderColor: "#52c41a" }}
+            style={{ backgroundColor: "#A15E48", borderColor: "#A15E48" }}
           >
             Add Category
           </Button>

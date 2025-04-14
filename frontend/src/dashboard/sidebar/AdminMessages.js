@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Table, Button, Modal, Input, message as antMessage } from 'antd';
 import axios from 'axios';
+import { Link, useNavigate } from "react-router-dom";
 
 const AdminMessages = () => {
   const [messages, setMessages] = useState([]);
   const [replyModalVisible, setReplyModalVisible] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [replyText, setReplyText] = useState('');
+    const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('/api/v1/contact/admin/messages')
@@ -49,6 +51,42 @@ const AdminMessages = () => {
   return (
     <>
       <Table columns={columns} dataSource={messages} rowKey="_id" />
+      <button
+        onClick={() => navigate('/admin')}
+        style={{
+          position: 'absolute',
+          top: '660px',
+          left: '10px',
+          backgroundColor: '#A15E48',
+          color: 'white',
+          padding: '8px 16px',
+          borderRadius: '4px',
+          border: '1px solid #A15E48',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          zIndex: 10,
+          marginBottom: '20px'
+        }}
+      >
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          width="16" 
+          height="16" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          strokeWidth="2" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"
+        >
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back To Dashboard
+      </button>
+
       <Modal
         title="Reply to User"
         open={replyModalVisible}

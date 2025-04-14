@@ -187,6 +187,111 @@
 /* eslint-disable */
 
 
+// import React, { useState } from "react";
+// import { Layout, Menu } from "antd";
+// import {
+//   UserOutlined,
+//   AppstoreOutlined,
+//   CarOutlined,
+//   ShoppingCartOutlined,
+//   DownloadOutlined,
+//   EnvironmentOutlined,
+//   MailOutlined 
+// } from "@ant-design/icons";
+
+
+
+// import { Link } from "react-router-dom";
+
+// const { Sider } = Layout;
+
+// export default function Sidebar() {
+//   const [collapsed, setCollapsed] = useState(false);
+
+//   const toggleCollapsed = () => {
+//     setCollapsed(!collapsed);
+//   };
+
+//   return (
+//     <Sider
+//       collapsible
+//       collapsed={collapsed}
+//       onCollapse={toggleCollapsed}
+//       width={220}
+//       className="h-screen shadow-lg bg-[#5a4239]"
+//       style={{
+//         position: "fixed",
+//         top: 0,
+//         left: 0,
+//         overflow: "auto",
+//         zIndex: 1000,
+//       }}
+//     >
+//       <div className="flex items-center justify-center p-4">
+//         <img
+//           src="/images/BikeForRentFinalLogo.png" // replace this with the actual bike-only logo path
+//           alt="Bike Logo"
+//           style={{
+//             height: collapsed ? "40px" : "70px",
+//             transition: "all 0.3s ease-in-out",
+//             cursor: "default",
+//           }}
+//         />
+//       </div>
+
+
+
+//       <Menu
+//         theme="light"
+//         mode="inline"
+//         defaultSelectedKeys={["/users"]}
+//         className="bg-teal-200"
+//       >
+//         <Menu.Item key="/users" icon={<UserOutlined />}>
+//           <Link to="/users">Users</Link>
+//         </Menu.Item>
+
+//         <Menu.Item key="/category" icon={<AppstoreOutlined />}>
+//           <Link to="/category">Category</Link>
+//         </Menu.Item>
+
+//         <Menu.Item key="/bikes" icon={<CarOutlined />}>
+//           <Link to="/bikes">Bikes</Link>
+//         </Menu.Item>
+
+//         <Menu.Item key="/userorders" icon={<ShoppingCartOutlined />}>
+//           <Link to="/userorders">Bike Orders</Link>
+//         </Menu.Item>
+
+//         <Menu.Item key="/downloadreports" icon={<DownloadOutlined />}>
+//           <Link
+//             to="https://docs.google.com/spreadsheets/d/1P_US4lNRlt6R1XfVw94XxaxfsMGpf_X1DbRmVtZZ8Kc/edit?usp=sharing"
+//             target="_blank"
+//           >
+//             Download Reports
+//           </Link>
+//         </Menu.Item>
+
+//         <Menu.Item key="/gpstracking" icon={<EnvironmentOutlined />}>
+//           <Link
+//             to="https://mvts11.millitrack.com/modern/#/"
+//             target="_blank"
+//           >
+//             GPS Tracking
+//           </Link>
+//         </Menu.Item>
+
+//         <Menu.Item key="contact" icon={<MailOutlined />}>
+//           <Link to="/AdminMessages">Messages</Link>
+//         </Menu.Item>
+
+
+
+
+//       </Menu>
+//     </Sider>
+//   );
+// }
 import React, { useState } from "react";
 import { Layout, Menu } from "antd";
 import {
@@ -198,9 +303,6 @@ import {
   EnvironmentOutlined,
   MailOutlined 
 } from "@ant-design/icons";
-
-
-
 import { Link } from "react-router-dom";
 
 const { Sider } = Layout;
@@ -218,7 +320,7 @@ export default function Sidebar() {
       collapsed={collapsed}
       onCollapse={toggleCollapsed}
       width={220}
-      className="h-screen shadow-lg bg-teal-200"
+      className="h-screen shadow-lg bg-[#C4A484]" // Lightened primary color
       style={{
         position: "fixed",
         top: 0,
@@ -227,70 +329,103 @@ export default function Sidebar() {
         zIndex: 1000,
       }}
     >
-      <div className="flex items-center justify-center p-4">
+      {/* Logo Container */}
+      <div 
+        className="flex items-center justify-center p-6 transition-all duration-300"
+        style={{
+          minHeight: collapsed ? "80px" : "120px",
+          backgroundColor: "#C4A484", // Slightly darker accent for logo area
+        }}
+      >
         <img
-          src="/images/BikeForRentFinalLogo.png" // replace this with the actual bike-only logo path
+          src="/images/BikeForRentFinalLogo.png"
           alt="Bike Logo"
           style={{
-            height: collapsed ? "40px" : "70px",
+            height: collapsed ? "50px" : "90px",
             transition: "all 0.3s ease-in-out",
             cursor: "default",
+            filter: "brightness(0.9)" // Lighten logo slightly
           }}
         />
       </div>
-
-
 
       <Menu
         theme="light"
         mode="inline"
         defaultSelectedKeys={["/users"]}
-        className="bg-teal-200"
+        className="bg-[#C4A484]"
+        // Remove Ant Design's default selection styles
+        style={{ borderRight: 0 }}
+        selectedKeys={[]}
       >
-        <Menu.Item key="/users" icon={<UserOutlined />}>
-          <Link to="/users">Users</Link>
+        <Menu.Item 
+          key="/users" 
+          icon={<UserOutlined className="text-[#5D4037]" />}
+          className="hover:bg-[#D1B79F] text-[#5D4037] font-medium"
+        >
+          <Link to="/users" className="text-[#5D4037] hover:text-[#3E2723]">Users</Link>
         </Menu.Item>
 
-        <Menu.Item key="/category" icon={<AppstoreOutlined />}>
-          <Link to="/category">Category</Link>
+        <Menu.Item 
+          key="/category" 
+          icon={<AppstoreOutlined className="text-[#5D4037]" />}
+          className="hover:bg-[#D1B79F] text-[#5D4037] font-medium"
+        >
+          <Link to="/category" className="text-[#5D4037] hover:text-[#3E2723]">Category</Link>
         </Menu.Item>
 
-        <Menu.Item key="/bikes" icon={<CarOutlined />}>
-          <Link to="/bikes">Bikes</Link>
+        <Menu.Item 
+          key="/bikes" 
+          icon={<CarOutlined className="text-[#5D4037]" />}
+          className="hover:bg-[#D1B79F] text-[#5D4037] font-medium"
+        >
+          <Link to="/bikes" className="text-[#5D4037] hover:text-[#3E2723]">Bikes</Link>
         </Menu.Item>
 
-        <Menu.Item key="/userorders" icon={<ShoppingCartOutlined />}>
-          <Link to="/userorders">Bike Orders</Link>
+        <Menu.Item 
+          key="/userorders" 
+          icon={<ShoppingCartOutlined className="text-[#5D4037]" />}
+          className="hover:bg-[#D1B79F] text-[#5D4037] font-medium"
+        >
+          <Link to="/userorders" className="text-[#5D4037] hover:text-[#3E2723]">Bike Orders</Link>
         </Menu.Item>
 
-        <Menu.Item key="/downloadreports" icon={<DownloadOutlined />}>
+        <Menu.Item 
+          key="/downloadreports" 
+          icon={<DownloadOutlined className="text-[#5D4037]" />}
+          className="hover:bg-[#D1B79F] text-[#5D4037] font-medium"
+        >
           <Link
             to="https://docs.google.com/spreadsheets/d/1P_US4lNRlt6R1XfVw94XxaxfsMGpf_X1DbRmVtZZ8Kc/edit?usp=sharing"
             target="_blank"
+            className="text-[#5D4037] hover:text-[#3E2723]"
           >
             Download Reports
           </Link>
         </Menu.Item>
 
-        <Menu.Item key="/gpstracking" icon={<EnvironmentOutlined />}>
+        <Menu.Item 
+          key="/gpstracking" 
+          icon={<EnvironmentOutlined className="text-[#5D4037]" />}
+          className="hover:bg-[#D1B79F] text-[#5D4037] font-medium"
+        >
           <Link
             to="https://mvts11.millitrack.com/modern/#/"
             target="_blank"
+            className="text-[#5D4037] hover:text-[#3E2723]"
           >
             GPS Tracking
           </Link>
         </Menu.Item>
 
-        <Menu.Item key="contact" icon={<MailOutlined />}>
-          <Link to="/AdminMessages">Messages</Link>
+        <Menu.Item 
+          key="contact" 
+          icon={<MailOutlined className="text-[#5D4037]" />}
+          className="hover:bg-[#D1B79F] text-[#5D4037] font-medium"
+        >
+          <Link to="/AdminMessages" className="text-[#5D4037] hover:text-[#3E2723]">Messages</Link>
         </Menu.Item>
-
-
-
-
       </Menu>
     </Sider>
   );
 }
-
-

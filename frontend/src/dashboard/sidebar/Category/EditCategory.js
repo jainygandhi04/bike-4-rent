@@ -167,6 +167,7 @@ const EditCategory = () => {
       method='update'
       handleBack={handleBack}
       backlink='/category'
+      
     >
       <Formik
         initialValues={{
@@ -221,8 +222,8 @@ const EditCategory = () => {
                 type='primary'
                 htmlType='submit'
                 style={{
-                  backgroundColor: "#fa8c16", // Orange
-                  borderColor: "#fa8c16",
+                  backgroundColor: "#A15E48", // Orange
+                  borderColor: "#A15E48",
                 }}
               >
                 Submit

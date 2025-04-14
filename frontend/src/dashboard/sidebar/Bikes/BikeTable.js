@@ -361,6 +361,43 @@ const BikeTable = () => {
 
   return (
     <div className="p-6">
+      
+      <button
+        onClick={() => navigate('/admin')}
+        style={{
+          position: 'absolute',
+          top: '400px',
+          left: '10px',
+          backgroundColor: '#A15E48',
+          color: 'White',
+          padding: '8px 16px',
+          borderRadius: '4px',
+          border: '1px solid #A15E48',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          zIndex: 10,
+          marginBottom: '20px'
+        }}
+      >
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          width="16" 
+          height="16" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          strokeWidth="2" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"
+        >
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back To Dashboard
+      </button>
+
       <h2 className="text-xl font-semibold mb-4">All Bikes</h2>
       <Table
         columns={columns}

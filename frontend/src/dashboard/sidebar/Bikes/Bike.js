@@ -9,6 +9,10 @@ const Bike = () => {
       addlink='/bikes/add'
       addTitle='Add Bike'
       layouttitle='Dashboard Bike table'
+      tyle={{ 
+        backgroundColor: '#A15E48 !important', // Force override
+        color: 'white !important'
+      }}
 
     >
       <BikeTable />

@@ -125,9 +125,11 @@ import React, { useEffect } from "react";
 import { Table } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { userAll } from "../../../redux/features/User/authAction";
+import { Link, useNavigate } from "react-router-dom";
 
 const UserTable = ({ searchText = "" }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(userAll());
@@ -172,6 +174,42 @@ const UserTable = ({ searchText = "" }) => {
 
   return (
     <div style={{ height: "calc(100vh - 180px)", overflow: "auto" }}>
+      <button
+        onClick={() => navigate('/admin')}
+        style={{
+          position: 'absolute',
+          top: '645px',
+          left: '10px',
+          backgroundColor: '#A15E48',
+          color: 'White',
+          padding: '8px 16px',
+          borderRadius: '4px',
+          border: '1px solid #A15E48',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          zIndex: 10,
+          marginBottom: '20px'
+        }}
+      >
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          width="16" 
+          height="16" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          strokeWidth="2" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"
+        >
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back To Dashboard
+      </button>
+        
       <Table
         columns={columns}
         dataSource={dataSource}
@@ -188,4 +226,3 @@ const UserTable = ({ searchText = "" }) => {
 };
 
 export default UserTable;
-

@@ -336,6 +336,191 @@
 // };
 
 // export default AboutUs;
+// import React, { useEffect, useState } from "react";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import {
+//   faBicycle,
+//   faUsers,
+//   faCheckCircle,
+//   faTags,
+//   faStore,
+//   faHandshake,
+//   faThumbsUp,
+//   faShieldAlt,
+//   faUsersGear,
+// } from "@fortawesome/free-solid-svg-icons";
+
+// const AboutUs = () => {
+//   const [animate, setAnimate] = useState(false);
+
+//   useEffect(() => {
+//     // Trigger animation after component mounts
+//     setAnimate(true);
+//   }, []);
+
+//   return (
+//     <div className="mt-10 bg-gradient-to-r from-[#fff7f0] to-[#fde9dc] min-h-screen">
+//       {/* Header Section */}
+//       {/* <div
+//         className={`${
+//           animate ? "translate-y-0 opacity-100" : "-translate-y-10 opacity-0"
+//         } transform transition-all duration-700 ease-out flex items-center justify-center space-x-4 p-6 rounded-lg shadow-lg `}
+//       >
+        
+       
+//         <h1 className={`text-4xl md:text-5xl font-extrabold text-orange-900 text-center transition-all duration-700 ${animate ? "opacity-100 translate-y-0 scale-110" : "opacity-0 translate-y-10 scale-90"}`}>
+//               <FontAwesomeIcon icon={faUsersGear} className="text-orange-800 mr-2" />
+//                 About Us
+//               </h1>
+//       </div> */}
+//       {/* <div
+//         className={`${
+//           animate ? "translate-y-0 opacity-100" : "-translate-y-10 opacity-0"
+//         } transform transition-all duration-700 ease-out flex flex-col items-center justify-center p-6 rounded-lg shadow-lg`}
+//       >
+//         <h1
+//           className={`text-4xl  font-extrabold text-orange-900 text-center transition-all duration-700 ${
+//             animate ? "opacity-100 translate-y-0 scale-110" : "opacity-0 translate-y-10 scale-90"
+//           }`}
+//         >
+//           <FontAwesomeIcon icon={faUsersGear} className="text-orange-800 mr-2" />
+//           About Us
+//         </h1>
+       
+//       </div> */}
+//       {/* <div
+//         className={`text-center pt-8 pb-8  transform transition-all duration-700 ${
+//           animate ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+//         }`}
+//       >
+        
+//         <h2 className="text-4xl font-extrabold tracking-tight text- text-orange-900">
+//         <FontAwesomeIcon icon={faUsersGear} className="text-orange-800 mr-2" />
+//           About Us
+//         </h2>
+//         <p className="text-[#5a4239] mt-2">
+//         Discover who we are
+//         </p>
+//       </div> */}
+//       <div
+//   className={`text-center pt-8 pb-8 transform transition-all duration-700 ${
+//     animate ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+//   } flex flex-col items-center space-y-4 p-6 rounded-lg shadow-lg`}
+// >
+//   {/* Heading */}
+//   <h2 className="text-4xl font-extrabold tracking-tight text-orange-900">
+//     <FontAwesomeIcon icon={faUsersGear} className="text-orange-800 mr-2" />
+//     Get to Know Us
+//   </h2>
+  
+//   {/* Subtext */}
+//   <p
+//     className={`text-[#5a4239] text-lg mt-2 transition-all duration-700 ${
+//       animate ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+//     }`}
+//   >
+//      Discover who we are
+//   </p>
+// </div>
+
+
+//       {/* Main Section */}
+//       <div className="grid md:grid-cols-2 gap-8 mt-10">
+//         {/* Left Section - Image */}
+//         <div
+//           className={`${
+//             animate ? "translate-x-0 opacity-100" : "-translate-x-10 opacity-0"
+//           } transform transition-all duration-700 ease-out flex items-center justify-center`}
+//         >
+//           <img
+//             src="/images/aboutus.jpg"
+//             alt="About Us"
+//             className="rounded-lg shadow-lg w-full max-w-lg hover:scale-105 transition-transform duration-300"
+//           />
+//         </div>
+
+//         {/* Right Section - Content */}
+//         <div
+//           className={`${
+//             animate ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"
+//           } transform transition-all duration-700 ease-out flex flex-col justify-center space-y-4`}
+//         >
+//           <h2 className="text-2xl font-semibold text-[#733F30] hover:text-[#8B4D3A] transition-colors duration-300">
+//             Our Mission
+//           </h2>
+//           <p className="text-[#5a4239] leading-relaxed">
+//             At Bike-4-Rent, we aim to provide the best rental experience for all
+//             our customers, ensuring safety, affordability, and convenience.
+//           </p>
+//           <div className="flex space-x-6">
+//             <div className="flex items-center space-x-2 group">
+//               <FontAwesomeIcon
+//                 icon={faBicycle}
+//                 className="text-[#A15E48] text-3xl group-hover:scale-110 transition-transform duration-300"
+//               />
+//               <div>
+//                 <h3 className="text-lg font-bold group-hover:text-[#8B4D3A] transition-colors duration-300">
+//                   + 50 Bikes
+//                 </h3>
+//                 <p className="text-sm text-[#5a4239]">Available for rent</p>
+//               </div>
+//             </div>
+//             <div className="flex items-center space-x-2 group">
+//               <FontAwesomeIcon
+//                 icon={faUsers}
+//                 className="text-[#A15E48] text-3xl group-hover:scale-110 transition-transform duration-300"
+//               />
+//               <div>
+//                 <h3 className="text-lg font-bold group-hover:text-[#8B4D3A] transition-colors duration-300">
+//                   + 100 Customers
+//                 </h3>
+//                 <p className="text-sm text-[#5a4239]">Served with care</p>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Why Choose Us Section */}
+//       <div
+//         className={`${
+//           animate ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+//         } transform transition-all duration-700 ease-out mt-10 bg-[#DCA689]  p-6 rounded-lg shadow-lg`}
+//       >
+//         <h2 className="text-2xl font-semibold text-center mb-6 text-[#733F30] hover:text-[#8B4D3A] transition-colors duration-300">
+//           Why Choose Us?
+//         </h2>
+//         <div className="grid md:grid-cols-3 gap-6">
+//           {[
+//             { icon: faStore, title: "One Stop Shop", desc: "All your rental needs in one place." },
+//             { icon: faTags, title: "Lowest Price Guarantee", desc: "Affordable rates for everyone." },
+//             { icon: faCheckCircle, title: "Assured Bikes", desc: "Top-quality bikes for every ride." },
+//             { icon: faHandshake, title: "Reliable Service", desc: "Trustworthy and dependable." },
+//             { icon: faThumbsUp, title: "Customer Satisfaction", desc: "Your happiness is our priority." },
+//             { icon: faShieldAlt, title: "Guaranteed Quality", desc: "Excellence in every service." },
+//           ].map((item, index) => (
+//             <div
+//               key={index}
+//               className="flex flex-col items-center text-center group bg-[#fff7f0] hover:bg-[#FFD9A0] p-4 rounded-lg transition-all duration-300"
+//             >
+//               <FontAwesomeIcon
+//                 icon={item.icon}
+//                 className="text-[#A15E48] text-4xl mb-3 group-hover:scale-110 transition-transform duration-300"
+//               />
+//               <h3 className="text-lg font-bold group-hover:text-[#8B4D3A] transition-colors duration-300">
+//                 {item.title}
+//               </h3>
+//               <p className="text-sm text-[#5a4239]">{item.desc}</p>
+//             </div>
+//           ))}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default AboutUs;
+
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -359,83 +544,39 @@ const AboutUs = () => {
   }, []);
 
   return (
-    <div className="mt-10 bg-gradient-to-r from-[#fff7f0] to-[#fde9dc] min-h-screen">
+    <div className="mt-10 bg-gradient-to-r from-[#fff7f0] to-[#fde9dc] min-h-screen px-4 sm:px-6 lg:px-8">
       {/* Header Section */}
-      {/* <div
-        className={`${
-          animate ? "translate-y-0 opacity-100" : "-translate-y-10 opacity-0"
-        } transform transition-all duration-700 ease-out flex items-center justify-center space-x-4 p-6 rounded-lg shadow-lg `}
+      <div
+        className={`text-center pt-8 pb-8 transform transition-all duration-700 ${
+          animate ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        } flex flex-col items-center space-y-4 p-4 sm:p-6 rounded-lg shadow-lg`}
       >
+        <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-orange-900">
+          <FontAwesomeIcon icon={faUsersGear} className="text-orange-800 mr-2" />
+          Get to Know Us
+        </h2>
         
-       
-        <h1 className={`text-4xl md:text-5xl font-extrabold text-orange-900 text-center transition-all duration-700 ${animate ? "opacity-100 translate-y-0 scale-110" : "opacity-0 translate-y-10 scale-90"}`}>
-              <FontAwesomeIcon icon={faUsersGear} className="text-orange-800 mr-2" />
-                About Us
-              </h1>
-      </div> */}
-      {/* <div
-        className={`${
-          animate ? "translate-y-0 opacity-100" : "-translate-y-10 opacity-0"
-        } transform transition-all duration-700 ease-out flex flex-col items-center justify-center p-6 rounded-lg shadow-lg`}
-      >
-        <h1
-          className={`text-4xl  font-extrabold text-orange-900 text-center transition-all duration-700 ${
-            animate ? "opacity-100 translate-y-0 scale-110" : "opacity-0 translate-y-10 scale-90"
+        <p
+          className={`text-[#5a4239] text-base sm:text-lg mt-2 transition-all duration-700 ${
+            animate ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          <FontAwesomeIcon icon={faUsersGear} className="text-orange-800 mr-2" />
-          About Us
-        </h1>
-       
-      </div> */}
-      {/* <div
-        className={`text-center pt-8 pb-8  transform transition-all duration-700 ${
-          animate ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
-      >
-        
-        <h2 className="text-4xl font-extrabold tracking-tight text- text-orange-900">
-        <FontAwesomeIcon icon={faUsersGear} className="text-orange-800 mr-2" />
-          About Us
-        </h2>
-        <p className="text-[#5a4239] mt-2">
-        Discover who we are
+          Discover who we are
         </p>
-      </div> */}
-      <div
-  className={`text-center pt-8 pb-8 transform transition-all duration-700 ${
-    animate ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-  } flex flex-col items-center space-y-4 p-6 rounded-lg shadow-lg`}
->
-  {/* Heading */}
-  <h2 className="text-4xl font-extrabold tracking-tight text-orange-900">
-    <FontAwesomeIcon icon={faUsersGear} className="text-orange-800 mr-2" />
-    Get to Know Us
-  </h2>
-  
-  {/* Subtext */}
-  <p
-    className={`text-[#5a4239] text-lg mt-2 transition-all duration-700 ${
-      animate ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-    }`}
-  >
-     Discover who we are
-  </p>
-</div>
-
+      </div>
 
       {/* Main Section */}
-      <div className="grid md:grid-cols-2 gap-8 mt-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10 px-4 sm:px-0">
         {/* Left Section - Image */}
         <div
           className={`${
             animate ? "translate-x-0 opacity-100" : "-translate-x-10 opacity-0"
-          } transform transition-all duration-700 ease-out flex items-center justify-center`}
+          } transform transition-all duration-700 ease-out flex items-center justify-center order-1 md:order-none`}
         >
           <img
             src="/images/aboutus.jpg"
             alt="About Us"
-            className="rounded-lg shadow-lg w-full max-w-lg hover:scale-105 transition-transform duration-300"
+            className="rounded-lg shadow-lg w-full max-w-md md:max-w-lg hover:scale-105 transition-transform duration-300"
           />
         </div>
 
@@ -443,7 +584,7 @@ const AboutUs = () => {
         <div
           className={`${
             animate ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"
-          } transform transition-all duration-700 ease-out flex flex-col justify-center space-y-4`}
+          } transform transition-all duration-700 ease-out flex flex-col justify-center space-y-4 px-4 sm:px-0`}
         >
           <h2 className="text-2xl font-semibold text-[#733F30] hover:text-[#8B4D3A] transition-colors duration-300">
             Our Mission
@@ -452,11 +593,11 @@ const AboutUs = () => {
             At Bike-4-Rent, we aim to provide the best rental experience for all
             our customers, ensuring safety, affordability, and convenience.
           </p>
-          <div className="flex space-x-6">
+          <div className="flex flex-col sm:flex-row sm:space-x-6 space-y-4 sm:space-y-0">
             <div className="flex items-center space-x-2 group">
               <FontAwesomeIcon
                 icon={faBicycle}
-                className="text-[#A15E48] text-3xl group-hover:scale-110 transition-transform duration-300"
+                className="text-[#A15E48] text-2xl sm:text-3xl group-hover:scale-110 transition-transform duration-300"
               />
               <div>
                 <h3 className="text-lg font-bold group-hover:text-[#8B4D3A] transition-colors duration-300">
@@ -468,7 +609,7 @@ const AboutUs = () => {
             <div className="flex items-center space-x-2 group">
               <FontAwesomeIcon
                 icon={faUsers}
-                className="text-[#A15E48] text-3xl group-hover:scale-110 transition-transform duration-300"
+                className="text-[#A15E48] text-2xl sm:text-3xl group-hover:scale-110 transition-transform duration-300"
               />
               <div>
                 <h3 className="text-lg font-bold group-hover:text-[#8B4D3A] transition-colors duration-300">
@@ -485,12 +626,12 @@ const AboutUs = () => {
       <div
         className={`${
           animate ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
-        } transform transition-all duration-700 ease-out mt-10 bg-[#DCA689]  p-6 rounded-lg shadow-lg`}
+        } transform transition-all duration-700 ease-out mt-10 bg-[#DCA689] p-4 sm:p-6 rounded-lg shadow-lg mx-4 sm:mx-0`}
       >
         <h2 className="text-2xl font-semibold text-center mb-6 text-[#733F30] hover:text-[#8B4D3A] transition-colors duration-300">
           Why Choose Us?
         </h2>
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {[
             { icon: faStore, title: "One Stop Shop", desc: "All your rental needs in one place." },
             { icon: faTags, title: "Lowest Price Guarantee", desc: "Affordable rates for everyone." },
@@ -501,16 +642,16 @@ const AboutUs = () => {
           ].map((item, index) => (
             <div
               key={index}
-              className="flex flex-col items-center text-center group bg-[#fff7f0] hover:bg-[#FFD9A0] p-4 rounded-lg transition-all duration-300"
+              className="flex flex-col items-center text-center group bg-[#fff7f0] hover:bg-[#FFD9A0] p-3 sm:p-4 rounded-lg transition-all duration-300"
             >
               <FontAwesomeIcon
                 icon={item.icon}
-                className="text-[#A15E48] text-4xl mb-3 group-hover:scale-110 transition-transform duration-300"
+                className="text-[#A15E48] text-3xl sm:text-4xl mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-300"
               />
-              <h3 className="text-lg font-bold group-hover:text-[#8B4D3A] transition-colors duration-300">
+              <h3 className="text-base sm:text-lg font-bold group-hover:text-[#8B4D3A] transition-colors duration-300">
                 {item.title}
               </h3>
-              <p className="text-sm text-[#5a4239]">{item.desc}</p>
+              <p className="text-xs sm:text-sm text-[#5a4239]">{item.desc}</p>
             </div>
           ))}
         </div>
@@ -520,4 +661,3 @@ const AboutUs = () => {
 };
 
 export default AboutUs;
-

@@ -320,6 +320,41 @@ const AddBike = () => {
       title="Add New Bike"
       className="max-w-4xl mx-auto my-10 shadow-xl rounded-2xl p-4"
     >
+      <button
+        onClick={() => navigate('/bikes')}
+        style={{
+          position: 'absolute',
+          top: '25px',
+          left: '750px',
+          backgroundColor: '#A15E48',
+          color: 'WHITE',
+          padding: '8px 16px',
+          borderRadius: '4px',
+          border: '1px solid #A15E48',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          zIndex: 10,
+          marginBottom: '20px'
+        }}
+      >
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          width="16" 
+          height="16" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          strokeWidth="2" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"
+        >
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back 
+      </button>
       <Form form={form} layout="vertical" onFinish={onFinish} autoComplete="off">
         <Form.Item
           label="Bike Name"
@@ -430,7 +465,7 @@ const AddBike = () => {
             type="primary"
             htmlType="submit"
             block
-            style={{ backgroundColor: "#fa8c16", borderColor: "#fa8c16" }}
+            style={{ backgroundColor: "#A15E48", borderColor: "#A15E48" }}
           >
             {loading ? <Spin size="small" /> : "Add Bike"}
           </Button>

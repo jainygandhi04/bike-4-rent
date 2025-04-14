@@ -171,9 +171,112 @@
 // export default Categories;
 
 
+// import { Card, Row, Col, Divider, Typography, Button } from "antd";
+// import { ArrowRightOutlined } from "@ant-design/icons";
+
+// import "react-lazy-load-image-component/src/effects/blur.css";
+// import { Link } from "react-router-dom";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faPersonBiking } from "@fortawesome/free-solid-svg-icons";
+
+// const { Title, Text } = Typography;
+// const CARD_BG_COLOR = "#8B4D3A"; // Default background
+// const CARD_HOVER_BG = "#733F30"; // Hover background
+// const CARD_BORDER = "#ffffff1a"; // Border color
+// const CARD_HOVER_BORDER = "#f59e0b"; // Hover border
+
+
+// const Categories = () => {
+//   const array = [
+//     {
+//       name: "Activa",
+//       images:  "/images/b1fleet.jpg",
+      
+//       href: "/bikerentsection",
+//     },
+//     {
+//       name: "Sport bikes",
+//       images: "/images/b2fleet.jpg",
+//       href: "/bikerentsection",
+//     },
+//     {
+//       name: "Jupiter",
+//       images: "/images/b3fleet.jpg",
+//       href: "/bikerentsection",
+//     },
+//   ];
+
+//   return (
+//     <div className="bg-gradient-to-b from-[#fff7f0] to-[#fde9dc] py-16 px-4">
+//       <div className="max-w-6xl mx-auto">
+//         {/* Section Header */}
+//         <div className="text-center mb-12">
+//           <Divider className="!h-1 !w-24 !min-w-0 !mx-auto !my-0 !mb-4 bg-gradient-to-r from-[#5a4239] to-orange-900" />
+//           <Title className="!text-4xl !font-bold !text-orange-900 flex items-center justify-center gap-3 !mb-2">
+//           <FontAwesomeIcon icon={faPersonBiking} className="text-orange-900 "  />
+//             Our Fleet
+//           </Title>
+//           <Text className="!text-xl !text-[#5a4239] font-[Roboto] block">
+//             Explore our premium range of bikes and scooters
+//           </Text>
+//         </div>
+
+//         {/* Fleet Cards */}
+//         <Row gutter={[24, 24]}>
+//           {array.map((item, index) => (
+//             <Col xs={24} md={8} key={index}>
+//               <Card
+//                 hoverable
+//                 className=" !bg-[#8B4D3A] !text-[#FFD9A0] !rounded-xl !overflow-hidden !bg-[#ffffff1a]  hover:!bg-[#733F30] !backdrop-blur-md !border !border-white/20 !border-orange-700 hover:!border-[#f59e0b]  hover:!bg-[#ffffff33] hover:!shadow-2xl hover:!-translate-y-1 transition-all duration-300"
+//                 style={{
+//                   backgroundColor: CARD_BG_COLOR,
+//                   color: "#FFD9A0",
+//                   borderColor: CARD_BORDER,
+//                 }}
+//                 bodyStyle={{ padding: 24 }}
+//                 cover={
+//                   <div className="h-60 w-full overflow-hidden relative group">
+//                     <img
+//                       alt={item.name}
+//                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+//                       src={item.images}
+//                       placeholderSrc="https://reactnativecode.com/wp-content/uploads/2018/02/Default_Image_Thumbnail.png"
+//                       effect="blur"
+                      
+//                     />
+//                     <div className="absolute inset-0 bg-gradient-to-b from-[#6c5049]/70 to-[#6c5049]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+//                   </div>
+//                 }
+//               >
+//                 <Title
+//                   level={4}
+//                   className="!text-2xl   !font-bold !text-[#FFD9A0]   group-hover:!text-orange-900 transition-colors duration-300"
+//                 >
+//                   {item.name}
+//                 </Title>
+//                 <Link to={item.href}>
+//                   <Button
+//                     type="primary"
+//                     //shape="round"
+//                     icon={<ArrowRightOutlined />}
+//                     className="!bg-[#FFD9A0] !text-orange-900 font-[Roboto] hover:!bg-[#B36D4E] hover:!text-white !mt-6 !h-10 !px-6 transition-all duration-300 hover:!translate-x-1"
+//                   >
+//                     Enquire Now
+//                   </Button>
+//                 </Link>
+//               </Card>
+//             </Col>
+//           ))}
+//         </Row>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Categories; //good
+
 import { Card, Row, Col, Divider, Typography, Button } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
-
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -185,8 +288,7 @@ const Categories = () => {
   const array = [
     {
       name: "Activa",
-      images:  "/images/b1fleet.jpg",
-      
+      images: "/images/b1fleet.jpg",
       href: "/bikerentsection",
     },
     {
@@ -207,61 +309,71 @@ const Categories = () => {
         {/* Section Header */}
         <div className="text-center mb-12">
           <Divider className="!h-1 !w-24 !min-w-0 !mx-auto !my-0 !mb-4 bg-gradient-to-r from-[#5a4239] to-orange-900" />
-          <Title className="!text-4xl !font-bold !text-orange-900 flex items-center justify-center gap-3 !mb-2">
-          <FontAwesomeIcon icon={faPersonBiking} className="text-orange-900 "  />
+          <Title className="!text-3xl md:!text-4xl !font-bold !text-orange-900 flex items-center justify-center gap-3 !mb-2">
+            <FontAwesomeIcon icon={faPersonBiking} className="text-orange-900" />
             Our Fleet
           </Title>
-          <Text className="!text-xl !text-[#5a4239] font-[Roboto] block">
+          <Text className="!text-lg md:!text-xl !text-[#5a4239] font-[Roboto] block">
             Explore our premium range of bikes and scooters
           </Text>
         </div>
 
-        {/* Fleet Cards */}
-        <Row gutter={[24, 24]}>
+        {/* Fleet Cards - Responsive Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {array.map((item, index) => (
-            <Col xs={24} md={8} key={index}>
+            <div key={index} className="w-full">
               <Card
                 hoverable
-                className=" !bg-[#8B4D3A] !text-[#FFD9A0] !rounded-xl !overflow-hidden !bg-[#ffffff1a]  hover:!bg-[#733F30] !backdrop-blur-md !border !border-white/20 !border-orange-700 hover:!border-[#f59e0b]  hover:!bg-[#ffffff33] hover:!shadow-2xl hover:!-translate-y-1 transition-all duration-300"
+                className={`
+                  w-full h-full
+                  bg-[#8B4D3A] text-[#FFD9A0]
+                  border border-[rgba(255,255,255,0.1)]
+                  rounded-xl overflow-hidden backdrop-blur-md
+                  transition-all duration-300
+                  hover:bg-[#733F30] hover:border-[#f59e0b]
+                  hover:shadow-xl hover:-translate-y-1
+                `}
                 bodyStyle={{ padding: 24 }}
                 cover={
-                  <div className="h-60 w-full overflow-hidden relative group">
+                  <div className="h-48 md:h-60 w-full overflow-hidden relative group">
                     <img
                       alt={item.name}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       src={item.images}
                       placeholderSrc="https://reactnativecode.com/wp-content/uploads/2018/02/Default_Image_Thumbnail.png"
                       effect="blur"
-                      
                     />
                     <div className="absolute inset-0 bg-gradient-to-b from-[#6c5049]/70 to-[#6c5049]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
                 }
               >
-                <Title
-                  level={4}
-                  className="!text-2xl   !font-bold !text-[#FFD9A0]   group-hover:!text-orange-900 transition-colors duration-300"
+                <Title 
+                  level={4} 
+                  className="!text-xl md:!text-2xl !font-bold !text-[#FFD9A0] group-hover:!text-orange-900 transition-colors duration-300"
                 >
                   {item.name}
                 </Title>
                 <Link to={item.href}>
                   <Button
                     type="primary"
-                    //shape="round"
                     icon={<ArrowRightOutlined />}
-                    className="!bg-[#FFD9A0] !text-orange-900 font-[Roboto] hover:!bg-[#B36D4E] hover:!text-white !mt-6 !h-10 !px-6 transition-all duration-300 hover:!translate-x-1"
+                    className={`
+                      !bg-[#FFD9A0] !text-orange-900 
+                      font-[Roboto] hover:!bg-[#B36D4E] 
+                      hover:!text-white !mt-6 !h-10 !px-6 
+                      transition-all duration-300 hover:!translate-x-1
+                    `}
                   >
                     Enquire Now
                   </Button>
                 </Link>
               </Card>
-            </Col>
+            </div>
           ))}
-        </Row>
+        </div>
       </div>
     </div>
   );
 };
 
-export default Categories; //good
-
+export default Categories;

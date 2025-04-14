@@ -138,8 +138,9 @@ const User = () => {
       <div style={{ minHeight: "calc(100vh - 64px)", padding: "24px" }}>
         <Row justify="space-between" align="middle" style={{ marginBottom: 16 }}>
           <Col>
-            <Title level={3} style={{ color: "#fa8c16", margin: 0 }}>
-              Total Users
+            <Title level={3} style={{ color: "black", margin: 0 }}>
+              User Management
+              
             </Title>
           </Col>
           <Col>
