@@ -28,7 +28,7 @@ function App() {
             <Routes>
               <Route path="/*" element={<App1 />} />
               <Route path="/admin/*" element={<Dashboard />} />
-              <Route path="/reviews" element={<AllReviews />} />
+            
 
             </Routes>
           </Suspense>

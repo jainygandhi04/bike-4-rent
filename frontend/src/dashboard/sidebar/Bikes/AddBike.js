@@ -295,6 +295,7 @@ const AddBike = () => {
   };
 
   const onFinish = async (values) => {
+    console.log('298:',imageFile);
     if (!imageFile) {
       message.error("Please upload a bike image.");
       return;

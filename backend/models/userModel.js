@@ -104,9 +104,20 @@ const userSchema = new mongoose.Schema(
       required: true,
       enum: ["male", "female", "other"], // Restrict to only these values
     },
+    
     role: {
       type: Number,
       default: 0, // 0: User, 1: Admin
+    },
+    licenseNumber: {
+      type: String,
+      required: false, // Optional field, can be added later
+    },
+    licenseFile: {
+      
+        data: Buffer,
+        contentType: String,
+     
     },
   },
   { timestamps: true }

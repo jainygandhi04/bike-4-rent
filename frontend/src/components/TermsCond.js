@@ -113,7 +113,7 @@ const TermsCond = () => {
       icon: faCalendarAlt,
       title: "Cancellation and Refund",
       description:
-        "Free cancellations are allowed up to 24 hours before the scheduled pickup time. Late cancellations may result in partial or no refunds.",
+        "Once the order is placed, the payment becomes non-refundable, and no cancellations or refund requests will be accepted regardless of the time remaining before the scheduled pickup.",
     },
     {
       icon: faHelmetSafety,

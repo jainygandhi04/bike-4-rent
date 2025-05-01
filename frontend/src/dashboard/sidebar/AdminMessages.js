@@ -55,8 +55,8 @@ const AdminMessages = () => {
         onClick={() => navigate('/admin')}
         style={{
           position: 'absolute',
-          top: '660px',
-          left: '10px',
+          top: '10px',
+          left: '1200px',
           backgroundColor: '#A15E48',
           color: 'white',
           padding: '8px 16px',

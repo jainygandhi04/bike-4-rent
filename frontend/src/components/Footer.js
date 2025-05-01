@@ -276,9 +276,9 @@ const Footer = () => {
             © {new Date().getFullYear()} BikeForRent. All rights reserved.
           </Text>
           <div className="flex space-x-4 mt-4 md:mt-0">
-            <Link to="/termsc" className="text-[#DCA689] hover:text-[#fff7f0] text-sm transition-colors duration-300">
+            {/* <Link to="/termsc" className="text-[#DCA689] hover:text-[#fff7f0] text-sm transition-colors duration-300">
               Privacy Policy
-            </Link>
+            </Link> */}
             <Link to="/termsc" className="text-[#DCA689] hover:text-[#fff7f0] text-sm transition-colors duration-300">
               Terms of Service
             </Link>

@@ -366,8 +366,8 @@ const BikeTable = () => {
         onClick={() => navigate('/admin')}
         style={{
           position: 'absolute',
-          top: '400px',
-          left: '10px',
+          top: '60x',
+          left: '1200px',
           backgroundColor: '#A15E48',
           color: 'White',
           padding: '8px 16px',
