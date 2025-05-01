@@ -456,7 +456,7 @@ const downloadCSV = () => {
         style={{
           position: 'absolute',
           top: '10px',
-          left: '1500px',
+          left: '1200px',
           backgroundColor: '#A15E48',
           color: 'white',
           padding: '8px 16px',

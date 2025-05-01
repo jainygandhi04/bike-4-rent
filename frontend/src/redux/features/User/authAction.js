@@ -49,6 +49,28 @@ export const userLogin = createAsyncThunk(
 );
 
 // ✅ Register User
+// export const userRegister = createAsyncThunk(
+//   "user/register",
+//   async (userData, { rejectWithValue }) => {
+//     try {
+//       const config = {
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//       };
+//       const data = await Axios.post(`/api/v1/auth/register`, userData, config);
+//       return data.data;
+//     } catch (error) {
+//       console.log(error);
+//       if (error.response && error.response.data.message) {
+//         return rejectWithValue(error.response.data.message);
+//       } else {
+//         return rejectWithValue(error.message);
+//       }
+//     }
+//   }
+// );
+
 export const userRegister = createAsyncThunk(
   "user/register",
   async (userData, { rejectWithValue }) => {
@@ -58,8 +80,16 @@ export const userRegister = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      const data = await Axios.post(`/api/v1/auth/register`, userData, config);
-      return data.data;
+      const response = await Axios.post(`/api/v1/auth/register`, userData, config);
+
+      // ✅ Check if the response contains the user ID
+      const userId = response.data?.user?._id || response.data?._id;
+
+      if (userId) {
+        localStorage.setItem("userId", userId); // ✅ Store userId
+      }
+
+      return response.data;
     } catch (error) {
       console.log(error);
       if (error.response && error.response.data.message) {
@@ -70,6 +100,7 @@ export const userRegister = createAsyncThunk(
     }
   }
 );
+
 
 // ✅ Forgot Password (new password submission after OTP)
 export const forgotPassword = createAsyncThunk(
@@ -161,3 +192,21 @@ export const editUserById = createAsyncThunk(
   }
 );
 
+
+export const addLicense = createAsyncThunk(
+  "user/license",
+  async (licenseData, { rejectWithValue }) => {
+    console.log('7:bikeAction:', licenseData);
+    try {
+      const data = await Http.post("/api/v1/auth/update-license", licenseData);
+      return data.data;
+    } catch (error) {
+      console.log(error);
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);

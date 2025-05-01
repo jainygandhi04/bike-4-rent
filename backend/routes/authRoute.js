@@ -8,9 +8,11 @@ import {
   verifyOtpController,
   resetPasswordController,
   editUserController,
+  updateLicenseDetails,
 } from "../controllers/authController.js";
 import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
 import { sendOtpController } from "../controllers/authController.js";//new change
+import formidable from "express-formidable";
 
 
 //  router object
@@ -36,6 +38,9 @@ router.post("/forgot-password", forgotPasswordController);
 
 //Send Otp
 router.post("/send-otp", sendOtpController);
+
+// Update license details
+router.post("/update-license",formidable(), updateLicenseDetails); // new API route
 
 //verify otp
 router.post("/verify-otp", verifyOtpController);

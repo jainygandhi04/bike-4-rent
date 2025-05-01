@@ -175,6 +175,16 @@ const UserTable = ({ searchText = "" }) => {
       key: "phone",
       align: "center",
     },
+    {
+      title: "License Number",
+      dataIndex: "licenseNumber",
+      key: "licenseNumber",
+      align: "center",
+      render: (license) => license ? license : "-",
+    },
+   
+
+
   ];
 
   const dataSource = filteredUsers?.map((user, index) => ({
@@ -183,7 +193,9 @@ const UserTable = ({ searchText = "" }) => {
     email: user.email,
     role: user.role,
     gender: user.gender,
-    phone: user.phone
+    phone: user.phone,
+    licenseNumber: user.licenseNumber,
+    //licenseFile: user.licenseFile,
   }));
 
   return (
@@ -207,15 +219,15 @@ const UserTable = ({ searchText = "" }) => {
           marginBottom: '20px'
         }}
       >
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          width="16" 
-          height="16" 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          stroke="currentColor" 
-          strokeWidth="2" 
-          strokeLinecap="round" 
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
           strokeLinejoin="round"
         >
           <line x1="19" y1="12" x2="5" y2="12"></line>
@@ -223,7 +235,7 @@ const UserTable = ({ searchText = "" }) => {
         </svg>
         Back To Dashboard
       </button>
-        
+
       <Table
         columns={columns}
         dataSource={dataSource}

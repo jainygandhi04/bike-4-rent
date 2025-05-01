@@ -644,6 +644,8 @@ import { comparePassword, hashPassword } from "../helpers/authHelper.js";
 import userModel from "../models/userModel.js";
 import JWT from "jsonwebtoken";
 import nodemailer from "nodemailer";
+import fs from "fs";
+
 
 // ✅ Utility to generate 6-digit OTP
 const generateOTP = () => Math.floor(1000 + Math.random() * 1000).toString();
@@ -978,5 +980,51 @@ export const editUserController = async (req, res) => {
       success: false,
       message: "Error updating user profile"
     });
+  }
+};
+
+export const updateLicenseDetails = async (req, res) => {
+  try {
+   
+    const { userId, licenseNumber } = req.fields;
+    const {licenseFile} = req.files;    
+    console.log(JSON.stringify(licenseFile, null, 2));
+
+    if (!userId || !licenseNumber || !licenseFile) {
+      return res.status(400).json({ success: false, message: "All fields are required" });
+    }
+
+    // Optionally, add file validation (e.g., checking file type)
+    const allowedFileTypes = ["image/jpeg", "image/png", "application/pdf"];
+    if (!allowedFileTypes.includes(licenseFile.type)) {
+      return res.status(400).json({ success: false, message: "Invalid file type. Please upload an image or PDF" });
+    }
+    let licenseData = {};
+    if (licenseFile) {
+      licenseData = {
+        licenseFile: {
+          data: fs.readFileSync(licenseFile.path),
+          contentType: licenseFile.type,
+        },
+      };
+    }    // Update the user's license details
+    const user = await userModel.findByIdAndUpdate(
+      userId,
+      {
+        licenseNumber,
+        ...licenseData
+        , // Adds the file path to the user
+      },
+      { new: true } // Returns the updated user
+    );
+
+    // If the user isn't found
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    res.status(200).json({ success: true, user });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal Server Error", error: error.message });
   }
 };

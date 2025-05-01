@@ -128,7 +128,7 @@ const AddCategory = () => {
             type="primary"
             htmlType="submit"
             block
-            style={{ backgroundColor: "#fa8c16", borderColor: "#fa8c16" }}
+            style={{ backgroundColor: "#A15E48", borderColor: "#A15E48" }}
           >
             {loading ? <Spin size="small" /> : "Add Category"}
           </Button>
